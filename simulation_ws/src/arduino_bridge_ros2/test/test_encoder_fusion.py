@@ -8,23 +8,30 @@ def feed(fusion, opto, hall, count=10):
     return result
 
 
-def test_uses_opto_when_ratio_is_consistent():
+def test_consistent_opto_is_diagnostic_but_hall_drives_delta():
     result = feed(WheelEncoderFusion(), 4, 3)
-    assert result['source'] == 'OPTO'
+    assert result['source'] == 'HALL_PRIMARY'
     assert result['delta'] == 4
-    assert result['confidence'] == 1.0
+    assert result['confidence'] == 0.85
 
 
-def test_blends_moderate_disagreement():
+def test_moderate_disagreement_still_uses_hall():
     result = feed(WheelEncoderFusion(), 4.4, 3)
-    assert result['source'] == 'BLEND'
-    assert 4.0 < result['delta'] < 4.4
-
-
-def test_falls_back_to_hall_on_opto_failure():
-    result = feed(WheelEncoderFusion(), 0, 3)
-    assert result['source'] == 'HALL'
+    assert result['source'] == 'HALL_PRIMARY'
     assert result['delta'] == 4
+
+
+def test_noisy_opto_is_rejected_without_changing_distance():
+    result = feed(WheelEncoderFusion(), 20, 3)
+    assert result['source'] == 'HALL_PRIMARY_OPTO_WARN'
+    assert result['delta'] == 4
+    assert result['error'] > 1.0
+
+
+def test_opto_only_motion_is_never_integrated():
+    result = feed(WheelEncoderFusion(), 20, 0)
+    assert result['source'] == 'HALL_WAIT'
+    assert result['delta'] == 0
 
 
 def test_stopped_wheel_rejects_counts_and_resets_window():
@@ -33,12 +40,3 @@ def test_stopped_wheel_rejects_counts_and_resets_window():
     result = fusion.update(9, 9, moving=False)
     assert result['source'] == 'STOP'
     assert result['delta'] == 0
-
-def test_source_switch_requires_three_consistent_windows():
-    fusion = WheelEncoderFusion(window_samples=1)
-    fusion.update(4, 3, moving=True)
-    fusion.update(4, 3, moving=True)
-    assert fusion.update(4, 3, moving=True)['source'] == 'OPTO'
-    assert fusion.update(0, 3, moving=True)['source'] == 'OPTO'
-    assert fusion.update(0, 3, moving=True)['source'] == 'OPTO'
-    assert fusion.update(0, 3, moving=True)['source'] == 'HALL'

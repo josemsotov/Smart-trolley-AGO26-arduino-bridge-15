@@ -6,6 +6,9 @@ build/
 build_output/
 MOTOR-INTERFACE-V-13/build/
 MOTOR-INTERFACE-V-13/slprj/
+/.codex_build*/
+/.codex_diag*_build/
+/.codex_upload_build*/
 
 # Local backups and credentials
 BACKUPS/
@@ -26,6 +29,7 @@ __pycache__/
 # Local robot camera diagnostics (may contain personal images)
 .codex_runtime_fix/pi8_face_static/*.jpg
 .codex_runtime_fix/pi8_safety_net/*.jpg
+.diagnostics/*.png
 
 # VS Code
 .vscode/

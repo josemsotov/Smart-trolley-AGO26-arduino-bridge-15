@@ -236,3 +236,14 @@ systemctl --user status robot-follower.service robot-operator-web.service
 - Los optos siguen sobrecontando a baja velocidad; para la siguiente prueba de posicion usar exclusivamente los conteos Hall crudos HL/HR.
 - Estado final: motors PWM/RPM=0/0, fusion STOP, robot-follower.service activo; PI y heading desactivados por cleanup.
 - Siguiente prueba: objetivo 20 cm = 10.61 pulsos Hall promedio; usar 11 pulsos como umbral y parada ROS inmediata, manteniendo PI Kp=0.50 y heading-hold.
+
+## 2026-08-24 - Consola Fairway Trolley OS y nuevo repositorio base
+
+- Interfaz redisenada en `simulation_ws/src/robot_operator_web/static/index.html`.
+- Acceso: `http://192.168.40.74:8080/`; la portada muestra `FAIRWAY TROLLEY OS`.
+- Areas separadas: Operacion, Pruebas y Entrenamiento; STOP siempre accesible.
+- Datos de campo/hoyo persistidos localmente en el navegador; no hay aun backend multiusuario.
+- Desplegada en las copias `src` e `install/share` de `robot_operator_web` en el Pi.
+- Validacion: web activa, follower activo pero deshabilitado, salida automatica deshabilitada, modo STADIA, PWM/RPM 0/0, Kinect RGB/depth y LiDAR activos; GPS comunicando sin fix.
+- Nuevo repositorio de continuidad: `https://github.com/josemsotov/Smart-trolley-AGO26-arduino-bridge-15.git`.
+- Analisis funcional y hardware recomendado: `GOLF_OPERATOR_UI_ANALYSIS.md`.

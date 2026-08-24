@@ -1,71 +1,76 @@
-# MOTOR-INTERFACE-V-13
+# Smart Trolley V14 — Arduino Bridge y ROS 2
 
-Sistema de control de motores para Smart Golf Trolley con in  
+Respaldo operativo del Smart Golf Trolley: firmware Arduino Mega 2560, puente ROS 2, fusión de encoders Hall/opto, follower y consola para operación en campo de golf.
 
-## 📁 Estructura del Proyecto
+## Acceso a la interfaz Fairway Trolley OS
 
+Con el Raspberry Pi encendido y la PC en la misma red, abrir:
+
+**http://192.168.40.74:8080/**
+
+La portada debe mostrar **FAIRWAY TROLLEY OS**. Si aparece una versión anterior, usar `Ctrl+F5`.
+
+- **Operación:** modo efectivo, GPS, odometría, Kinect, LiDAR, preparación, campo/hoyo y STOP.
+- **Pruebas:** servicios, PWM/RPM/corriente, encoders, IMU/GPS, límites Stadia, Arduino y telemetría.
+- **Entrenamiento:** postura/swing, seguimiento de pelota y estimación de distancia (funciones piloto).
+
+Los datos del campo se guardan localmente en el navegador; la telemetría se recibe en tiempo real mediante `/ws`.
+
+## Acceso al Raspberry Pi
+
+```powershell
+ssh josemsotov@192.168.40.74
 ```
-MOTOR_INTERFACE-V-13/
-├── MOTOR-INTERFACE-V-13.ino    # Archivo principal
-├── Configuration.h              # Configuración del sistema
-├── Pins.h                       # Definición de pines
-├── Modules.h                    # Inclusión de módulos
-├── Core_Functions.h             # Funciones principales
-├── Motor_Control.h              # Control de motores
-├── Robot_States.h               # Máquina de estados
-├── Hall_Sensors.h               # Sensores Hall
-├── pid_control.h                # Control PID
-├── ROS2_Bridge.h                # Comunicación ROS2
-├── Serial_Command_Processor.h   # Procesador de comandos
-└── Joystick_Module.h            # Módulo de joystick
+
+Diagnóstico desde el Pi:
+
+```bash
+systemctl --user status robot-operator-web.service robot-follower.service
+curl http://127.0.0.1:8080/api/state
 ```
 
-## 🚀 Comandos Disponibles
+Para reiniciar únicamente la consola web:
 
-### Comandos Locales
-- `HELP` - Mostrar ayuda
-- `INFO` - Información del sistema
-- `HABILITAR` / `INHABILITAR` - Control de estado
-- `ADELANTE` / `ATRAS` / `STOP` - Control manual
-- `PTEST` - Prueba PWM=50 por 2s
-- `VTEST` - Prueba PWM=30 continua
+```bash
+systemctl --user restart robot-operator-web.service
+```
 
-### Comandos ROS2
-- `v <linear> <angular>` - Comando de velocidad
-- `e` - Request encoder counts
-- `r` - Reset encoders
-- `s` - Request status
-- `c` - Calibración PID
+Código web del repositorio:
 
-## ⚙️ Configuración
+```text
+simulation_ws/src/robot_operator_web/static/index.html
+```
 
-Edita `Configuration.h` para habilitar/deshabilitar funcionalidades:
-- `ENABLE_SERIAL_COMMANDS` - Comandos por serial
-- `ENABLE_ROS2_BRIDGE` - Integración ROS2
-- `ENABLE_HALL_SENSORS` - Sensores Hall
-- `ENABLE_PID_CONTROL` - Control PID
-- `ENABLE_JOYSTICK` - Control por joystick
+Copias desplegadas en el Pi:
 
-## 📡 Comunicación Serial
+```text
+/home/josemsotov/robot_ws/src/robot_operator_web/static/index.html
+/home/josemsotov/robot_ws/install/share/robot_operator_web/static/index.html
+```
 
-- **Baud Rate:** 115200
-- **Protocolo:** Comandos de texto ASCII
-- **Compatible con:** ROS2 Humble (Raspberry Pi 5)
+El reinicio del servicio web no sustituye el paro físico. Antes de una prueba de movimiento se debe verificar PWM/RPM en cero, trayectoria despejada y control manual disponible.
 
-## 🔧 Hardware
+## Componentes principales
 
-- **Placa:** Arduino Mega 2560
-- **Motores:** Driver L298N x2
-- **Sensores:** Hall effect x2
-- **Joystick:** Analógico 2 ejes
+- `MOTOR-INTERFACE-V14.ino`: firmware principal.
+- `Pins.h`: asignación de pines.
+- `Hall_Sensors.h`: velocidad Hall y filtrado opto.
+- `Motor_Control.h`: accionamiento y protecciones.
+- `ROS2_Bridge.h`: protocolo serie Pi–Arduino.
+- `simulation_ws/src/arduino_bridge_ros2/`: puente y fusión de encoders.
+- `simulation_ws/src/robot_follower/`: follower y control ROS 2.
+- `simulation_ws/src/robot_operator_web/`: servidor y consola web.
+- `HANDOVER.md`: estado operativo y próximo paso.
+- `GOLF_OPERATOR_UI_ANALYSIS.md`: capacidades y hardware recomendado.
 
-## 📝 Notas
+## Hardware relevante
 
-- Todos los cambios futuros se realizarán en el mismo archivo `.ino`
-- No se generarán archivos de documentación/debug adicionales
-- Los backups se mantienen solo durante desarrollo activo
+- Arduino Mega 2560 y Raspberry Pi con ROS 2 Jazzy.
+- Optoencoders de 60 PPR y Hall de 45 PPR en el mismo eje.
+- Diámetro nominal actual de rueda: 27 cm.
+- Kinect RGB-D, LiDAR, MPU/IMU, GPS NEO-6M, Coral y Stadia.
+- Enlace serie Arduino: 115200 baud.
 
----
+## Fuente de verdad
 
-**Autor:** JMS 2025  
-**Versión:** 13
+Este repositorio es la línea de trabajo desde el respaldo del 24 de agosto de 2026. Consultar primero `HANDOVER.md` e `INDEX.md`. La carpeta `MOTOR-INTERFACE-V-13` es histórica y no debe editarse para cambios V14.

@@ -22,9 +22,10 @@ robot_follower:
     visual_identity_verify_once: true
     visual_target_fov_deg: 62.0
     person_detection_width: 384
-    person_detection_stride: 3
+    person_detection_stride: 2
+    visual_process_max_hz: 4.0
     person_min_confidence: 0.35
-    person_track_timeout: 0.80
+    person_track_timeout: 1.20
     lidar_visual_gate_deg: 14.0
     lidar_camera_yaw_deg: 90.0
     lidar_cluster_jump_m: 0.30

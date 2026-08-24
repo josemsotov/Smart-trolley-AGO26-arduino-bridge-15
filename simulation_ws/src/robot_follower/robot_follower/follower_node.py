@@ -52,6 +52,7 @@ class FollowerNode(Node):
         self.declare_parameter('visual_target_fov_deg', 62.0)
         self.declare_parameter('person_detection_width', 384)
         self.declare_parameter('person_detection_stride', 3)
+        self.declare_parameter('visual_process_max_hz', 3.0)
         self.declare_parameter('person_min_confidence', 0.35)
         self.declare_parameter('person_track_timeout', 0.80)
         self.declare_parameter('coral_person_enabled', True)
@@ -144,6 +145,7 @@ class FollowerNode(Node):
         )
         self.person_tracker = sv.ByteTrack(frame_rate=10)
         self.person_frame_count = 0
+        self.visual_last_process_monotonic = 0.0
         self.person_track_id = None
         self.person_box = None
         self.person_confidence = 0.0
@@ -505,6 +507,15 @@ class FollowerNode(Node):
             return
         if not self.get_parameter('visual_identity_enabled').value:
             return
+
+        # Kinect publishes faster than the Pi can run pose plus both face
+        # detectors. Drop excess frames before conversion/inference so the
+        # single-threaded executor can continue servicing LiDAR and timers.
+        max_hz = max(0.1, float(self.get_parameter('visual_process_max_hz').value))
+        now_monotonic = time.monotonic()
+        if now_monotonic - self.visual_last_process_monotonic < 1.0 / max_hz:
+            return
+        self.visual_last_process_monotonic = now_monotonic
 
         image = self._image_to_rgb(msg)
         if image is None:

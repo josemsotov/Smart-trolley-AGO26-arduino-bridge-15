@@ -33,6 +33,9 @@ volatile unsigned long lastHallPulseTimeLeft = 0, lastHallPulseTimeRight = 0;
 volatile unsigned long hallPulseIntervalLeft = 0, hallPulseIntervalRight = 0;
 const unsigned long HALL_SPEED_UPDATE_MS = 100UL;
 const unsigned long HALL_SPEED_MIN_INTERVAL_US = 6000UL;
+const unsigned long HALL_COUNT_MIN_INTERVAL_US = 6000UL;
+volatile unsigned long hallCountPulseTimeLeft = 0, hallCountPulseTimeRight = 0;
+volatile uint32_t hallCountRejectedLeft = 0, hallCountRejectedRight = 0;
 volatile unsigned long hallSpeedPulseTimeLeft = 0, hallSpeedPulseTimeRight = 0;
 volatile unsigned long hallSpeedIntervalLeft = 0, hallSpeedIntervalRight = 0;
 
@@ -60,6 +63,12 @@ uint16_t optoLeftPermilleForHallInterval(uint32_t interval_us) {
 
 void leftHallISR() {
   const uint32_t now = micros();
+  unsigned long countInterval = now - hallCountPulseTimeLeft;
+  if (hallCountPulseTimeLeft != 0 && countInterval < HALL_COUNT_MIN_INTERVAL_US) {
+    hallCountRejectedLeft++;
+    return;
+  }
+  hallCountPulseTimeLeft = now;
   leftHallCount++;
   leftHallTotal++;
   unsigned long speedInterval = now - hallSpeedPulseTimeLeft;
@@ -87,6 +96,12 @@ void leftHallISR() {
 
 void rightHallISR() {
   const uint32_t now = micros();
+  unsigned long countInterval = now - hallCountPulseTimeRight;
+  if (hallCountPulseTimeRight != 0 && countInterval < HALL_COUNT_MIN_INTERVAL_US) {
+    hallCountRejectedRight++;
+    return;
+  }
+  hallCountPulseTimeRight = now;
   rightHallCount++;
   rightHallTotal++;
   unsigned long speedInterval = now - hallSpeedPulseTimeRight;
@@ -262,6 +277,10 @@ void resetHallCounters() {
   hallSpeedPulseTimeRight = 0;
   hallSpeedIntervalLeft = 0;
   hallSpeedIntervalRight = 0;
+  hallCountPulseTimeLeft = 0;
+  hallCountPulseTimeRight = 0;
+  hallCountRejectedLeft = 0;
+  hallCountRejectedRight = 0;
   interrupts();
 
   lastHallTimeLeft = millis();
