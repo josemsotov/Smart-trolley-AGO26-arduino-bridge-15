@@ -41,7 +41,7 @@
 //===========================================================================
 
 // ── Integradores per-rueda con anti-windup ─────────────────────────────────
-// Clamped en MAX_PWM_VALUE/100 para evitar windup cuando el motor está bloqueado.
+// Acotado para evitar windup cuando el motor esta bloqueado; no limita el PWM base.
 static float integral_left  = 0.0f;
 static float integral_right = 0.0f;
 static unsigned long pid_per_wheel_last_time = 0;
@@ -50,6 +50,13 @@ static float velocity_pi_corr_left = 0.0f;
 static float velocity_pi_corr_right = 0.0f;
 static float velocity_pi_target_left_rpm = 0.0f;
 static float velocity_pi_target_right_rpm = 0.0f;
+static float velocity_feedback_left_rpm = 0.0f;
+static float velocity_feedback_right_rpm = 0.0f;
+static bool velocity_feedback_left_fused = false;
+static bool velocity_feedback_right_fused = false;
+static uint32_t velocity_opto_prev_left = 0;
+static uint32_t velocity_opto_prev_right = 0;
+static unsigned long velocity_opto_last_ms = 0;
 static const float VELOCITY_PI_MAX_POSITIVE_CORRECTION_PWM = 6.0f;
 static const float VELOCITY_PI_MAX_NEGATIVE_CORRECTION_PWM = 10.0f;
 static const float VELOCITY_PI_INTEGRAL_LIMIT = 30.0f;
@@ -62,6 +69,10 @@ void pid_per_wheel_reset() {
   velocity_pi_corr_right = 0.0f;
   velocity_pi_target_left_rpm = 0.0f;
   velocity_pi_target_right_rpm = 0.0f;
+  velocity_feedback_left_rpm = 0.0f;
+  velocity_feedback_right_rpm = 0.0f;
+  velocity_feedback_left_fused = false;
+  velocity_feedback_right_fused = false;
   // Limpiar velocidades Hall stale para que FF domine al arrancar
   currentSpeedLeftHall  = 0.0f;
   currentSpeedRightHall = 0.0f;
@@ -441,8 +452,8 @@ void ros2_processCmdVel(String cmd) {
       if (abs_left  > 0 && dir_left   != leftMotor.direction)  { motor_pwm_write(PWM_LEFT_MOTOR,  0); delayMicroseconds(2000); }
       if (abs_right > 0 && !dir_right != rightMotor.direction) { motor_pwm_write(PWM_RIGHT_MOTOR, 0); delayMicroseconds(2000); }
 
-      // PI de velocidad por rueda sobre el feed-forward. Hall es la referencia
-      // rapida del lazo interno; la odometria Hall/opto fusionada cierra posicion.
+      // PI de velocidad por rueda sobre el feed-forward. La realimentacion
+      // combina Hall/opto cuando concuerdan y vuelve a Hall ante discrepancia.
       velocity_pi_target_left_rpm = fabsf(v_left_raw) * 60.0f / (PI * WHEEL_DIAMETER_M);
       velocity_pi_target_right_rpm = fabsf(v_right_raw) * 60.0f / (PI * WHEEL_DIAMETER_M);
       unsigned long velocity_pi_now = millis();
@@ -452,9 +463,9 @@ void ros2_processCmdVel(String cmd) {
       velocity_pi_corr_left = 0.0f;
       velocity_pi_corr_right = 0.0f;
       if (velocity_pi_enabled) {
-        float left_error_rpm = velocity_pi_target_left_rpm - currentSpeedLeftHall;
-        float right_error_rpm = velocity_pi_target_right_rpm - currentSpeedRightHall;
-        if (l_moving && currentSpeedLeftHall > 0.5f) {
+        float left_error_rpm = velocity_pi_target_left_rpm - velocity_feedback_left_rpm;
+        float right_error_rpm = velocity_pi_target_right_rpm - velocity_feedback_right_rpm;
+        if (l_moving && velocity_feedback_left_rpm > 0.5f) {
           integral_left = constrain(integral_left + left_error_rpm * velocity_pi_dt,
             -VELOCITY_PI_INTEGRAL_LIMIT, VELOCITY_PI_INTEGRAL_LIMIT);
           velocity_pi_corr_left = constrain(Kp_v * left_error_rpm + Ki_v * integral_left,
@@ -463,7 +474,7 @@ void ros2_processCmdVel(String cmd) {
           demand_left = constrain(demand_left + velocity_pi_corr_left,
             0.0f, (float)MAX_PWM_VALUE);
         }
-        if (r_moving && currentSpeedRightHall > 0.5f) {
+        if (r_moving && velocity_feedback_right_rpm > 0.5f) {
           integral_right = constrain(integral_right + right_error_rpm * velocity_pi_dt,
             -VELOCITY_PI_INTEGRAL_LIMIT, VELOCITY_PI_INTEGRAL_LIMIT);
           velocity_pi_corr_right = constrain(Kp_v * right_error_rpm + Ki_v * integral_right,
@@ -521,6 +532,10 @@ void ros2_processCmdVel(String cmd) {
         Serial.print(" Rpwm="); Serial.print(abs_right);
         Serial.print(" Lrpm="); Serial.print((int)currentSpeedLeftHall);
         Serial.print(" Rrpm="); Serial.print((int)currentSpeedRightHall);
+        Serial.print(" Lfrpm="); Serial.print((int)velocity_feedback_left_rpm);
+        Serial.print(" Rfrpm="); Serial.print((int)velocity_feedback_right_rpm);
+        Serial.print(" Lfs="); Serial.print(velocity_feedback_left_fused ? "F" : "H");
+        Serial.print(" Rfs="); Serial.print(velocity_feedback_right_fused ? "F" : "H");
         Serial.print(" Ltrpm="); Serial.print(velocity_pi_target_left_rpm, 1);
         Serial.print(" Rtrpm="); Serial.print(velocity_pi_target_right_rpm, 1);
         Serial.print(" Lpi="); Serial.print(velocity_pi_corr_left, 2);
@@ -634,6 +649,67 @@ EncoderHealthState encoder_classify_window(uint32_t hall, uint32_t opto) {
   if (measured_scaled < expected_scaled * 80UL) return ENC_HEALTH_LOW;
   if (measured_scaled > expected_scaled * 120UL) return ENC_HEALTH_HIGH;
   return ENC_HEALTH_OK;
+}
+
+float encoder_fuse_speed_rpm(float hall_rpm, float opto_rpm, bool &fused) {
+  fused = false;
+  if (hall_rpm <= 0.5f) return 0.0f;
+  if (opto_rpm <= 0.5f) return hall_rpm;
+  float error = fabsf(opto_rpm - hall_rpm) / hall_rpm;
+  if (error <= ((float)ENCODER_FUSION_MAX_ERROR_PERMILLE / 1000.0f)) {
+    fused = true;
+    return 0.5f * (hall_rpm + opto_rpm);
+  }
+  return hall_rpm;
+}
+
+void encoder_control_speed_update() {
+  unsigned long now = millis();
+  if (velocity_opto_last_ms == 0) {
+    noInterrupts();
+    velocity_opto_prev_left = leftOptoCount;
+    velocity_opto_prev_right = rightOptoCount;
+    interrupts();
+    velocity_opto_last_ms = now;
+    return;
+  }
+  unsigned long elapsed = now - velocity_opto_last_ms;
+  if (elapsed < ENCODER_FUSION_UPDATE_MS) return;
+  noInterrupts();
+  uint32_t ol = leftOptoCount;
+  uint32_t oright = rightOptoCount;
+  interrupts();
+  if (ol < velocity_opto_prev_left || oright < velocity_opto_prev_right) {
+    velocity_opto_prev_left = ol;
+    velocity_opto_prev_right = oright;
+    velocity_feedback_left_rpm = currentSpeedLeftHall;
+    velocity_feedback_right_rpm = currentSpeedRightHall;
+    velocity_feedback_left_fused = false;
+    velocity_feedback_right_fused = false;
+    velocity_opto_last_ms = now;
+    return;
+  }
+  uint32_t dol = ol - velocity_opto_prev_left;
+  uint32_t dor = oright - velocity_opto_prev_right;
+  velocity_opto_prev_left = ol;
+  velocity_opto_prev_right = oright;
+  velocity_opto_last_ms = now;
+  float opto_left_rpm = (float)dol * 60000.0f /
+    ((float)PPR_OPTO_ENCODERS * (float)elapsed);
+  float opto_right_rpm = (float)dor * 60000.0f /
+    ((float)PPR_OPTO_ENCODERS * (float)elapsed);
+  velocity_feedback_left_rpm = encoder_fuse_speed_rpm(
+    currentSpeedLeftHall, opto_left_rpm, velocity_feedback_left_fused);
+  velocity_feedback_right_rpm = encoder_fuse_speed_rpm(
+    currentSpeedRightHall, opto_right_rpm, velocity_feedback_right_fused);
+  if (leftMotor.pwm == 0) {
+    velocity_feedback_left_rpm = 0.0f;
+    velocity_feedback_left_fused = false;
+  }
+  if (rightMotor.pwm == 0) {
+    velocity_feedback_right_rpm = 0.0f;
+    velocity_feedback_right_fused = false;
+  }
 }
 
 const __FlashStringHelper* encoder_health_name(EncoderHealthState state) {
@@ -755,7 +831,7 @@ void ros2_processCommand(String cmd) {
       if (args == "selftest") {
         bool pass =
           encoder_classify_window(0, 0) == ENC_HEALTH_IDLE &&
-          encoder_classify_window(45, 60) == ENC_HEALTH_OK &&
+          encoder_classify_window(45, 45) == ENC_HEALTH_OK &&
           encoder_classify_window(45, 30) == ENC_HEALTH_LOW &&
           encoder_classify_window(45, 90) == ENC_HEALTH_HIGH;
         Serial.println(pass ? F("n SELFTEST PASS") : F("n SELFTEST FAIL"));
@@ -910,7 +986,7 @@ void ros2_processCommand(String cmd) {
     }
     case 'q': {
       // q <L|R> <pwm> - prueba individual continua de 1 s, limitada a
-      // MAX_PWM_VALUE, bypass del minimo de trabajo para calibrarlo.
+      // rango PWM completo, bypass del minimo de trabajo para calibrarlo.
       int sp1 = cmd.indexOf(' ');
       int sp2 = cmd.indexOf(' ', sp1 + 1);
       if (sp1 < 0 || sp2 < 0) {
@@ -918,7 +994,7 @@ void ros2_processCommand(String cmd) {
         break;
       }
       char side = cmd.charAt(sp1 + 1);
-      const int DIAGNOSTIC_MAX_PWM = 80;
+      const int DIAGNOSTIC_MAX_PWM = 255;
       int test_pwm = constrain(cmd.substring(sp2 + 1).toInt(), 0, DIAGNOSTIC_MAX_PWM);
       if (side != 'L' && side != 'R') {
         Serial.println("q FAIL side");
@@ -938,11 +1014,24 @@ void ros2_processCommand(String cmd) {
       #ifdef ENABLE_OPTO_ENCODERS
       leftOptoCount = 0;
       rightOptoCount = 0;
+      leftOptoRawEdges = 0;
+      rightOptoRawEdges = 0;
+      leftOptoAccepted = 0;
+      rightOptoAccepted = 0;
+      leftOptoRejected = 0;
+      rightOptoRejected = 0;
+      leftOptoLastPulseUs = 0;
+      rightOptoLastPulseUs = 0;
+      optoDiagnosticFixedFilter = true;
+      leftOptoFilterUs = 2500UL;
+      rightOptoFilterUs = 2500UL;
       #endif
       interrupts();
       if (side == 'L') {
         #ifdef ENABLE_ADAPTIVE_OPTO_FILTER
-        leftOptoFilterUs = optoLeftBootstrapFilterForPwm((uint8_t)test_pwm);
+        if (!optoDiagnosticFixedFilter) {
+          leftOptoFilterUs = optoLeftBootstrapFilterForPwm((uint8_t)test_pwm);
+        }
         lastHallPulseTimeLeft = 0;
         hallPulseIntervalLeft = 0;
         #endif
@@ -950,7 +1039,9 @@ void ros2_processCommand(String cmd) {
         motor_pwm_write(PWM_LEFT_MOTOR, test_pwm);
       } else {
         #ifdef ENABLE_ADAPTIVE_OPTO_FILTER
-        rightOptoFilterUs = optoRightBootstrapFilterForPwm((uint8_t)test_pwm);
+        if (!optoDiagnosticFixedFilter) {
+          rightOptoFilterUs = optoRightBootstrapFilterForPwm((uint8_t)test_pwm);
+        }
         lastHallPulseTimeRight = 0;
         hallPulseIntervalRight = 0;
         #endif
@@ -966,6 +1057,7 @@ void ros2_processCommand(String cmd) {
       #ifdef ENABLE_OPTO_ENCODERS
       uint32_t q_opto_left = leftOptoCount;
       uint32_t q_opto_right = rightOptoCount;
+      optoDiagnosticFixedFilter = false;
       #endif
       interrupts();
       setStateInhabilitado();
@@ -1231,7 +1323,7 @@ void ros2_processCommand(String cmd) {
       
     case 'x': {
       // x — sweep PWM solo motor DERECHO (sin izquierdo): descarta estáctica vs firmware
-      // Barrido: 20,40,60,80,100,150,200  cada nivel 1.5s  (analogWrite directo, sin guards)
+      // Barrido: 20,40,60,80,100,150,200; escritura Timer5 segura.
       // Imprime OCR5A/TCCR5A y pulsos Hall por nivel.
       Serial.println("x SWEEP_RIGHT_START");
 
@@ -1241,7 +1333,7 @@ void ros2_processCommand(String cmd) {
       rightMotor.enabled = true;  rightMotor.braked = false;
       currentRobotState  = STATE_HABILITADO;
       // Izquierdo APAGADO para no competir por corriente
-      analogWrite(PWM_LEFT_MOTOR, 0);
+      motor_pwm_write(PWM_LEFT_MOTOR, 0);
       delay(100);
 
       // --- DIR derecho = FWD ---
@@ -1256,7 +1348,7 @@ void ros2_processCommand(String cmd) {
         uint32_t r0 = rightHallTotal;
         interrupts();
 
-        analogWrite(PWM_RIGHT_MOTOR, pwm);
+        motor_pwm_write(PWM_RIGHT_MOTOR, pwm);
         Serial.print("x PWM="); Serial.print(pwm);
         Serial.print(" OCR5A="); Serial.print(OCR5A);
         Serial.print(" TCCR5A=0x"); Serial.print(TCCR5A, HEX);
@@ -1273,7 +1365,7 @@ void ros2_processCommand(String cmd) {
           delay(1);
         }
 
-        analogWrite(PWM_RIGHT_MOTOR, 0);
+        motor_pwm_write(PWM_RIGHT_MOTOR, 0);
         noInterrupts();
         uint32_t r1 = rightHallTotal;
         interrupts();
@@ -1297,7 +1389,7 @@ void ros2_processCommand(String cmd) {
       pinMode(BRAKE_LEFT_MOTOR, INPUT);
       leftMotor.enabled = true;  leftMotor.braked = false;
       currentRobotState = STATE_HABILITADO;
-      analogWrite(PWM_RIGHT_MOTOR, 0);
+      motor_pwm_write(PWM_RIGHT_MOTOR, 0);
       delay(100);
 
       // DIR izquierdo FWD = HIGH (ver Motor_Control.h: DIR_LEFT setHIGH=FWD)
@@ -1312,7 +1404,7 @@ void ros2_processCommand(String cmd) {
         uint32_t l0 = leftHallTotal;
         interrupts();
 
-        analogWrite(PWM_LEFT_MOTOR, pwm);
+        motor_pwm_write(PWM_LEFT_MOTOR, pwm);
         Serial.print("X PWM="); Serial.print(pwm);
         Serial.print(" OCR5C="); Serial.print(OCR5C);
         Serial.print(" TCCR5A=0x"); Serial.print(TCCR5A, HEX);
@@ -1328,7 +1420,7 @@ void ros2_processCommand(String cmd) {
           delay(1);
         }
 
-        analogWrite(PWM_LEFT_MOTOR, 0);
+        motor_pwm_write(PWM_LEFT_MOTOR, 0);
         noInterrupts();
         uint32_t l1 = leftHallTotal;
         interrupts();
@@ -1360,24 +1452,24 @@ void ros2_processCommand(String cmd) {
         interrupts();
         if (side == 0) { // izq FWD
           digitalWrite(DIR_LEFT_MOTOR, HIGH);
-          analogWrite(PWM_LEFT_MOTOR, pwm);
-          analogWrite(PWM_RIGHT_MOTOR, 0);
+          motor_pwm_write(PWM_LEFT_MOTOR, pwm);
+          motor_pwm_write(PWM_RIGHT_MOTOR, 0);
         } else if (side == 1) { // der FWD
           digitalWrite(DIR_RIGHT_MOTOR, LOW);
-          analogWrite(PWM_RIGHT_MOTOR, pwm);
-          analogWrite(PWM_LEFT_MOTOR, 0);
+          motor_pwm_write(PWM_RIGHT_MOTOR, pwm);
+          motor_pwm_write(PWM_LEFT_MOTOR, 0);
         } else if (side == 2) { // izq BWD
           digitalWrite(DIR_LEFT_MOTOR, LOW);
-          analogWrite(PWM_LEFT_MOTOR, pwm);
-          analogWrite(PWM_RIGHT_MOTOR, 0);
+          motor_pwm_write(PWM_LEFT_MOTOR, pwm);
+          motor_pwm_write(PWM_RIGHT_MOTOR, 0);
         } else { // der BWD
           digitalWrite(DIR_RIGHT_MOTOR, HIGH);
-          analogWrite(PWM_RIGHT_MOTOR, pwm);
-          analogWrite(PWM_LEFT_MOTOR, 0);
+          motor_pwm_write(PWM_RIGHT_MOTOR, pwm);
+          motor_pwm_write(PWM_LEFT_MOTOR, 0);
         }
         delay((unsigned long)MS_PER_WINDOW);
-        analogWrite(PWM_LEFT_MOTOR, 0);
-        analogWrite(PWM_RIGHT_MOTOR, 0);
+        motor_pwm_write(PWM_LEFT_MOTOR, 0);
+        motor_pwm_write(PWM_RIGHT_MOTOR, 0);
         noInterrupts();
         uint32_t t1 = (side < 2) ? leftHallTotal : rightHallTotal;
         interrupts();
@@ -1387,7 +1479,7 @@ void ros2_processCommand(String cmd) {
       };
 
       if (currentRobotState != STATE_HABILITADO) { setStateHabilitado(); delay(50); }
-      // Disable STOP/BRAKE for direct analogWrite
+      // Liberar STOP/BRAKE para la prueba directa de Timer5.
       pinMode(STOP_LEFT_MOTOR,  INPUT); pinMode(STOP_RIGHT_MOTOR,  INPUT);
       pinMode(BRAKE_LEFT_MOTOR, INPUT); pinMode(BRAKE_RIGHT_MOTOR, INPUT);
       leftMotor.enabled  = rightMotor.enabled  = true;
@@ -1457,8 +1549,8 @@ void ros2_processCommand(String cmd) {
         uint32_t l0 = leftHallTotal; uint32_t r0 = rightHallTotal;
         interrupts();
 
-        digitalWrite(DIR_LEFT_MOTOR,  HIGH);  analogWrite(PWM_LEFT_MOTOR,  p);
-        digitalWrite(DIR_RIGHT_MOTOR, LOW);   analogWrite(PWM_RIGHT_MOTOR, p);
+        digitalWrite(DIR_LEFT_MOTOR,  HIGH);  motor_pwm_write(PWM_LEFT_MOTOR,  p);
+        digitalWrite(DIR_RIGHT_MOTOR, LOW);   motor_pwm_write(PWM_RIGHT_MOTOR, p);
 
         delay(1000);
 
@@ -1587,9 +1679,10 @@ bool ros2_tryProcessCommand(String cmd) {
 //===========================================================================
 
 void ros2_update() {
-  #if defined(ENABLE_HALL_SENSORS) && defined(ENABLE_OPTO_ENCODERS)
+#if defined(ENABLE_HALL_SENSORS) && defined(ENABLE_OPTO_ENCODERS)
+  encoder_control_speed_update();
   encoder_supervisor_update();
-  #endif
+#endif
   // Verificar timeout de comandos
   if (ros2_connected && (millis() - ros2_last_cmd_time > ROS2_CMD_TIMEOUT)) {
     ros2_linear_vel = 0.0;

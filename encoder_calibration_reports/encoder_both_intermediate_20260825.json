@@ -1,0 +1,289 @@
+{
+  "timestamp_utc": "2026-08-25T16:41:37.924532+00:00",
+  "port": "/dev/ttyACM0",
+  "hall_ppr": 45.0,
+  "opto_ppr": 60.0,
+  "expected_opto_per_hall": 1.3333333333333333,
+  "pwms": [
+    15,
+    25,
+    35
+  ],
+  "repeats": 3,
+  "sides": [
+    "L",
+    "R"
+  ],
+  "swapped_outs": false,
+  "rest": {
+    "seconds": 3.0,
+    "left_start": 0,
+    "right_start": 0,
+    "left_end": 0,
+    "right_end": 0,
+    "left_delta": 0,
+    "right_delta": 0
+  },
+  "rows": [
+    {
+      "pwm": 15,
+      "repeat": 1,
+      "side": "L",
+      "opto_channel": "OL",
+      "hall": 24,
+      "opto": 0,
+      "expected_opto": 32.0,
+      "signed_error_pct": -100.0,
+      "ratio_opto_per_hall": 0.0
+    },
+    {
+      "pwm": 15,
+      "repeat": 1,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 23,
+      "opto": 25,
+      "expected_opto": 30.666666666666664,
+      "signed_error_pct": -18.47826086956521,
+      "ratio_opto_per_hall": 1.0869565217391304
+    },
+    {
+      "pwm": 15,
+      "repeat": 2,
+      "side": "L",
+      "opto_channel": "OL",
+      "hall": 25,
+      "opto": 0,
+      "expected_opto": 33.33333333333333,
+      "signed_error_pct": -100.0,
+      "ratio_opto_per_hall": 0.0
+    },
+    {
+      "pwm": 15,
+      "repeat": 2,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 23,
+      "opto": 23,
+      "expected_opto": 30.666666666666664,
+      "signed_error_pct": -24.999999999999993,
+      "ratio_opto_per_hall": 1.0
+    },
+    {
+      "pwm": 15,
+      "repeat": 3,
+      "side": "L",
+      "opto_channel": "OL",
+      "hall": 24,
+      "opto": 0,
+      "expected_opto": 32.0,
+      "signed_error_pct": -100.0,
+      "ratio_opto_per_hall": 0.0
+    },
+    {
+      "pwm": 15,
+      "repeat": 3,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 23,
+      "opto": 23,
+      "expected_opto": 30.666666666666664,
+      "signed_error_pct": -24.999999999999993,
+      "ratio_opto_per_hall": 1.0
+    },
+    {
+      "pwm": 25,
+      "repeat": 1,
+      "side": "L",
+      "opto_channel": "OL",
+      "hall": 44,
+      "opto": 0,
+      "expected_opto": 58.666666666666664,
+      "signed_error_pct": -100.0,
+      "ratio_opto_per_hall": 0.0
+    },
+    {
+      "pwm": 25,
+      "repeat": 1,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 43,
+      "opto": 43,
+      "expected_opto": 57.33333333333333,
+      "signed_error_pct": -24.999999999999993,
+      "ratio_opto_per_hall": 1.0
+    },
+    {
+      "pwm": 25,
+      "repeat": 2,
+      "side": "L",
+      "opto_channel": "OL",
+      "hall": 44,
+      "opto": 0,
+      "expected_opto": 58.666666666666664,
+      "signed_error_pct": -100.0,
+      "ratio_opto_per_hall": 0.0
+    },
+    {
+      "pwm": 25,
+      "repeat": 2,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 43,
+      "opto": 43,
+      "expected_opto": 57.33333333333333,
+      "signed_error_pct": -24.999999999999993,
+      "ratio_opto_per_hall": 1.0
+    },
+    {
+      "pwm": 25,
+      "repeat": 3,
+      "side": "L",
+      "opto_channel": "OL",
+      "hall": 44,
+      "opto": 0,
+      "expected_opto": 58.666666666666664,
+      "signed_error_pct": -100.0,
+      "ratio_opto_per_hall": 0.0
+    },
+    {
+      "pwm": 25,
+      "repeat": 3,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 42,
+      "opto": 43,
+      "expected_opto": 56.0,
+      "signed_error_pct": -23.214285714285715,
+      "ratio_opto_per_hall": 1.0238095238095237
+    },
+    {
+      "pwm": 35,
+      "repeat": 1,
+      "side": "L",
+      "opto_channel": "OL",
+      "hall": 63,
+      "opto": 0,
+      "expected_opto": 84.0,
+      "signed_error_pct": -100.0,
+      "ratio_opto_per_hall": 0.0
+    },
+    {
+      "pwm": 35,
+      "repeat": 1,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 62,
+      "opto": 65,
+      "expected_opto": 82.66666666666666,
+      "signed_error_pct": -21.370967741935473,
+      "ratio_opto_per_hall": 1.0483870967741935
+    },
+    {
+      "pwm": 35,
+      "repeat": 2,
+      "side": "L",
+      "opto_channel": "OL",
+      "hall": 63,
+      "opto": 0,
+      "expected_opto": 84.0,
+      "signed_error_pct": -100.0,
+      "ratio_opto_per_hall": 0.0
+    },
+    {
+      "pwm": 35,
+      "repeat": 2,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 62,
+      "opto": 63,
+      "expected_opto": 82.66666666666666,
+      "signed_error_pct": -23.79032258064515,
+      "ratio_opto_per_hall": 1.0161290322580645
+    },
+    {
+      "pwm": 35,
+      "repeat": 3,
+      "side": "L",
+      "opto_channel": "OL",
+      "hall": 63,
+      "opto": 0,
+      "expected_opto": 84.0,
+      "signed_error_pct": -100.0,
+      "ratio_opto_per_hall": 0.0
+    },
+    {
+      "pwm": 35,
+      "repeat": 3,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 61,
+      "opto": 62,
+      "expected_opto": 81.33333333333333,
+      "signed_error_pct": -23.770491803278684,
+      "ratio_opto_per_hall": 1.0163934426229508
+    }
+  ],
+  "summary": [
+    {
+      "pwm": 15,
+      "side": "L",
+      "samples": 3,
+      "hall_mean": 24.333333333333332,
+      "opto_mean": 0,
+      "error_mean_pct": -100.0,
+      "error_stdev_pct": 0.0,
+      "error_max_abs_pct": 100.0
+    },
+    {
+      "pwm": 15,
+      "side": "R",
+      "samples": 3,
+      "hall_mean": 23,
+      "opto_mean": 23.666666666666668,
+      "error_mean_pct": -22.82608695652173,
+      "error_stdev_pct": 3.765327842541037,
+      "error_max_abs_pct": 24.999999999999993
+    },
+    {
+      "pwm": 25,
+      "side": "L",
+      "samples": 3,
+      "hall_mean": 44,
+      "opto_mean": 0,
+      "error_mean_pct": -100.0,
+      "error_stdev_pct": 0.0,
+      "error_max_abs_pct": 100.0
+    },
+    {
+      "pwm": 25,
+      "side": "R",
+      "samples": 3,
+      "hall_mean": 42.666666666666664,
+      "opto_mean": 43,
+      "error_mean_pct": -24.4047619047619,
+      "error_stdev_pct": 1.0309826235528985,
+      "error_max_abs_pct": 24.999999999999993
+    },
+    {
+      "pwm": 35,
+      "side": "L",
+      "samples": 3,
+      "hall_mean": 63,
+      "opto_mean": 0,
+      "error_mean_pct": -100.0,
+      "error_stdev_pct": 0.0,
+      "error_max_abs_pct": 100.0
+    },
+    {
+      "pwm": 35,
+      "side": "R",
+      "samples": 3,
+      "hall_mean": 61.666666666666664,
+      "opto_mean": 63.333333333333336,
+      "error_mean_pct": -22.97726070861977,
+      "error_stdev_pct": 1.3911258519800846,
+      "error_max_abs_pct": 23.79032258064515
+    }
+  ]
+}

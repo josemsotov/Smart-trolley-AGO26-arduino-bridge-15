@@ -234,7 +234,7 @@
  */
 #ifdef ENABLE_DIFFERENTIAL_CONTROL
   #define DIFFERENTIAL_MIN_PWM  10    // PWM mínimo para giros
-  #define DIFFERENTIAL_MAX_PWM  40    // PWM máximo para giros
+  #define DIFFERENTIAL_MAX_PWM  255   // Rango PWM completo de 8 bits
   #define DIFFERENTIAL_TIMEOUT  5000  // Timeout giros automáticos (ms)
 #endif
 
@@ -246,7 +246,7 @@
 #endif
 
 #ifdef ENABLE_OPTO_ENCODERS  
-  #define PPR_OPTO_ENCODERS     60    // Pulsos por revolución OptoEncoders
+  #define PPR_OPTO_ENCODERS     45    // PPR efectivos medidos: relacion 1:1 contra Hall de 45 PPR
   #define OPTO_FILTER_US       6000UL // Calibrado: mejor error Hall/opto con motores energizados
   #define ENABLE_ADAPTIVE_OPTO_FILTER
   #define OPTO_FILTER_LEFT_MIN_US   2500UL
@@ -254,6 +254,8 @@
   #define OPTO_FILTER_MAX_US       40000UL
   #define OPTO_FILTER_LEFT_HALL_PERMILLE  450UL
   #define OPTO_FILTER_RIGHT_HALL_PERMILLE 520UL
+  #define ENCODER_FUSION_MAX_ERROR_PERMILLE 120UL
+  #define ENCODER_FUSION_UPDATE_MS          100UL
 #endif
 
 /**

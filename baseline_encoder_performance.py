@@ -10,7 +10,7 @@ PORT = sys.argv[1] if len(sys.argv) > 1 else "COM4"
 PWM_LEVELS = (20, 25, 30, 35, 40)
 REPEATS = 3
 HALL_PPR = 45.0
-OPTO_PPR = 60.0
+OPTO_PPR = 45.0
 Q_RE = re.compile(r"q OK side=([LR]) pwm=(\d+) L=(\d+) R=(\d+) OL=(\d+) OR=(\d+)")
 STAT_RE = re.compile(
     r"j STAT Lus=(\d+) Rus=(\d+) Lraw=(\d+) Lacc=(\d+) Lrej=(\d+) "

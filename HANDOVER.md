@@ -2,6 +2,26 @@
 
 Actualizado: 2026-08-20
 
+## Actualizacion 2026-08-25 - PPR efectivo de optoencoders
+
+- Las barridas repetidas PWM 25-80 mostraron una relacion estable cercana a 1:1 entre Hall y opto en ambas ruedas.
+- Se adopta `45 PPR` efectivos para los optoencoders, igual que los Hall; el supuesto anterior de 60 PPR queda retirado.
+- Firmware `PPR_OPTO_ENCODERS`, puente ROS 2, fusion, launch files, perfil de hardware, calibradores y documentacion fueron alineados a 45 PPR.
+- Diametro fisico de rueda permanece en `0.27 m`; no se modifica para compensar la escala del encoder.
+- PWM 90 sigue excluido por la caida anomala de conteos Hall. Para pruebas operativas se conserva el rango prudente PWM 25-40.
+- La rueda izquierda mostro arranque intermitente en PWM 10-20; no usar ese rango para caracterizacion de posicion.
+
+## Actualizacion 2026-08-25 - lazo cerrado Hall/opto
+
+- Odometria ROS 2 fusiona Hall y opto 50/50 con discrepancia <=5%, usa 75/25 a 5-12% y vuelve a Hall por encima de 12%.
+- PI interno de velocidad usa RPM Hall/opto promediada solo cuando ambos sensores concuerdan dentro de 12%; ante ausencia, reset o ruido opto vuelve a Hall.
+- Una señal opto aislada nunca genera movimiento ni realimentacion valida.
+- Telemetria del firmware agrega `Lfrpm/Rfrpm` y fuente `Lfs/Rfs` (`F` fusionada, `H` Hall/fallback).
+- PWM 90 permanece fuera del rango de control por discrepancia severa y simetrica entre Hall y opto.
+- Firmware de fusion instalado y verificado por `avrdude` (65696 bytes); respaldo previo en `/home/josemsotov/robot_backups/pre_fused_loop_20260825.hex`.
+- Prueba estatica aprobada: PI activo, telemetria `Lfrpm/Rfrpm` y fallback `Lfs/Rfs` operativos, parada final PWM/RPM cero.
+- Prueba dinamica pendiente de repetir: con PWM comandado 20-30 los motores no vencieron movimiento; verificacion directa `q 30` dio L Hall/opto 1/0 y R 11/25, muy por debajo de la barrida anterior. Revisar potencia/habilitacion/arnes antes de ajustar ganancias.
+
 
 ## Actualizacion 2026-08-20 - plataforma de movimiento y odometria
 
@@ -9,7 +29,7 @@ Actualizado: 2026-08-20
 - Raspberry Pi accesible en `josemsotov@192.168.40.74`.
 - Zenoh persistente y servicios `smart-trolley-zenoh-router`, `robot-follower` y `robot-operator-web` activos.
 - Diametro fisico real: `wheel_dia=0.27 m`; Pi recompilado y parametro activo verificado.
-- Optoencoders declarados a `ppr=60`: D3 izquierdo y D2 derecho. El comando `e` publica optos; Hall permanece para RPM/diagnostico.
+- Optoencoders configurados a `ppr=45` efectivos: D3 izquierdo y D2 derecho. El comando `e` publica optos; Hall permanece como referencia primaria de RPM/odometria.
 - IMU activa con fusion inicial yaw/gyro Z. GPS comunica, pero la ultima verificacion seguia sin fix ni satelites.
 - Prueba terrestre util: inicio `L=1794 R=2225`, final `L=1988 R=2345`, distancia fisica `30.3 cm`; deltas `L=194 R=120`.
 - Hay asimetria significativa entre encoders. La calibracion de odometria no esta cerrada.
@@ -152,7 +172,7 @@ systemctl --user status robot-follower.service robot-operator-web.service
 - `MAX_PWM_VALUE` operativo permanece en 40 para ROS2/Stadia.
 - El comando diagnostico `q <L|R> <pwm>` tiene limite independiente `DIAGNOSTIC_MAX_PWM = 80`.
 - Firmware compilado (59990 bytes), respaldado en Pi como `/home/josemsotov/robot_backups/pre_20260821_diag_pwm80.hex`, cargado y verificado con avrdude.
-- Matriz: PWM 10,15,20,25,30,35,40,50,60,70,80; 3 repeticiones por rueda; Hall 45 PPR contra opto 60 PPR.
+- Matriz historica: PWM 10,15,20,25,30,35,40,50,60,70,80; 3 repeticiones por rueda; originalmente evaluada bajo el supuesto Hall 45 PPR contra opto 60 PPR, reemplazado por 45/45 tras las pruebas del 2026-08-25.
 - Zona mas consistente: PWM 25-40 (aprox. -3.4% a +5.4% de error medio, excepto dispersion puntual izquierda a 40).
 - PWM 10-15: sobreconteo fuerte; PWM 50-80: subconteo creciente, alrededor de -20% a -23% desde PWM 60.
 - Informes: `encoder_calibration_reports/encoder_cross_extended_20260821.{json,csv}`.
@@ -247,3 +267,20 @@ systemctl --user status robot-follower.service robot-operator-web.service
 - Validacion: web activa, follower activo pero deshabilitado, salida automatica deshabilitada, modo STADIA, PWM/RPM 0/0, Kinect RGB/depth y LiDAR activos; GPS comunicando sin fix.
 - Nuevo repositorio de continuidad: `https://github.com/josemsotov/Smart-trolley-AGO26-arduino-bridge-15.git`.
 - Analisis funcional y hardware recomendado: `GOLF_OPERATOR_UI_ANALYSIS.md`.
+
+## 2026-08-27 - PWM completo y rango Hall corregido
+
+- Firmware operativo ampliado de `MAX_PWM_VALUE=40` al rango Timer5 completo `0..255`; control diferencial y comando diagnostico `q` tambien admiten hasta 255.
+- Las rutinas de diagnostico del firmware principal dejaron de usar `analogWrite()` sobre 44/46 y usan `motor_pwm_write()`, que restaura los bits COM5A1/COM5C1 del Timer5.
+- Firmware instalado y verificado por `avrdude`: 65470 bytes flash; RAM 6861/8192 bytes (83%, 1331 libres).
+- Caracterizacion suspendida, tres repeticiones por PWM 10..90, guardada en `encoder_calibration_reports/controller_pwm_profile_20260827.{json,csv}`.
+- En reposo durante 5 s: cero pulsos falsos Hall/opto. Entre PWM 20 y 80 ambos Hall mostraron velocidad practicamente simetrica.
+- Se identifico que `HALL_SPEED_MIN_INTERVAL_US=6000` y `HALL_COUNT_MIN_INTERVAL_US=6000` rechazaban pulsos validos a PWM 90 (intervalo real aproximado 5850 us), dividiendo artificialmente el conteo Hall.
+- Ambos umbrales Hall se redujeron a 2500 us, rango teorico aproximado de 533 RPM con 45 PPR. Validacion posterior:
+  - PWM 60: L Hall/opto 109/126; R 109/110.
+  - PWM 80: L 143/152; R 143/146.
+  - PWM 90: L 159/170; R 158/160.
+- Motores izquierdo y derecho respondieron nuevamente. Persisten 2..5 pulsos cruzados por ventana en la rueda detenida y exceso opto izquierdo aproximado de 6..15%; mantener fusion/fallback Hall.
+- `PPR_OPTO_ENCODERS=45`, diametro de rueda 0.27 m y PWM completo 0..255 permanecen como configuracion activa.
+- El test directo antiguo de PI por `pyserial` presenta `SerialTimeoutException` con el volumen actual de telemetria; no produjo movimiento. Ajuste PI siguiente debe ejecutarse mediante la ruta ROS normal o actualizar el protocolo de prueba.
+- Estado al cierre: follower/web/Zenoh activos; motores PWM/RPM 0; robot suspendido.

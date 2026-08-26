@@ -1,0 +1,159 @@
+{
+  "timestamp_utc": "2026-08-25T14:27:32.897708+00:00",
+  "port": "/dev/ttyACM0",
+  "hall_ppr": 45.0,
+  "opto_ppr": 60.0,
+  "expected_opto_per_hall": 1.3333333333333333,
+  "pwms": [
+    10,
+    20,
+    30
+  ],
+  "repeats": 3,
+  "sides": [
+    "R"
+  ],
+  "swapped_outs": false,
+  "rest": {
+    "seconds": 10.0,
+    "left_start": 0,
+    "right_start": 0,
+    "left_end": 0,
+    "right_end": 14,
+    "left_delta": 0,
+    "right_delta": 14
+  },
+  "rows": [
+    {
+      "pwm": 10,
+      "repeat": 1,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 13,
+      "opto": 14,
+      "expected_opto": 17.333333333333332,
+      "signed_error_pct": -19.230769230769223,
+      "ratio_opto_per_hall": 1.0769230769230769
+    },
+    {
+      "pwm": 10,
+      "repeat": 2,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 14,
+      "opto": 13,
+      "expected_opto": 18.666666666666664,
+      "signed_error_pct": -30.357142857142847,
+      "ratio_opto_per_hall": 0.9285714285714286
+    },
+    {
+      "pwm": 10,
+      "repeat": 3,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 14,
+      "opto": 13,
+      "expected_opto": 18.666666666666664,
+      "signed_error_pct": -30.357142857142847,
+      "ratio_opto_per_hall": 0.9285714285714286
+    },
+    {
+      "pwm": 20,
+      "repeat": 1,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 32,
+      "opto": 33,
+      "expected_opto": 42.666666666666664,
+      "signed_error_pct": -22.656249999999996,
+      "ratio_opto_per_hall": 1.03125
+    },
+    {
+      "pwm": 20,
+      "repeat": 2,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 32,
+      "opto": 34,
+      "expected_opto": 42.666666666666664,
+      "signed_error_pct": -20.312499999999996,
+      "ratio_opto_per_hall": 1.0625
+    },
+    {
+      "pwm": 20,
+      "repeat": 3,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 33,
+      "opto": 33,
+      "expected_opto": 44.0,
+      "signed_error_pct": -25.0,
+      "ratio_opto_per_hall": 1.0
+    },
+    {
+      "pwm": 30,
+      "repeat": 1,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 54,
+      "opto": 56,
+      "expected_opto": 72.0,
+      "signed_error_pct": -22.22222222222222,
+      "ratio_opto_per_hall": 1.037037037037037
+    },
+    {
+      "pwm": 30,
+      "repeat": 2,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 54,
+      "opto": 55,
+      "expected_opto": 72.0,
+      "signed_error_pct": -23.61111111111111,
+      "ratio_opto_per_hall": 1.0185185185185186
+    },
+    {
+      "pwm": 30,
+      "repeat": 3,
+      "side": "R",
+      "opto_channel": "OR",
+      "hall": 54,
+      "opto": 54,
+      "expected_opto": 72.0,
+      "signed_error_pct": -25.0,
+      "ratio_opto_per_hall": 1.0
+    }
+  ],
+  "summary": [
+    {
+      "pwm": 10,
+      "side": "R",
+      "samples": 3,
+      "hall_mean": 13.666666666666666,
+      "opto_mean": 13.333333333333334,
+      "error_mean_pct": -26.64835164835164,
+      "error_stdev_pct": 6.423814808291165,
+      "error_max_abs_pct": 30.357142857142847
+    },
+    {
+      "pwm": 20,
+      "side": "R",
+      "samples": 3,
+      "hall_mean": 32.333333333333336,
+      "opto_mean": 33.333333333333336,
+      "error_mean_pct": -22.656249999999996,
+      "error_stdev_pct": 2.3437500000000018,
+      "error_max_abs_pct": 25.0
+    },
+    {
+      "pwm": 30,
+      "side": "R",
+      "samples": 3,
+      "hall_mean": 54,
+      "opto_mean": 55,
+      "error_mean_pct": -23.61111111111111,
+      "error_stdev_pct": 1.3888888888888893,
+      "error_max_abs_pct": 25.0
+    }
+  ]
+}

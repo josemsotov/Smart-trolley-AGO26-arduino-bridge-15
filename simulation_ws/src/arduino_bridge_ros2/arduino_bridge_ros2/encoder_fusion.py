@@ -1,11 +1,11 @@
-"""Hall-primary wheel odometry with opto diagnostic cross-checking."""
+"""Fail-safe Hall/opto wheel odometry in a common 45-PPR domain."""
 from collections import deque
 
 
 class WheelEncoderFusion:
-    """Use 45-PPR Hall motion; monitor the colocated 60-PPR opto for health."""
+    """Blend agreeing sensors and fall back to Hall when opto is implausible."""
 
-    def __init__(self, opto_ppr=60.0, hall_ppr=45.0, window_samples=10,
+    def __init__(self, opto_ppr=45.0, hall_ppr=45.0, window_samples=10,
                  high_threshold=0.05, medium_threshold=0.12):
         self.ratio = float(opto_ppr) / float(hall_ppr)
         self.high_threshold = float(high_threshold)
@@ -40,12 +40,20 @@ class WheelEncoderFusion:
         hall_as_opto = hall_delta * self.ratio
         expected_window = hall_window * self.ratio
         error = abs(opto_window - expected_window) / expected_window
-        if error <= self.medium_threshold:
-            source = 'HALL_PRIMARY'
-            confidence = 0.85
+        if error <= self.high_threshold:
+            delta = 0.5 * (opto_delta + hall_as_opto)
+            source = 'HALL_OPTO_FUSED'
+            confidence = 1.0
+        elif error <= self.medium_threshold:
+            # Prefer Hall near the warning boundary while still allowing the
+            # second sensor to improve quantization and position resolution.
+            delta = 0.25 * opto_delta + 0.75 * hall_as_opto
+            source = 'HALL_OPTO_DEGRADED'
+            confidence = 0.80
         else:
+            delta = hall_as_opto
             source = 'HALL_PRIMARY_OPTO_WARN'
             confidence = 0.60
-        return {'delta': hall_as_opto, 'source': source,
+        return {'delta': delta, 'source': source,
                 'confidence': confidence, 'error': error,
                 'opto_window': opto_window, 'hall_window': hall_window}

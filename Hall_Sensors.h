@@ -32,8 +32,10 @@ unsigned long lastHallTimeLeft = 0, lastHallTimeRight = 0;
 volatile unsigned long lastHallPulseTimeLeft = 0, lastHallPulseTimeRight = 0;
 volatile unsigned long hallPulseIntervalLeft = 0, hallPulseIntervalRight = 0;
 const unsigned long HALL_SPEED_UPDATE_MS = 100UL;
-const unsigned long HALL_SPEED_MIN_INTERVAL_US = 6000UL;
-const unsigned long HALL_COUNT_MIN_INTERVAL_US = 6000UL;
+// 2500 us admite hasta ~533 RPM con 45 PPR. El umbral anterior de 6000 us
+// rechazaba pulsos validos desde ~222 RPM y dividia el conteo a PWM 90.
+const unsigned long HALL_SPEED_MIN_INTERVAL_US = 2500UL;
+const unsigned long HALL_COUNT_MIN_INTERVAL_US = 2500UL;
 volatile unsigned long hallCountPulseTimeLeft = 0, hallCountPulseTimeRight = 0;
 volatile uint32_t hallCountRejectedLeft = 0, hallCountRejectedRight = 0;
 volatile unsigned long hallSpeedPulseTimeLeft = 0, hallSpeedPulseTimeRight = 0;
@@ -77,7 +79,7 @@ void leftHallISR() {
     hallSpeedPulseTimeLeft = now;
   }
   #if defined(ENABLE_OPTO_ENCODERS) && defined(ENABLE_ADAPTIVE_OPTO_FILTER)
-  if (lastHallPulseTimeLeft != 0) {
+  if (!optoDiagnosticFixedFilter && lastHallPulseTimeLeft != 0) {
     uint32_t interval = now - lastHallPulseTimeLeft;
     if (interval < 1000000UL) {
       if (hallPulseIntervalLeft == 0 || interval < hallPulseIntervalLeft) {
@@ -110,7 +112,7 @@ void rightHallISR() {
     hallSpeedPulseTimeRight = now;
   }
   #if defined(ENABLE_OPTO_ENCODERS) && defined(ENABLE_ADAPTIVE_OPTO_FILTER)
-  if (lastHallPulseTimeRight != 0) {
+  if (!optoDiagnosticFixedFilter && lastHallPulseTimeRight != 0) {
     uint32_t interval = now - lastHallPulseTimeRight;
     if (interval < 1000000UL) {
       if (hallPulseIntervalRight == 0 || interval < hallPulseIntervalRight) {

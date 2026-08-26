@@ -15,7 +15,7 @@ Separar la experiencia de usuario en tres contextos con distinto nivel de riesgo
 | Subsistema | Datos disponibles | Uso operativo |
 |---|---|---|
 | Arduino / motores | PWM, RPM, dirección, corriente, comando lineal/angular | Confirmar ejecución, bloqueo, sobrecarga y asimetría |
-| Hall 45 PPR + opto 60 PPR | Conteos crudos, fusión y odometría | Velocidad, distancia y diagnóstico redundante; Hall es referencia primaria actual |
+| Hall 45 PPR + opto 45 PPR efectivos | Conteos crudos, fusión y odometría | Velocidad, distancia y diagnóstico redundante; Hall es referencia primaria actual |
 | MPU9250/6500 | aceleración, giro, yaw y pitch | Orientación, estabilidad y fusión de odometría del robot |
 | NEO-6M | fix, satélites, HDOP y salud serial | Ubicación general y disponibilidad de navegación exterior |
 | LiDAR 2D | nube polar, distancia frontal y grupos | Obstáculos y asociación de persona en el plano del sensor |

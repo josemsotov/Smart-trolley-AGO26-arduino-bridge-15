@@ -55,8 +55,8 @@ MotorState rightMotor = {0, false, true, true, false};  // direction=false: DIR 
 /**
  * LÍMITES DE SEGURIDAD
  */
-#define MIN_PWM_VALUE          10    // PWM mínimo ambos motores
-#define MAX_PWM_VALUE          40    // PWM máximo permitido (full stick = mitad, 2026-07-07)
+#define MIN_PWM_VALUE          10    // Umbral de arranque; no limita el extremo superior
+#define MAX_PWM_VALUE          255   // Rango completo de Timer5 / analogWrite (8 bits)
 // Motor derecho: umbral re-calibrado 2026-07-07 con ruedas 0.27m.
 // Caracterización confirmó motor gira desde PWM=20. Umbral 25 = margen seguro.
 #define MIN_PWM_RIGHT_WORKING  10    // Recalibrado 2026-08-04: giro continuo desde PWM=10
@@ -214,6 +214,9 @@ volatile uint32_t leftOptoLastPulseUs = 0;
 volatile uint32_t rightOptoLastPulseUs = 0;
 volatile uint32_t leftOptoFilterUs = OPTO_FILTER_US;
 volatile uint32_t rightOptoFilterUs = OPTO_FILTER_US;
+// Solo para el comando diagnostico q: congela ambos canales con el mismo
+// debounce y evita que el Hall del lado logico modifique el canal cruzado.
+volatile bool optoDiagnosticFixedFilter = false;
 volatile uint32_t leftOptoRawEdges = 0;
 volatile uint32_t rightOptoRawEdges = 0;
 volatile uint32_t leftOptoAccepted = 0;

@@ -9,6 +9,7 @@ MOTOR-INTERFACE-V-13/slprj/
 /.codex_build*/
 /.codex_diag*_build/
 /.codex_upload_build*/
+/.build_pwm255/
 
 # Local backups and credentials
 BACKUPS/

@@ -61,7 +61,7 @@ physical:
 
 encoders:
   active_type: optoencoder_module
-  pulses_per_revolution: 60
+  pulses_per_revolution: 45
   left_pin: 3
   right_pin: 2
 

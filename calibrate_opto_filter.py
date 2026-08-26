@@ -10,7 +10,7 @@ PORT = sys.argv[1] if len(sys.argv) > 1 else "COM4"
 DELAYS_US = (5000, 5500, 6000, 6500, 7000, 7500)
 REPEATS = 3
 HALL_PPR = 45.0
-OPTO_PPR = 60.0
+OPTO_PPR = 45.0
 Q_RE = re.compile(r"q OK side=([LR]) pwm=(\d+) L=(\d+) R=(\d+) OL=(\d+) OR=(\d+)")
 
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Cross-calibrate 60-PPR optoencoders against 45-PPR Hall sensors."""
+"""Cross-calibrate 45-PPR optoencoders against 45-PPR Hall sensors."""
 import argparse
 import csv
 import json
@@ -12,9 +12,9 @@ from pathlib import Path
 import serial
 
 HALL_PPR = 45.0
-OPTO_PPR = 60.0
+OPTO_PPR = 45.0
 EXPECTED_RATIO = OPTO_PPR / HALL_PPR
-PWMS = (10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80)
+PWMS = (10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90)
 REPEATS = 3
 Q_RE = re.compile(r"q OK side=([LR]) pwm=(\d+) L=(\d+) R=(\d+) OL=(\d+) OR=(\d+)")
 O_RE = re.compile(r"o (\d+) (\d+)")
@@ -47,7 +47,26 @@ def main():
     ap.add_argument("--port", default="/dev/ttyACM0")
     ap.add_argument("--output", default="encoder_cross_calibration.json")
     ap.add_argument("--rest-seconds", type=float, default=10.0)
+    ap.add_argument(
+        "--pwms",
+        default=",".join(str(pwm) for pwm in PWMS),
+        help="Lista PWM separada por comas",
+    )
+    ap.add_argument(
+        "--sides",
+        default="LR",
+        help="Ruedas a probar: L, R o LR",
+    )
+    ap.add_argument(
+        "--swapped-outs",
+        action="store_true",
+        help="OUT fisicos intercambiados: Hall L usa OR y Hall R usa OL",
+    )
     args = ap.parse_args()
+    pwms = tuple(int(value) for value in args.pwms.split(",") if value.strip())
+    sides = tuple(side for side in args.sides.upper() if side in ("L", "R"))
+    if not sides:
+        raise ValueError("--sides debe contener L y/o R")
     output = Path(args.output)
     rows = []
     report = {
@@ -56,8 +75,10 @@ def main():
         "hall_ppr": HALL_PPR,
         "opto_ppr": OPTO_PPR,
         "expected_opto_per_hall": EXPECTED_RATIO,
-        "pwms": list(PWMS),
+        "pwms": list(pwms),
         "repeats": REPEATS,
+        "sides": list(sides),
+        "swapped_outs": args.swapped_outs,
     }
 
     with serial.Serial(args.port, 115200, timeout=0.10) as ser:
@@ -82,20 +103,26 @@ def main():
                 "left_delta": l1 - l0, "right_delta": r1 - r0,
             }
 
-            for pwm in PWMS:
+            for pwm in pwms:
                 for repeat in range(1, REPEATS + 1):
-                    for side in ("L", "R"):
+                    for side in sides:
                         q_line = response(ser, f"q {side} {pwm}", "q ", 5.0)
                         q = Q_RE.fullmatch(q_line)
                         if not q:
                             raise RuntimeError(f"Unexpected q response: {q_line}")
                         _, actual_pwm, hall_l, hall_r, opto_l, opto_r = q.groups()
                         hall = int(hall_l if side == "L" else hall_r)
-                        opto = int(opto_l if side == "L" else opto_r)
+                        if args.swapped_outs:
+                            opto = int(opto_r if side == "L" else opto_l)
+                            opto_channel = "OR" if side == "L" else "OL"
+                        else:
+                            opto = int(opto_l if side == "L" else opto_r)
+                            opto_channel = "OL" if side == "L" else "OR"
                         expected = hall * EXPECTED_RATIO
                         signed_error = None if expected == 0 else 100.0 * (opto - expected) / expected
                         row = {
                             "pwm": int(actual_pwm), "repeat": repeat, "side": side,
+                            "opto_channel": opto_channel,
                             "hall": hall, "opto": opto, "expected_opto": expected,
                             "signed_error_pct": signed_error,
                             "ratio_opto_per_hall": None if hall == 0 else opto / hall,
@@ -108,8 +135,8 @@ def main():
 
     report["rows"] = rows
     summary = []
-    for pwm in PWMS:
-        for side in ("L", "R"):
+    for pwm in pwms:
+        for side in sides:
             group = [r for r in rows if r["pwm"] == pwm and r["side"] == side]
             errors = [r["signed_error_pct"] for r in group if r["signed_error_pct"] is not None]
             summary.append({

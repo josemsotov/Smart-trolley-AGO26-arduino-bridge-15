@@ -66,7 +66,7 @@ El reinicio del servicio web no sustituye el paro físico. Antes de una prueba d
 ## Hardware relevante
 
 - Arduino Mega 2560 y Raspberry Pi con ROS 2 Jazzy.
-- Optoencoders de 60 PPR y Hall de 45 PPR en el mismo eje.
+- Optoencoders y Hall configurados a 45 PPR efectivos en el mismo eje.
 - Diámetro nominal actual de rueda: 27 cm.
 - Kinect RGB-D, LiDAR, MPU/IMU, GPS NEO-6M, Coral y Stadia.
 - Enlace serie Arduino: 115200 baud.

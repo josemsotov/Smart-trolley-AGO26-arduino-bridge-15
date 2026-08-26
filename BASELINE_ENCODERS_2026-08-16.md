@@ -4,11 +4,11 @@
 
 - Arduino Mega 2560, puerto COM4.
 - Hall: 45 PPR.
-- Optoencoder: 60 PPR.
+- Optoencoder: 45 PPR efectivos (el supuesto original de 60 PPR fue reemplazado el 2026-08-25).
 - Opto izquierdo: D3; opto derecho: D2.
 - Filtro temporal fijo: 6000 us.
 - Prueba individual: 1 segundo por rueda, tres repeticiones por PWM.
-- Posición cerrada: objetivo de 60 pulsos opto, cinco repeticiones.
+- Posición cerrada histórica: objetivo de 60 pulsos opto, cinco repeticiones; equivale a 1.333 vueltas con la escala efectiva actual.
 
 ## Reposo
 
@@ -16,7 +16,7 @@ Durante cinco segundos, ambas tecnologías registraron cero pulsos en las dos ru
 
 ## Barrido individual hacia adelante
 
-El error compara el opto medido contra `Hall × 60 / 45`.
+El error vigente compara el opto medido contra `Hall × 45 / 45`. Las tablas siguientes conservan los resultados históricos obtenidos bajo el supuesto anterior.
 
 | PWM | Rueda | Hall promedio | CV Hall | Opto promedio | Error absoluto medio |
 |---:|:---:|---:|---:|---:|---:|

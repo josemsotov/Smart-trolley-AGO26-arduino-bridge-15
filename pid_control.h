@@ -19,7 +19,7 @@
 //   A PWM=64 → motor corre 72 RPM = 0.754 m/s → FF = 64/0.754 = 85
 //   FF alto asegura que el motor siempre recibe suficiente PWM base
 //   y el PID solo corrige el residuo pequeño.
-float FF_LEFT_GAIN  = 100.0f;  // PWM/(m/s) izq FWD  — calibrado 2026-07-07: full_stick(0.40m/s)*100=40=MAX_PWM
+float FF_LEFT_GAIN  = 100.0f;  // PWM/(m/s) izq FWD; calibrado, no escalar al nuevo maximo sin medir
 float FF_RIGHT_GAIN = 100.0f;  // PWM/(m/s) der FWD  — calibrado 2026-07-07
 float FF_LEFT_BWD   = 100.0f;  // PWM/(m/s) izq BWD
 float FF_RIGHT_BWD  = 100.0f;  // PWM/(m/s) der BWD
@@ -35,7 +35,7 @@ float Kp_pos = 0.30, Ki_pos = 0.0, Kd_pos = 0.0; // AJUSTADO PARA PRUEBAS: PWM~3
 // Wheel speed matching for straight motion.
 // Positive trim means right wheel is faster: boost left and reduce right.
 float SPEED_MATCH_KP_PWM_PER_RPM = 0.50f;
-float SPEED_MATCH_MAX_PWM = 8.0f;  // rango efectivo 25-40 PWM = 15 ancho, trim max=8
+float SPEED_MATCH_MAX_PWM = 8.0f;  // correccion diferencial acotada para evitar oscilacion
 
 // =================== VARIABLES INTERNAS ===================
 float pid_v_integral = 0, pid_v_prev_error = 0;
