@@ -2,7 +2,10 @@
 
 
 MODE_SOURCE = {
-    'STADIA': ('stadia', 'web'),
+    # A held web joystick is an explicit dead-man command. Give it temporary
+    # priority while fresh; after 0.35 s without packets control automatically
+    # returns to the physical Stadia source.
+    'STADIA': ('web', 'stadia'),
     'FOLLOW': ('follower',),
     'GESTURE': ('gesture',),
     'GO_TO': ('nav',),

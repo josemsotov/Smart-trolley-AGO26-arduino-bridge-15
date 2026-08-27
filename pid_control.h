@@ -19,10 +19,10 @@
 //   A PWM=64 → motor corre 72 RPM = 0.754 m/s → FF = 64/0.754 = 85
 //   FF alto asegura que el motor siempre recibe suficiente PWM base
 //   y el PID solo corrige el residuo pequeño.
-float FF_LEFT_GAIN  = 100.0f;  // PWM/(m/s) izq FWD; calibrado, no escalar al nuevo maximo sin medir
-float FF_RIGHT_GAIN = 100.0f;  // PWM/(m/s) der FWD  — calibrado 2026-07-07
-float FF_LEFT_BWD   = 100.0f;  // PWM/(m/s) izq BWD
-float FF_RIGHT_BWD  = 100.0f;  // PWM/(m/s) der BWD
+float FF_LEFT_GAIN  = 120.0f;  // PWM/(m/s) izq FWD; perfil manual V5 2026-08-28
+float FF_RIGHT_GAIN = 120.0f;  // PWM/(m/s) der FWD; perfil manual V5 2026-08-28
+float FF_LEFT_BWD   = 120.0f;  // PWM/(m/s) izq BWD; perfil manual V5
+float FF_RIGHT_BWD  = 120.0f;  // PWM/(m/s) der BWD; perfil manual V5
 
 // PI deshabilitado (Kp=Ki=0): control por FF puro + speed-matching.
 // El PI con anti-stall provocaba oscilación cuando MIN_PWM_RIGHT_WORKING > FF*v.

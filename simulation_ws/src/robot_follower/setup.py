@@ -19,5 +19,6 @@ setup(
         'field_supervisor = robot_follower.field_supervisor:main',
         'cmd_vel_guard = robot_follower.cmd_vel_guard:main',
         'cmd_vel_mux = robot_follower.cmd_vel_mux:main',
+        'swing_analyzer = robot_follower.swing_analyzer_node:main',
     ]},
 )

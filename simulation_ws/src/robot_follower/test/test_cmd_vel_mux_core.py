@@ -24,9 +24,14 @@ def test_mode_selects_only_its_authorized_source():
     assert select_command('GO_TO', inputs)['selected_source'] == 'nav'
 
 
-def test_stadia_uses_web_only_when_physical_source_is_stale():
-    inputs = {'stadia': source(fresh=False), 'web': source(0.2)}
+def test_stadia_gives_fresh_deadman_web_temporary_priority():
+    inputs = {'stadia': source(0.1), 'web': source(0.2)}
     assert select_command('STADIA', inputs)['selected_source'] == 'web'
+
+
+def test_stadia_returns_to_physical_when_web_is_stale():
+    inputs = {'stadia': source(0.1), 'web': source(0.2, fresh=False)}
+    assert select_command('STADIA', inputs)['selected_source'] == 'stadia'
 
 
 def test_stale_source_fails_closed():

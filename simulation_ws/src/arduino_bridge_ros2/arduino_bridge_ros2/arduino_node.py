@@ -380,8 +380,19 @@ class ArduinoNode(Node):
             self.right_fusion.reset()
             return
 
-        left_moving = self.last_left_pwm > 0
-        right_moving = self.last_right_pwm > 0
+        # PWM can be zero for one pulse-density modulation quantum while the
+        # wheel is still commanded and coasting. Treat the commanded wheel
+        # velocity as motion authority so odometry does not discard those
+        # valid Hall pulses during the OFF quantum.
+        command_fresh = time.monotonic() - self.last_cmd_time <= 0.5
+        commanded_left = self.last_cmd_linear - (
+            self.last_cmd_angular * self.wheel_base / 2.0)
+        commanded_right = self.last_cmd_linear + (
+            self.last_cmd_angular * self.wheel_base / 2.0)
+        left_moving = self.last_left_pwm > 0 or (
+            command_fresh and abs(commanded_left) > 1e-4)
+        right_moving = self.last_right_pwm > 0 or (
+            command_fresh and abs(commanded_right) > 1e-4)
         if dual_frame:
             left = self.left_fusion.update(raw_dl, hall_dl, left_moving)
             right = self.right_fusion.update(raw_dr, hall_dr, right_moving)

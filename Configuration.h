@@ -73,6 +73,12 @@
   #define HEADING_ANGULAR_DEADBAND_RAD_S 0.04f
   #define HEADING_LINEAR_ACTIVE_M_S      0.03f
   #define HEADING_ERROR_DEADBAND_DEG     0.8f
+  // Reverse motion pivots the two passive casters. Use a softer outer loop so
+  // their transient yaw does not make heading hold chase and amplify it.
+  #define HEADING_REVERSE_HOLD_KP         0.012f
+  #define HEADING_REVERSE_RATE_KP         0.10f
+  #define HEADING_REVERSE_MAX_RAD_S       0.10f
+  #define HEADING_REVERSE_DEADBAND_DEG    2.0f
   #define HEADING_GYRO_FILTER_ALPHA      0.18f
   #define HEADING_GYRO_BIAS_RAD_S       -0.00024f
   #define HEADING_GYRO_NOISE_RAD_S       0.004f

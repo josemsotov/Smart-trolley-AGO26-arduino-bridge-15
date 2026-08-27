@@ -83,12 +83,16 @@ class SharedState:
         }
         self.gps_status: dict[str, Any] = {}
         self.gesture_status: dict[str, Any] = {}
+        self.swing_status: dict[str, Any] = {"state": "waiting"}
         self.scan: dict[str, Any] = {}
         self.raw_rx = deque(maxlen=80)
         self.rgb_jpeg: bytes | None = None
         self.depth_jpeg: bytes | None = None
         self.rgb_stamp: float | None = None
         self.depth_stamp: float | None = None
+        self.video_recording = False
+        self.video_frames = deque(maxlen=1200)
+        self.video_started: float | None = None
         self.stamps: dict[str, float] = {}
         self.last_cmd: dict[str, float] = {"linear": 0.0, "angular": 0.0}
         self.cmd_vel: dict[str, float] = {"linear": 0.0, "angular": 0.0}
@@ -110,6 +114,7 @@ class SharedState:
                 "field_state": dict(self.field_state),
                 "gps_status": dict(self.gps_status),
                 "gesture_status": dict(self.gesture_status),
+                "swing_status": dict(self.swing_status),
                 "scan": dict(self.scan),
                 "raw_rx": list(self.raw_rx),
                 "last_cmd": dict(self.last_cmd),
@@ -123,6 +128,8 @@ class SharedState:
                     "depth_age": stamp_age(self.depth_stamp),
                     "rgb_ready": self.rgb_jpeg is not None,
                     "depth_ready": self.depth_jpeg is not None,
+                    "video_recording": self.video_recording,
+                    "video_frames": len(self.video_frames),
                 },
             }
 
@@ -147,6 +154,7 @@ class OperatorNode(Node):
             Bool, "/hand_field/arm", 10
         )
         self.pub_raw = self.create_publisher(String, "/arduino/raw_command", 10)
+        self.pub_swing = self.create_publisher(String, "/swing/control", 10)
         self.create_subscription(String, "/motor_status", self.motor_status_cb, 10)
         self.create_subscription(String, "/arduino/raw_rx", self.raw_rx_cb, 10)
         self.create_subscription(String, "/encoder_counts", self.encoder_cb, 10)
@@ -158,6 +166,7 @@ class OperatorNode(Node):
         self.create_subscription(String, "/field/state", self.field_state_cb, 10)
         self.create_subscription(String, "/gps/status", self.gps_status_cb, 10)
         self.create_subscription(String, "/gesture/status", self.gesture_status_cb, 10)
+        self.create_subscription(String, "/swing/status", self.swing_status_cb, 10)
         self.create_subscription(LaserScan, "/scan", self.scan_cb, 10)
         self.create_subscription(Image, "/camera/rgb/image_raw", self.rgb_cb, 2)
         self.create_subscription(Image, "/camera/depth/image_raw", self.depth_cb, 2)
@@ -376,6 +385,11 @@ class OperatorNode(Node):
             self.state.gesture_status = parse_json_or_raw(msg.data)
             self.state.stamps["gesture_status"] = now_s()
 
+    def swing_status_cb(self, msg: String) -> None:
+        with self.state.lock:
+            self.state.swing_status = parse_json_or_raw(msg.data)
+            self.state.stamps["swing_status"] = now_s()
+
     def scan_cb(self, msg: LaserScan) -> None:
         valid = []
         front = []
@@ -411,6 +425,8 @@ class OperatorNode(Node):
                 self.state.rgb_jpeg = jpeg
                 self.state.rgb_stamp = t
                 self.state.stamps["camera_rgb"] = t
+                if self.state.video_recording:
+                    self.state.video_frames.append((time.time(), jpeg))
 
     def depth_cb(self, msg: Image) -> None:
         t = now_s()
@@ -467,6 +483,8 @@ def create_app(node: OperatorNode, state: SharedState) -> FastAPI:
     share = get_package_share_directory("robot_operator_web")
     static_dir = os.path.join(share, "static")
     app = FastAPI(title="Smart Trolley Operator")
+    media_dir = os.path.expanduser("~/robot_media")
+    os.makedirs(media_dir, exist_ok=True)
     app.mount("/static", StaticFiles(directory=static_dir, follow_symlink=True), name="static")
 
     async def close_local_kiosk() -> None:
@@ -605,6 +623,14 @@ def create_app(node: OperatorNode, state: SharedState) -> FastAPI:
             raise HTTPException(status_code=400, detail=str(exc))
         return {"ok": True, "command": command.strip()}
 
+    @app.post("/api/swing")
+    async def api_swing(payload: dict[str, Any]) -> dict[str, Any]:
+        command = str(payload.get("command", "")).strip().lower()
+        if command not in ("start", "stop", "reset"):
+            raise HTTPException(status_code=400, detail="Use start, stop or reset")
+        node.pub_swing.publish(String(data=command))
+        return {"ok": True, "command": command}
+
     @app.get("/api/frame/rgb.jpg")
     def rgb_frame() -> Response:
         with state.lock:
@@ -644,6 +670,60 @@ def create_app(node: OperatorNode, state: SharedState) -> FastAPI:
         if not data:
             raise HTTPException(status_code=503, detail="Depth frame not ready")
         return Response(content=data, media_type="image/jpeg")
+
+    @app.post("/api/camera/photo")
+    async def camera_photo() -> dict[str, Any]:
+        with state.lock:
+            data = state.rgb_jpeg
+        if not data:
+            raise HTTPException(status_code=503, detail="RGB frame not ready")
+        name = time.strftime("photo_%Y%m%d_%H%M%S.jpg")
+        path = os.path.join(media_dir, name)
+        with open(path, "wb") as handle:
+            handle.write(data)
+        return {"ok": True, "file": name, "url": f"/api/media/{name}"}
+
+    @app.post("/api/camera/video")
+    async def camera_video(payload: dict[str, Any]) -> dict[str, Any]:
+        action = str(payload.get("action", "")).lower()
+        if action == "start":
+            with state.lock:
+                if state.video_recording:
+                    raise HTTPException(status_code=409, detail="Video already recording")
+                state.video_frames.clear()
+                state.video_recording = True
+                state.video_started = time.time()
+            return {"ok": True, "recording": True}
+        if action != "stop":
+            raise HTTPException(status_code=400, detail="Use start or stop")
+        with state.lock:
+            state.video_recording = False
+            frames = list(state.video_frames)
+            state.video_frames.clear()
+        if not frames:
+            raise HTTPException(status_code=409, detail="No video frames captured")
+        first = cv2.imdecode(np.frombuffer(frames[0][1], np.uint8), cv2.IMREAD_COLOR)
+        if first is None:
+            raise HTTPException(status_code=500, detail="Invalid recorded frame")
+        name = time.strftime("video_%Y%m%d_%H%M%S.avi")
+        path = os.path.join(media_dir, name)
+        writer = cv2.VideoWriter(path, cv2.VideoWriter_fourcc(*"MJPG"), 4.0,
+                                 (first.shape[1], first.shape[0]))
+        for _, encoded in frames:
+            frame = cv2.imdecode(np.frombuffer(encoded, np.uint8), cv2.IMREAD_COLOR)
+            if frame is not None:
+                writer.write(frame)
+        writer.release()
+        return {"ok": True, "recording": False, "file": name,
+                "url": f"/api/media/{name}", "frames": len(frames)}
+
+    @app.get("/api/media/{name}")
+    async def media_file(name: str) -> FileResponse:
+        safe = os.path.basename(name)
+        path = os.path.join(media_dir, safe)
+        if safe != name or not os.path.isfile(path):
+            raise HTTPException(status_code=404, detail="Media not found")
+        return FileResponse(path)
 
     @app.websocket("/ws")
     async def websocket_endpoint(ws: WebSocket) -> None:

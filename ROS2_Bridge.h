@@ -86,7 +86,7 @@ float ros2_angular_vel = 0.0;  // rad/s
 
 // Low-speed pulse-density modulation. The 50 ms quantum gives each minimum
 // PWM pulse enough mechanical duration while preserving a fractional average.
-static const unsigned long ROS2_PWM_MODULATION_INTERVAL_MS = 50;
+static const unsigned long ROS2_PWM_MODULATION_INTERVAL_MS = 100;
 static unsigned long ros2_pwm_last_apply_ms = 0;
 static float ros2_pwm_demand_left = 0.0f;
 static float ros2_pwm_demand_right = 0.0f;
@@ -96,8 +96,10 @@ static int ros2_pwm_applied_left = -1;
 static int ros2_pwm_applied_right = -1;
 static float ros2_pwm_accumulator_left = 0.0f;
 static float ros2_pwm_accumulator_right = 0.0f;
-static const int ROS2_STARTUP_BOOST_PWM = 17;
-static const unsigned long ROS2_STARTUP_BOOST_MS = 500;
+// Ground calibration 2026-08-27: PWM 10..20 remained inside the intermittent
+// breakaway region. Apply a short, bounded kick before returning to FF + PI.
+static const int ROS2_STARTUP_BOOST_PWM = 25;
+static const unsigned long ROS2_STARTUP_BOOST_MS = 150;
 static bool ros2_was_moving_left = false;
 static bool ros2_was_moving_right = false;
 static unsigned long ros2_motion_start_left_ms = 0;
@@ -191,11 +193,20 @@ float heading_control_apply(float linear, float angular_request) {
 
   float error_deg = heading_wrap_deg(
     heading_reference_deg - heading_control_yaw_deg());
-  if (fabsf(error_deg) < HEADING_ERROR_DEADBAND_DEG) error_deg = 0.0f;
+  const bool reverse_motion = linear < -HEADING_LINEAR_ACTIVE_M_S;
+  const float error_deadband = reverse_motion
+    ? HEADING_REVERSE_DEADBAND_DEG : HEADING_ERROR_DEADBAND_DEG;
+  if (fabsf(error_deg) < error_deadband) error_deg = 0.0f;
   heading_last_error_deg = error_deg;
-  float correction = HEADING_HOLD_KP * error_deg - HEADING_RATE_KP * gyro_rad_s;
+  const float hold_kp = reverse_motion
+    ? HEADING_REVERSE_HOLD_KP : HEADING_HOLD_KP;
+  const float rate_kp = reverse_motion
+    ? HEADING_REVERSE_RATE_KP : HEADING_RATE_KP;
+  const float correction_limit = reverse_motion
+    ? HEADING_REVERSE_MAX_RAD_S : HEADING_MAX_CORRECTION_RAD_S;
+  float correction = hold_kp * error_deg - rate_kp * gyro_rad_s;
   heading_last_w_output = constrain(correction,
-    -HEADING_MAX_CORRECTION_RAD_S, HEADING_MAX_CORRECTION_RAD_S);
+    -correction_limit, correction_limit);
   return heading_last_w_output;
 }
 #endif
@@ -230,9 +241,9 @@ void ros2_apply_pwm_demands() {
   }
   ros2_pwm_last_apply_ms = now;
   int next_left = ros2_time_proportioned_pwm(
-    ros2_pwm_demand_left, MIN_PWM_VALUE, ros2_pwm_accumulator_left);
+    ros2_pwm_demand_left, ROS2_STARTUP_BOOST_PWM, ros2_pwm_accumulator_left);
   int next_right = ros2_time_proportioned_pwm(
-    ros2_pwm_demand_right, MIN_PWM_RIGHT_WORKING,
+    ros2_pwm_demand_right, ROS2_STARTUP_BOOST_PWM,
     ros2_pwm_accumulator_right);
   if (next_left != ros2_pwm_applied_left ||
       ros2_pwm_dir_left != leftMotor.direction) {
@@ -463,6 +474,16 @@ void ros2_processCmdVel(String cmd) {
       velocity_pi_corr_left = 0.0f;
       velocity_pi_corr_right = 0.0f;
       if (velocity_pi_enabled) {
+        const float max_feedback_left = max(30.0f, velocity_pi_target_left_rpm * 3.0f);
+        const float max_feedback_right = max(30.0f, velocity_pi_target_right_rpm * 3.0f);
+        if (velocity_feedback_left_rpm > max_feedback_left) {
+          velocity_feedback_left_rpm = 0.0f;
+          currentSpeedLeftHall = 0.0f;
+        }
+        if (velocity_feedback_right_rpm > max_feedback_right) {
+          velocity_feedback_right_rpm = 0.0f;
+          currentSpeedRightHall = 0.0f;
+        }
         float left_error_rpm = velocity_pi_target_left_rpm - velocity_feedback_left_rpm;
         float right_error_rpm = velocity_pi_target_right_rpm - velocity_feedback_right_rpm;
         if (l_moving && velocity_feedback_left_rpm > 0.5f) {
@@ -702,11 +723,13 @@ void encoder_control_speed_update() {
     currentSpeedLeftHall, opto_left_rpm, velocity_feedback_left_fused);
   velocity_feedback_right_rpm = encoder_fuse_speed_rpm(
     currentSpeedRightHall, opto_right_rpm, velocity_feedback_right_fused);
-  if (leftMotor.pwm == 0) {
+  // La modulacion de baja velocidad alterna PWM 0/minimo mientras la rueda
+  // sigue girando. No borrar el feedback durante esos intervalos OFF.
+  if (leftMotor.pwm == 0 && ros2_pwm_demand_left <= 0.0f) {
     velocity_feedback_left_rpm = 0.0f;
     velocity_feedback_left_fused = false;
   }
-  if (rightMotor.pwm == 0) {
+  if (rightMotor.pwm == 0 && ros2_pwm_demand_right <= 0.0f) {
     velocity_feedback_right_rpm = 0.0f;
     velocity_feedback_right_fused = false;
   }

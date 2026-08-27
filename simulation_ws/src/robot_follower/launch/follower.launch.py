@@ -79,6 +79,8 @@ def generate_launch_description():
                           'require_raised_hand':True,
                           'max_wrist_y':0.78,
                           'publish_image':True}]),
+        Node(package='robot_follower', executable='swing_analyzer',
+             name='swing_analyzer', output='screen'),
         Node(package='arduino_bridge_ros2', executable='stadia_node',
              name='stadia_node', output='screen',
              condition=IfCondition(enable_stadia),

@@ -63,10 +63,20 @@ uint16_t optoLeftPermilleForHallInterval(uint32_t interval_us) {
   return 350U;
 }
 
+unsigned long hallMinIntervalForPwm(int pwm) {
+  // Strong rejection in the low-PWM operating region where switching noise
+  // previously appeared as 169..388 RPM. Preserve the characterized high
+  // speed range by relaxing the interval only when high PWM is actually used.
+  if (pwm <= 60) return 12000UL;
+  if (pwm <= 85) return 6000UL;
+  return HALL_COUNT_MIN_INTERVAL_US;
+}
+
 void leftHallISR() {
   const uint32_t now = micros();
   unsigned long countInterval = now - hallCountPulseTimeLeft;
-  if (hallCountPulseTimeLeft != 0 && countInterval < HALL_COUNT_MIN_INTERVAL_US) {
+  const unsigned long minInterval = hallMinIntervalForPwm(leftMotor.pwm);
+  if (hallCountPulseTimeLeft != 0 && countInterval < minInterval) {
     hallCountRejectedLeft++;
     return;
   }
@@ -74,7 +84,7 @@ void leftHallISR() {
   leftHallCount++;
   leftHallTotal++;
   unsigned long speedInterval = now - hallSpeedPulseTimeLeft;
-  if (hallSpeedPulseTimeLeft == 0 || speedInterval >= HALL_SPEED_MIN_INTERVAL_US) {
+  if (hallSpeedPulseTimeLeft == 0 || speedInterval >= minInterval) {
     if (hallSpeedPulseTimeLeft != 0 && speedInterval < 1000000UL) hallSpeedIntervalLeft = speedInterval;
     hallSpeedPulseTimeLeft = now;
   }
@@ -99,7 +109,8 @@ void leftHallISR() {
 void rightHallISR() {
   const uint32_t now = micros();
   unsigned long countInterval = now - hallCountPulseTimeRight;
-  if (hallCountPulseTimeRight != 0 && countInterval < HALL_COUNT_MIN_INTERVAL_US) {
+  const unsigned long minInterval = hallMinIntervalForPwm(rightMotor.pwm);
+  if (hallCountPulseTimeRight != 0 && countInterval < minInterval) {
     hallCountRejectedRight++;
     return;
   }
@@ -107,7 +118,7 @@ void rightHallISR() {
   rightHallCount++;
   rightHallTotal++;
   unsigned long speedInterval = now - hallSpeedPulseTimeRight;
-  if (hallSpeedPulseTimeRight == 0 || speedInterval >= HALL_SPEED_MIN_INTERVAL_US) {
+  if (hallSpeedPulseTimeRight == 0 || speedInterval >= minInterval) {
     if (hallSpeedPulseTimeRight != 0 && speedInterval < 1000000UL) hallSpeedIntervalRight = speedInterval;
     hallSpeedPulseTimeRight = now;
   }

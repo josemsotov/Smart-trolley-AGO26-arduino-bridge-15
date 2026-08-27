@@ -1,0 +1,1511 @@
+[2m2026-08-26T23:39:56.406308Z[0m [33m WARN[0m ThreadId(11) [2mzenoh::net::runtime::orchestrator[0m[2m:[0m Scouting delay elapsed before start conditions are met.
+[2m2026-08-26T23:39:56.772164Z[0m [33m WARN[0m ThreadId(20) [2mzenoh::net::runtime::orchestrator[0m[2m:[0m Scouting delay elapsed before start conditions are met.
+[2m2026-08-26T23:39:57.043317Z[0m [33m WARN[0m ThreadId(20) [2mzenoh::net::runtime::orchestrator[0m[2m:[0m Scouting delay elapsed before start conditions are met.
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: L=234.000 R=215.250 OL=0 OR=0 HL=0 HR=0
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00015 gyz=0.000 Lpwm=17 Rpwm=17 Lrpm=0 Rrpm=0 Lfrpm=0 Rfrpm=0 Lfs=H Rfs=H Ltrpm=7....
+---
+data: Lsrc=HALL_WAIT Lconf=0.25 Lerr=-1.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=1.000
+data: L=234.000 R=216.250 OL=0 OR=0 HL=0 HR=1
+---
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+data: L=235.000 R=216.750 OL=1 OR=1 HL=1 HR=1
+---
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00015 gyz=0.000 Lpwm=17 Rpwm=17 Lrpm=23 Rrpm=19 Lfrpm=0 Rfrpm=0 Lfs=H Rfs=H Ltrpm...
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=236.000 R=217.750 OL=2 OR=2 HL=2 HR=2
+---
+data: L=238.000 R=219.750 OL=4 OR=3 HL=4 HR=4
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00046 gyz=0.000 Lpwm=17 Rpwm=17 Lrpm=23 Rrpm=19 Lfrpm=0 Rfrpm=0 Lfs=H Rfs=H Ltrpm=...
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=239.000 R=221.250 OL=5 OR=5 HL=5 HR=5
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.143
+data: L=241.000 R=223.250 OL=7 OR=6 HL=7 HR=7
+---
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00054 gyz=0.000 Lpwm=17 Rpwm=17 Lrpm=29 Rrpm=27 Lfrpm=23 Rfrpm=19 Lfs=H Rfs=H Ltrp...
+---
+data: L=242.000 R=224.750 OL=8 OR=8 HL=8 HR=8
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=HALL_OPTO_DEGRADED Lconf=0.80 Lerr=0.100 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=243.750 R=225.750 OL=9 OR=9 HL=10 HR=9
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00025 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=34 Rrpm=33 Lfrpm=29 Rfrpm=27 Lfs=H Rfs=H Ltr...
+---
+data: L=245.250 R=227.500 OL=11 OR=10 HL=11 HR=11
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_DEGRADED Rconf=0.80 Rerr=0.091
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=246.250 R=228.000 OL=12 OR=11 HL=12 HR=11
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00078 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=37 Rrpm=33 Lfrpm=34 Rfrpm=33 Lfs=H Rfs=H Ltrpm=...
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_DEGRADED Rconf=0.80 Rerr=0.091
+data: L=246.250 R=229.000 OL=12 OR=12 HL=12 HR=12
+---
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_DEGRADED Rconf=0.80 Rerr=0.083
+---
+data: L=247.250 R=229.750 OL=13 OR=12 HL=13 HR=13
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00001 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=33 Rrpm=30 Lfrpm=37 Rfrpm=33 Lfs=H Rfs=H Ltrp...
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=248.250 R=230.250 OL=14 OR=13 HL=14 HR=13
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=248.250 R=230.750 OL=14 OR=13 HL=14 HR=14
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00068 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=27 Rrpm=25 Lfrpm=33 Rfrpm=30 Lfs=H Rfs=H Ltrpm...
+---
+data: L=249.250 R=231.250 OL=15 OR=14 HL=15 HR=14
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.143
+---
+data: L=249.250 R=231.250 OL=15 OR=14 HL=15 HR=14
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00134 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=23 Rrpm=22 Lfrpm=0 Rfrpm=0 Lfs=H Rfs=H Ltrpm=7...
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=249.250 R=231.250 OL=15 OR=14 HL=15 HR=14
+---
+data: L=249.250 R=231.250 OL=15 OR=14 HL=15 HR=14
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00011 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=21 Rrpm=20 Lfrpm=23 Rfrpm=22 Lfs=H Rfs=H Ltr...
+---
+data: L=250.250 R=231.750 OL=15 OR=14 HL=16 HR=15
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=250.750 R=232.250 OL=16 OR=15 HL=16 HR=15
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00032 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=15 Rrpm=15 Lfrpm=21 Rfrpm=20 Lfs=H Rfs=H Ltrpm=...
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: L=251.750 R=233.250 OL=16 OR=15 HL=17 HR=16
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+data: L=252.250 R=233.250 OL=17 OR=15 HL=17 HR=16
+---
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00027 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=15 Rrpm=14 Lfrpm=0 Rfrpm=0 Lfs=H Rfs=H Ltrpm=7...
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.333
+---
+data: L=252.250 R=233.250 OL=17 OR=15 HL=17 HR=16
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=252.250 R=233.250 OL=17 OR=15 HL=17 HR=16
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00012 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=14 Rrpm=14 Lfrpm=15 Rfrpm=14 Lfs=H Rfs=H Ltrp...
+---
+data: L=252.250 R=233.750 OL=17 OR=16 HL=17 HR=16
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.333
+---
+data: L=253.250 R=234.750 OL=18 OR=16 HL=18 HR=17
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00041 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=14 Rrpm=14 Lfrpm=14 Rfrpm=13 Lfs=H Rfs=F Ltrpm=...
+---
+data: L=253.250 R=235.250 OL=18 OR=17 HL=18 HR=17
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=254.250 R=235.250 OL=18 OR=17 HL=19 HR=17
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.250 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00044 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=11 Rrpm=11 Lfrpm=14 Rfrpm=13 Lfs=F Rfs=F Ltrpm...
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.333 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=254.250 R=235.750 OL=19 OR=17 HL=19 HR=18
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+data: L=254.250 R=236.250 OL=19 OR=18 HL=19 HR=18
+---
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00014 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=11 Rrpm=10 Lfrpm=11 Rfrpm=11 Lfs=H Rfs=H Ltrpm=...
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.333 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=255.250 R=236.750 OL=20 OR=18 HL=20 HR=19
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=255.250 R=236.750 OL=20 OR=18 HL=20 HR=19
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00014 gyz=0.000 Lpwm=0 Rpwm=10 Lrpm=11 Rrpm=10 Lfrpm=11 Rfrpm=10 Lfs=H Rfs=H Ltrpm...
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.250 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.333
+data: L=256.250 R=236.750 OL=20 OR=19 HL=21 HR=19
+---
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=256.750 R=237.250 OL=21 OR=19 HL=21 HR=20
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00027 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=11 Rrpm=9 Lfrpm=11 Rfrpm=10 Lfs=H Rfs=H Ltrp...
+---
+data: L=257.750 R=237.750 OL=21 OR=20 HL=22 HR=20
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+---
+data: L=258.250 R=238.250 OL=22 OR=20 HL=22 HR=21
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00093 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=11 Rrpm=11 Lfrpm=11 Rfrpm=9 Lfs=H Rfs=H Ltrp...
+---
+data: L=259.250 R=239.250 OL=22 OR=21 HL=23 HR=22
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.250 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=259.250 R=239.750 OL=23 OR=22 HL=23 HR=22
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00067 gyz=0.000 Lpwm=10 Rpwm=0 Lrpm=13 Rrpm=13 Lfrpm=11 Rfrpm=11 Lfs=H Rfs=H Ltrp...
+---
+data: L=260.250 R=240.250 OL=24 OR=22 HL=24 HR=23
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.167 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=261.250 R=240.750 OL=24 OR=23 HL=25 HR=23
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00045 gyz=0.000 Lpwm=0 Rpwm=10 Lrpm=13 Rrpm=15 Lfrpm=13 Rfrpm=13 Lfs=F Rfs=F Ltrpm...
+---
+data: L=261.750 R=241.250 OL=25 OR=23 HL=25 HR=24
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+---
+data: L=262.750 R=242.250 OL=26 OR=24 HL=26 HR=25
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00018 gyz=0.000 Lpwm=0 Rpwm=10 Lrpm=15 Rrpm=14 Lfrpm=13 Rfrpm=15 Lfs=F Rfs=H Ltrp...
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.167
+---
+data: L=262.750 R=242.250 OL=26 OR=24 HL=26 HR=25
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.167 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=263.750 R=243.250 OL=26 OR=25 HL=27 HR=26
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00017 gyz=0.000 Lpwm=0 Rpwm=10 Lrpm=15 Rrpm=15 Lfrpm=15 Rfrpm=13 Lfs=H Rfs=F Ltrp...
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.167
+---
+data: L=263.750 R=243.250 OL=27 OR=25 HL=27 HR=26
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+data: L=263.750 R=243.250 OL=27 OR=26 HL=27 HR=26
+---
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00060 gyz=0.000 Lpwm=0 Rpwm=10 Lrpm=14 Rrpm=14 Lfrpm=15 Rfrpm=15 Lfs=H Rfs=H Ltrpm...
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=264.750 R=243.750 OL=28 OR=26 HL=28 HR=27
+---
+data: L=264.750 R=244.250 OL=28 OR=27 HL=28 HR=27
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00044 gyz=0.000 Lpwm=10 Rpwm=0 Lrpm=12 Rrpm=12 Lfrpm=13 Rfrpm=14 Lfs=F Rfs=H Ltrpm...
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: L=264.750 R=244.250 OL=28 OR=27 HL=28 HR=27
+---
+data: L=264.750 R=245.250 OL=28 OR=27 HL=28 HR=28
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.333 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00065 gyz=0.000 Lpwm=10 Rpwm=0 Lrpm=12 Rrpm=12 Lfrpm=12 Rfrpm=13 Lfs=H Rfs=F Ltrpm...
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.250 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=265.750 R=245.250 OL=28 OR=27 HL=29 HR=28
+---
+data: L=266.250 R=245.250 OL=29 OR=28 HL=29 HR=28
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.333
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00126 gyz=0.000 Lpwm=10 Rpwm=0 Lrpm=10 Rrpm=10 Lfrpm=12 Rfrpm=12 Lfs=F Rfs=H Ltrp...
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=266.250 R=245.750 OL=29 OR=28 HL=29 HR=29
+---
+data: L=267.250 R=245.750 OL=30 OR=28 HL=30 HR=29
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.333 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00072 gyz=0.000 Lpwm=0 Rpwm=10 Lrpm=9 Rrpm=10 Lfrpm=10 Rfrpm=10 Lfs=H Rfs=H Ltrpm...
+---
+data: L=267.250 R=246.750 OL=30 OR=29 HL=30 HR=30
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=268.250 R=246.750 OL=31 OR=29 HL=31 HR=30
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00139 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=11 Rrpm=10 Lfrpm=9 Rfrpm=10 Lfs=H Rfs=H Ltrp...
+---
+data: L=268.250 R=247.750 OL=31 OR=30 HL=31 HR=31
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=269.250 R=248.250 OL=32 OR=31 HL=32 HR=31
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00077 gyz=0.000 Lpwm=0 Rpwm=10 Lrpm=12 Rrpm=11 Lfrpm=11 Rfrpm=10 Lfs=H Rfs=H Ltrp...
+---
+data: L=270.250 R=249.250 OL=32 OR=31 HL=33 HR=32
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+data: L=270.750 R=249.250 OL=33 OR=32 HL=33 HR=32
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00026 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=13 Rrpm=13 Lfrpm=12 Rfrpm=11 Lfs=F Rfs=H Ltrp...
+---
+data: L=271.250 R=249.750 OL=33 OR=32 HL=34 HR=33
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.167
+---
+data: L=271.750 R=250.750 OL=34 OR=33 HL=34 HR=34
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00101 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=13 Rrpm=14 Lfrpm=13 Rfrpm=13 Lfs=F Rfs=F Ltrp...
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.167 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+data: L=272.750 R=250.750 OL=34 OR=34 HL=35 HR=34
+---
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=273.250 R=251.250 OL=35 OR=34 HL=35 HR=35
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00061 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=13 Rrpm=16 Lfrpm=13 Rfrpm=13 Lfs=F Rfs=F Ltr...
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=273.250 R=252.250 OL=35 OR=35 HL=35 HR=36
+---
+data: L=274.250 R=252.250 OL=36 OR=35 HL=36 HR=36
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00092 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=12 Rrpm=15 Lfrpm=13 Rfrpm=16 Lfs=H Rfs=H Ltr...
+---
+data: L=274.250 R=252.250 OL=36 OR=36 HL=36 HR=36
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+data: L=274.250 R=253.250 OL=36 OR=36 HL=36 HR=37
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.167
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00060 gyz=0.000 Lpwm=10 Rpwm=0 Lrpm=11 Rrpm=14 Lfrpm=12 Rfrpm=15 Lfs=F Rfs=H Ltrp...
+---
+data: L=274.750 R=253.250 OL=36 OR=37 HL=37 HR=37
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+data: L=275.250 R=253.250 OL=37 OR=37 HL=37 HR=37
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00036 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=10 Rrpm=13 Lfrpm=11 Rfrpm=13 Lfs=H Rfs=F Ltrp...
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.333 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+data: L=275.250 R=253.250 OL=37 OR=37 HL=37 HR=37
+---
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=276.250 R=253.750 OL=38 OR=37 HL=38 HR=38
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00019 gyz=0.000 Lpwm=0 Rpwm=10 Lrpm=9 Rrpm=11 Lfrpm=10 Rfrpm=13 Lfs=H Rfs=H Ltrpm...
+---
+data: L=276.250 R=253.750 OL=38 OR=37 HL=38 HR=38
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.333 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.333
+---
+data: L=277.250 R=253.750 OL=39 OR=38 HL=39 HR=38
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00001 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=9 Rrpm=9 Lfrpm=9 Rfrpm=11 Lfs=H Rfs=H Ltrpm=...
+---
+data: L=277.250 R=254.250 OL=39 OR=38 HL=39 HR=39
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=278.250 R=254.250 OL=40 OR=38 HL=40 HR=39
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00042 gyz=0.000 Lpwm=0 Rpwm=10 Lrpm=11 Rrpm=8 Lfrpm=9 Rfrpm=9 Lfs=H Rfs=H Ltrpm=7....
+---
+data: L=278.250 R=254.750 OL=40 OR=39 HL=40 HR=39
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=279.250 R=255.250 OL=41 OR=39 HL=41 HR=40
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00011 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=13 Rrpm=9 Lfrpm=13 Rfrpm=9 Lfs=F Rfs=H Ltrpm=...
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.250 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: L=279.250 R=256.250 OL=41 OR=40 HL=41 HR=41
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=280.250 R=256.750 OL=42 OR=41 HL=42 HR=41
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00018 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=12 Rrpm=11 Lfrpm=13 Rfrpm=9 Lfs=H Rfs=H Ltrpm=...
+---
+data: L=281.250 R=257.750 OL=42 OR=41 HL=43 HR=42
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.167 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+---
+data: L=281.750 R=257.750 OL=43 OR=42 HL=43 HR=42
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00024 gyz=0.000 Lpwm=0 Rpwm=10 Lrpm=14 Rrpm=14 Lfrpm=13 Rfrpm=11 Lfs=F Rfs=H Ltrp...
+---
+data: L=282.750 R=258.250 OL=43 OR=42 HL=44 HR=43
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.167 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.167
+---
+data: L=283.250 R=259.250 OL=44 OR=43 HL=44 HR=44
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00030 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=13 Rrpm=14 Lfrpm=14 Rfrpm=13 Lfs=H Rfs=F Ltrpm=...
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+data: L=283.250 R=259.250 OL=44 OR=44 HL=44 HR=44
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=283.250 R=259.750 OL=44 OR=44 HL=44 HR=45
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00018 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=13 Rrpm=15 Lfrpm=13 Rfrpm=13 Lfs=F Rfs=F Ltrpm...
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=284.250 R=260.250 OL=45 OR=45 HL=45 HR=45
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=284.250 R=260.750 OL=45 OR=45 HL=45 HR=46
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00063 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=11 Rrpm=14 Lfrpm=13 Rfrpm=15 Lfs=F Rfs=H Ltrpm=...
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+data: L=285.250 R=260.750 OL=45 OR=46 HL=46 HR=46
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=285.750 R=260.750 OL=46 OR=46 HL=46 HR=46
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00024 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=11 Rrpm=13 Lfrpm=11 Rfrpm=13 Lfs=H Rfs=F Ltrpm=...
+---
+data: L=285.750 R=261.250 OL=46 OR=46 HL=46 HR=47
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.333 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=286.750 R=261.750 OL=46 OR=47 HL=47 HR=47
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.250 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00027 gyz=0.000 Lpwm=10 Rpwm=0 Lrpm=10 Rrpm=12 Lfrpm=11 Rfrpm=13 Lfs=H Rfs=F Ltrp...
+---
+data: L=286.750 R=262.250 OL=47 OR=47 HL=47 HR=48
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.333 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+---
+data: L=287.750 R=262.250 OL=47 OR=47 HL=48 HR=48
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.250 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00039 gyz=0.000 Lpwm=10 Rpwm=0 Lrpm=9 Rrpm=11 Lfrpm=10 Rfrpm=12 Lfs=H Rfs=H Ltrpm...
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=288.250 R=262.750 OL=48 OR=48 HL=48 HR=48
+---
+data: L=289.250 R=262.750 OL=48 OR=48 HL=49 HR=48
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.333
+---
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00092 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=11 Rrpm=10 Lfrpm=9 Rfrpm=11 Lfs=H Rfs=H Ltrpm...
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: L=289.750 R=263.750 OL=49 OR=48 HL=49 HR=49
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=290.750 R=264.750 OL=50 OR=49 HL=50 HR=50
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00036 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=13 Rrpm=9 Lfrpm=11 Rfrpm=10 Lfs=H Rfs=H Ltrpm=7...
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.250 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: L=290.750 R=264.750 OL=50 OR=49 HL=50 HR=50
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=291.750 R=265.250 OL=51 OR=50 HL=51 HR=50
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00029 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=14 Rrpm=11 Lfrpm=13 Rfrpm=9 Lfs=F Rfs=H Ltrp...
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.167 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: L=292.750 R=266.250 OL=51 OR=51 HL=52 HR=51
+---
+data: L=292.750 R=267.250 OL=52 OR=51 HL=52 HR=52
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00120 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=14 Rrpm=11 Lfrpm=13 Rfrpm=11 Lfs=F Rfs=H Ltr...
+---
+data: L=293.750 R=267.250 OL=52 OR=51 HL=53 HR=52
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.167 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=293.750 R=268.250 OL=53 OR=52 HL=53 HR=53
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00142 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=14 Rrpm=12 Lfrpm=13 Rfrpm=11 Lfs=F Rfs=H Ltr...
+---
+data: L=293.750 R=268.750 OL=53 OR=53 HL=53 HR=53
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.167
+---
+data: L=294.750 R=269.750 OL=54 OR=53 HL=54 HR=54
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00008 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=13 Rrpm=14 Lfrpm=13 Rfrpm=12 Lfs=F Rfs=F Ltr...
+---
+data: L=294.750 R=269.750 OL=54 OR=54 HL=54 HR=54
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+data: L=295.750 R=270.250 OL=54 OR=54 HL=55 HR=55
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.200 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00000 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=12 Rrpm=13 Lfrpm=13 Rfrpm=13 Lfs=H Rfs=F Ltr...
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+data: L=296.250 R=270.250 OL=55 OR=55 HL=55 HR=55
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=296.250 R=270.250 OL=55 OR=55 HL=55 HR=55
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00004 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=11 Rrpm=13 Lfrpm=12 Rfrpm=13 Lfs=F Rfs=F Ltr...
+---
+data: L=297.250 R=271.250 OL=56 OR=55 HL=56 HR=56
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.250 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+---
+data: L=297.250 R=271.250 OL=56 OR=56 HL=56 HR=56
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00063 gyz=0.000 Lpwm=10 Rpwm=0 Lrpm=11 Rrpm=12 Lfrpm=11 Rfrpm=13 Lfs=H Rfs=F Ltrp...
+---
+data: L=298.250 R=271.750 OL=57 OR=56 HL=57 HR=57
+---
+data: Lsrc=HALL_PRIMARY_OPTO_WARN Lconf=0.60 Lerr=0.250 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: L=298.250 R=271.750 OL=57 OR=57 HL=57 HR=57
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=-0.00022 gyz=0.000 Lpwm=0 Rpwm=0 Lrpm=11 Rrpm=12 Lfrpm=11 Rfrpm=12 Lfs=H Rfs=F Ltrpm...
+---
+data: L=299.250 R=272.750 OL=58 OR=57 HL=58 HR=58
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=299.250 R=272.750 OL=58 OR=57 HL=58 HR=58
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00137 gyz=0.000 Lpwm=10 Rpwm=0 Lrpm=12 Rrpm=11 Lfrpm=11 Rfrpm=12 Lfs=H Rfs=H Ltrpm...
+---
+data: L=300.250 R=273.250 OL=59 OR=58 HL=59 HR=58
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=300.750 R=273.750 OL=59 OR=58 HL=60 HR=59
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: T lin=0.100 ang=0.000 hcw=0.000 hce=0.0 gyr=0.00000 gyz=0.000 Lpwm=10 Rpwm=10 Lrpm=14 Rrpm=11 Lfrpm=12 Rfrpm=12 Lfs=F Rfs=F Ltrp...
+---
+data: L=301.250 R=274.250 OL=60 OR=59 HL=60 HR=59
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+data: L=302.250 R=275.250 OL=61 OR=59 HL=61 HR=60
+---
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: L=302.250 R=275.250 OL=61 OR=60 HL=61 HR=60
+---
+data: L=303.250 R=276.250 OL=62 OR=60 HL=62 HR=61
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=303.250 R=276.250 OL=62 OR=60 HL=62 HR=61
+---
+data: L=304.250 R=276.750 OL=63 OR=61 HL=63 HR=61
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_OPTO_FUSED Rconf=1.00 Rerr=0.000
+---
+data: L=304.250 R=277.250 OL=63 OR=61 HL=63 HR=62
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+data: L=305.250 R=277.250 OL=64 OR=62 HL=64 HR=62
+---
+---
+data: L=305.250 R=278.250 OL=64 OR=62 HL=64 HR=63
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: L=305.750 R=278.250 OL=64 OR=63 HL=65 HR=63
+---
+data: L=306.250 R=279.250 OL=65 OR=63 HL=65 HR=64
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.200
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=64
+---
+data: Lsrc=HALL_OPTO_FUSED Lconf=1.00 Lerr=0.000 Rsrc=HALL_PRIMARY_OPTO_WARN Rconf=0.60 Rerr=0.250
+---
+data: T lin=0.000 ang=0.000 Lpwm=0 Rpwm=0 Lrpm=0 Rrpm=0 Ld=F Rd=F LmA=0.00 RmA=0.00
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=64
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: T lin=0.000 ang=0.000 Lpwm=0 Rpwm=0 Lrpm=0 Rrpm=0 Ld=F Rd=F LmA=0.00 RmA=0.00
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---
+data: Lsrc=STOP Lconf=1.00 Lerr=0.000 Rsrc=STOP Rconf=1.00 Rerr=0.000
+---
+data: L=307.250 R=279.250 OL=66 OR=64 HL=66 HR=65
+---

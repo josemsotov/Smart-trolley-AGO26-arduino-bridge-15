@@ -284,3 +284,17 @@ systemctl --user status robot-follower.service robot-operator-web.service
 - `PPR_OPTO_ENCODERS=45`, diametro de rueda 0.27 m y PWM completo 0..255 permanecen como configuracion activa.
 - El test directo antiguo de PI por `pyserial` presenta `SerialTimeoutException` con el volumen actual de telemetria; no produjo movimiento. Ajuste PI siguiente debe ejecutarse mediante la ruta ROS normal o actualizar el protocolo de prueba.
 - Estado al cierre: follower/web/Zenoh activos; motores PWM/RPM 0; robot suspendido.
+
+## 2026-08-28 - Control virtual, Kinect y firmware FF120 V5
+
+- La consola `FAIRWAY TROLLEY OS` incorpora en Pruebas una palanca virtual de movimiento y controles para tomar fotos y grabar video con Kinect.
+- Acceso a la interfaz: `http://192.168.40.74:8080/`.
+- La palanca publica a 20 Hz, emplea el perfil de ejes/deadzone/expo de Stadia y tiene prioridad temporal sobre Stadia mientras mantiene su deadman activo; Stadia recupera el control aproximadamente 0.35 s despues de cesar la entrada web.
+- Se agrego el nodo piloto `swing_analyzer` y sus controles en el area Entrenamiento.
+- Firmware FF120 V5: `FF_LEFT_GAIN`, `FF_RIGHT_GAIN`, `FF_LEFT_BWD_GAIN` y `FF_RIGHT_BWD_GAIN` configurados en 120. El limite electrico permanece en PWM 255.
+- Con los limites web actuales, la palanca completa solicita aproximadamente PWM 48 en traslacion y PWM 34 en rotacion antes de correcciones PI.
+- Se conserva el impulso de arranque PWM 25 durante 150 ms para vencer friccion estatica.
+- Firmware compilado: 66006 bytes flash; RAM 6861/8192 bytes, 1331 libres.
+- Firmware instalado y verificado en Arduino. Respaldo previo en Pi: `/home/josemsotov/robot_backups/pre_ff120_v5_20260828.hex`.
+- Validacion posterior: `robot-follower.service` activo, puente Arduino recibiendo telemetria y motores detenidos con PWM/RPM 0/0.
+- Siguiente accion: validar fisicamente recorridos cortos de avance, reversa y giro desde la palanca virtual, empezando con amplitud reducida.
