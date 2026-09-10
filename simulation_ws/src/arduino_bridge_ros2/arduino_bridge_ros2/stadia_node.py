@@ -8,6 +8,7 @@ Parámetros configurables en follower_params.yaml bajo stadia_node:
 import json
 import threading
 import time
+from .stick_ramp import ramp
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
@@ -25,6 +26,12 @@ class StadiaNode(Node):
         self.declare_parameter('angular_expo',    2.0)    # 1.0=lineal 2.0=cuadrático
         self.declare_parameter('smoothing_alpha', 0.35)   # 0=sin cambio 1=instantáneo
         self.declare_parameter('send_rate_hz',    20.0)
+        self.declare_parameter('linear_expo', 1.6)
+        self.declare_parameter('linear_acceleration', 0.20)
+        self.declare_parameter('linear_deceleration', 0.50)
+        self.declare_parameter('angular_acceleration', 0.45)
+        self.declare_parameter('angular_deceleration', 1.0)
+        self._last_ramp_time = time.monotonic()
         self.declare_parameter('rotation_dominance', 2.0)
         self.declare_parameter('rotation_speed_scale', 0.5)
         self.declare_parameter('stadia_mac',      'C1:B8:D3:D6:E9:D5')
@@ -461,7 +468,8 @@ class StadiaNode(Node):
         lx_n = self._normalize(self.axis.get(ecodes.ABS_X, 128))
         ly_n = self._normalize(self.axis.get(ecodes.ABS_Y, 128))
 
-        target_lin = self._deadzone(-ly_n, p['dz_lin']) * p['max_lin']
+        target_lin = self._expo(self._deadzone(-ly_n, p['dz_lin']),
+                                self.get_parameter('linear_expo').value) * p['max_lin']
         ax_raw     = self._deadzone(lx_n,  p['dz_ang'])
         target_ang = self._expo(ax_raw, p['expo']) * p['max_ang']
 
@@ -499,8 +507,21 @@ class StadiaNode(Node):
 
         # Suavizado (smoothing_alpha: 0=lento 1=directo)
         a = p['alpha']
-        self.smooth_lin += a * (target_lin - self.smooth_lin)
-        self.smooth_ang += a * (target_ang - self.smooth_ang)
+        now = time.monotonic()
+        dt = now - self._last_ramp_time
+        self._last_ramp_time = now
+        for axis, target, accel, decel in (
+            ('smooth_lin', target_lin, 'linear_acceleration', 'linear_deceleration'),
+            ('smooth_ang', target_ang, 'angular_acceleration', 'angular_deceleration'),
+        ):
+            current = getattr(self, axis)
+            filtered = current + a * (target-current)
+            # Use the original target during reversal so smoothing cannot
+            # conceal the sign change from the braking stage.
+            demand = target if target == 0 or current*target < 0 else filtered
+            setattr(self, axis, ramp(current, demand, dt,
+                                    float(self.get_parameter(accel).value),
+                                    float(self.get_parameter(decel).value)))
         # Avoid an asymptotic stream of denormal values after the sticks
         # return to neutral. A neutral command must settle at an exact STOP.
         if target_lin == 0.0 and abs(self.smooth_lin) < 0.001:

@@ -23,6 +23,10 @@ BACKUPS/
 MOTOR-INTERFACE-V-13/resources/
 
 # Python cache
+# Private deployment/media snapshots and access credentials
+BACKUPS/session_*/
+*.token
+*.credentials
 __pycache__/
 *.pyc
 *.pyo

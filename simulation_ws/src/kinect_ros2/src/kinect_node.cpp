@@ -55,7 +55,8 @@ public:
             "Kinect node iniciado (libfreenect_sync), inclinacion=%d deg, resultado=%d",
             tilt_degrees_, tilt_result
         );
-        timer_ = create_wall_timer(std::chrono::milliseconds(66),  // ~15 fps
+        const double capture_fps = std::clamp(declare_parameter<double>("capture_fps", 30.0), 1.0, 30.0);
+        timer_ = create_wall_timer(std::chrono::microseconds(static_cast<int>(1000000.0/capture_fps)),
                                    std::bind(&KinectNode::capture, this));
         tilt_timer_ = create_wall_timer(
             std::chrono::seconds(1), std::bind(&KinectNode::publish_tilt, this));
@@ -155,7 +156,8 @@ private:
             pub_depth_->publish(msg);
             pub_depth_info_->publish(camera_info(
                 msg.header, depth_fx_, depth_fy_, depth_cx_, depth_cy_));
-            if ((depth_frame_count_++ % point_cloud_every_n_frames_) == 0) {
+            if ((depth_frame_count_++ % point_cloud_every_n_frames_) == 0 &&
+                pub_points_->get_subscription_count() > 0) {
                 publish_point_cloud(static_cast<const uint16_t*>(dep_data), msg.header);
             }
         }

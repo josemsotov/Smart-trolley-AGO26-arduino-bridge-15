@@ -8,6 +8,7 @@ import re
 import subprocess
 import threading
 import time
+import uuid
 from collections import deque
 from typing import Any
 
@@ -19,11 +20,16 @@ from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconn
 from fastapi.responses import FileResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from geometry_msgs.msg import Twist
-from nav_msgs.msg import Odometry
+from nav_msgs.msg import Odometry, OccupancyGrid
+from rclpy.qos import QoSProfile, DurabilityPolicy
+from tf2_ros import Buffer, TransformListener, TransformException
+import yaml
+from pathlib import Path
 from rclpy.node import Node
 from sensor_msgs.msg import Image, LaserScan
 from std_msgs.msg import Bool, String
 import uvicorn
+from .training_media import install_routes
 
 
 PRINTABLE = re.compile(r"^[ -~]{1,96}$")
@@ -70,6 +76,9 @@ def parse_json_or_raw(line: str) -> dict[str, Any]:
 class SharedState:
     def __init__(self) -> None:
         self.lock = threading.Lock()
+        self.map_data = None
+        self.map_pose = None
+        self.map_received = None
         self.motor_status: dict[str, Any] = {}
         self.encoder_counts = ""
         self.odom: dict[str, Any] = {}
@@ -93,6 +102,7 @@ class SharedState:
         self.video_recording = False
         self.video_frames = deque(maxlen=1200)
         self.video_started: float | None = None
+        self.rgb_times = deque(maxlen=90)
         self.stamps: dict[str, float] = {}
         self.last_cmd: dict[str, float] = {"linear": 0.0, "angular": 0.0}
         self.cmd_vel: dict[str, float] = {"linear": 0.0, "angular": 0.0}
@@ -130,6 +140,7 @@ class SharedState:
                     "depth_ready": self.depth_jpeg is not None,
                     "video_recording": self.video_recording,
                     "video_frames": len(self.video_frames),
+                    "capture_fps": round((len(self.rgb_times)-1)/(self.rgb_times[-1]-self.rgb_times[0]), 1) if len(self.rgb_times)>1 and self.rgb_times[-1]>self.rgb_times[0] else 0,
                 },
             }
 
@@ -138,6 +149,11 @@ class OperatorNode(Node):
     def __init__(self, state: SharedState) -> None:
         super().__init__("robot_operator_web")
         self.state = state
+        self.map_tf = Buffer()
+        self.map_listener = TransformListener(self.map_tf, self)
+        self.create_subscription(OccupancyGrid, '/map', self.map_cb,
+                                 QoSProfile(depth=1, durability=DurabilityPolicy.TRANSIENT_LOCAL))
+        self.create_timer(0.5, self.map_pose_cb)
         self.pub_cmd = self.create_publisher(Twist, "/cmd_vel/web", 10)
         self.pub_enable = self.create_publisher(Bool, "/follower/enable", 10)
         self.pub_stadia = self.create_publisher(String, "/stadia/control", 10)
@@ -172,6 +188,32 @@ class OperatorNode(Node):
         self.create_subscription(Image, "/camera/depth/image_raw", self.depth_cb, 2)
         self._last_rgb_encode = 0.0
         self._last_depth_encode = 0.0
+
+    def map_cb(self, msg):
+        q = msg.info.origin.orientation
+        payload = dict(width=msg.info.width, height=msg.info.height,
+                       resolution=msg.info.resolution, frame=msg.header.frame_id,
+                       origin=[msg.info.origin.position.x, msg.info.origin.position.y,
+                               math.atan2(2*(q.w*q.z+q.x*q.y), 1-2*(q.y*q.y+q.z*q.z))],
+                       cells=list(msg.data), source='live')
+        with self.state.lock:
+            self.state.map_data = payload
+            self.state.map_received = now_s()
+
+    def map_pose_cb(self):
+        pose = None
+        try:
+            tf = self.map_tf.lookup_transform('map', 'base_link', rclpy.time.Time())
+            age = (self.get_clock().now().nanoseconds -
+                   rclpy.time.Time.from_msg(tf.header.stamp).nanoseconds) / 1e9
+            if 0 <= age < 2:
+                q = tf.transform.rotation
+                pose = dict(x=tf.transform.translation.x, y=tf.transform.translation.y,
+                            yaw=math.atan2(2*(q.w*q.z+q.x*q.y), 1-2*(q.y*q.y+q.z*q.z)))
+        except TransformException:
+            pass
+        with self.state.lock:
+            self.state.map_pose = pose
 
     def publish_cmd(self, linear: float, angular: float) -> None:
         msg = Twist()
@@ -416,17 +458,23 @@ class OperatorNode(Node):
 
     def rgb_cb(self, msg: Image) -> None:
         t = now_s()
-        if t - self._last_rgb_encode < 0.25:
+        with self.state.lock:
+            self.state.rgb_times.append(t)
+            recording = self.state.video_recording
+        if not recording and t - self._last_rgb_encode < 0.25:
             return
         self._last_rgb_encode = t
-        jpeg = encode_rgb(msg)
+        jpeg = encode_rgb(msg, full_resolution=recording)
         if jpeg:
             with self.state.lock:
                 self.state.rgb_jpeg = jpeg
                 self.state.rgb_stamp = t
                 self.state.stamps["camera_rgb"] = t
                 if self.state.video_recording:
-                    self.state.video_frames.append((time.time(), jpeg))
+                    if len(self.state.video_frames) < 900 and t-self.state.video_started < 30:
+                        self.state.video_frames.append((t, jpeg))
+                    else:
+                        self.state.video_recording = False
 
     def depth_cb(self, msg: Image) -> None:
         t = now_s()
@@ -441,7 +489,7 @@ class OperatorNode(Node):
                 self.state.stamps["camera_depth"] = t
 
 
-def encode_rgb(msg: Image) -> bytes | None:
+def encode_rgb(msg: Image, full_resolution=False) -> bytes | None:
     try:
         if msg.encoding.lower() == "rgb8":
             arr = np.frombuffer(msg.data, dtype=np.uint8).reshape(msg.height, msg.width, 3)
@@ -453,10 +501,10 @@ def encode_rgb(msg: Image) -> bytes | None:
             bgr = cv2.cvtColor(mono, cv2.COLOR_GRAY2BGR)
         else:
             return None
-        if bgr.shape[1] > 480:
+        if not full_resolution and bgr.shape[1] > 480:
             scale = 480 / bgr.shape[1]
             bgr = cv2.resize(bgr, (480, int(bgr.shape[0] * scale)))
-        ok, buf = cv2.imencode(".jpg", bgr, [int(cv2.IMWRITE_JPEG_QUALITY), 65])
+        ok, buf = cv2.imencode(".jpg", bgr, [int(cv2.IMWRITE_JPEG_QUALITY), 85 if full_resolution else 65])
         return buf.tobytes() if ok else None
     except Exception:
         return None
@@ -485,6 +533,7 @@ def create_app(node: OperatorNode, state: SharedState) -> FastAPI:
     app = FastAPI(title="Smart Trolley Operator")
     media_dir = os.path.expanduser("~/robot_media")
     os.makedirs(media_dir, exist_ok=True)
+    install_routes(app, media_dir)
     app.mount("/static", StaticFiles(directory=static_dir, follow_symlink=True), name="static")
 
     async def close_local_kiosk() -> None:
@@ -515,6 +564,31 @@ def create_app(node: OperatorNode, state: SharedState) -> FastAPI:
     @app.get("/api/state")
     def api_state() -> dict[str, Any]:
         return state.snapshot()
+
+    @app.get("/api/map")
+    def map_state():
+        with state.lock:
+            if state.map_data is not None:
+                return {**state.map_data, 'age': stamp_age(state.map_received),
+                        'robot': state.map_pose}
+        directory = Path(os.environ.get('ROBOT_MAP_DIR', '/home/josemsotov/robot_ws/maps'))
+        for path in sorted(directory.glob('*.yaml'), key=lambda p: p.stat().st_mtime, reverse=True):
+            try:
+                meta = yaml.safe_load(path.read_text())
+                pixels = cv2.imread(str(path.parent / meta['image']), cv2.IMREAD_GRAYSCALE)
+                if pixels is None:
+                    continue
+                probability = pixels / 255.0 if meta.get('negate', 0) else 1-pixels/255.0
+                cells = np.full(pixels.shape, -1, dtype=np.int16)
+                cells[probability < meta.get('free_thresh', .25)] = 0
+                cells[probability > meta.get('occupied_thresh', .65)] = 100
+                return dict(width=pixels.shape[1], height=pixels.shape[0],
+                            resolution=meta['resolution'], origin=meta['origin'],
+                            cells=np.flipud(cells).ravel().tolist(), frame='map',
+                            source='saved', name=path.stem, age=None, robot=None)
+            except (OSError, KeyError, TypeError, ValueError, yaml.YAMLError):
+                continue
+        raise HTTPException(status_code=404, detail='Todavia no hay mapa disponible')
 
     @app.post("/api/follower")
     async def api_follower(payload: dict[str, Any]) -> dict[str, Any]:
@@ -692,7 +766,7 @@ def create_app(node: OperatorNode, state: SharedState) -> FastAPI:
                     raise HTTPException(status_code=409, detail="Video already recording")
                 state.video_frames.clear()
                 state.video_recording = True
-                state.video_started = time.time()
+                state.video_started = now_s()
             return {"ok": True, "recording": True}
         if action != "stop":
             raise HTTPException(status_code=400, detail="Use start or stop")
@@ -705,17 +779,33 @@ def create_app(node: OperatorNode, state: SharedState) -> FastAPI:
         first = cv2.imdecode(np.frombuffer(frames[0][1], np.uint8), cv2.IMREAD_COLOR)
         if first is None:
             raise HTTPException(status_code=500, detail="Invalid recorded frame")
-        name = time.strftime("video_%Y%m%d_%H%M%S.avi")
+        name = 'kinect_' + uuid.uuid4().hex + '.avi'
         path = os.path.join(media_dir, name)
-        writer = cv2.VideoWriter(path, cv2.VideoWriter_fourcc(*"MJPG"), 4.0,
+        fps = (len(frames)-1)/(frames[-1][0]-frames[0][0]) if len(frames)>1 else 1.0
+        writer = cv2.VideoWriter(path, cv2.VideoWriter_fourcc(*"MJPG"), fps,
                                  (first.shape[1], first.shape[0]))
+        if not writer.isOpened():
+            raise HTTPException(status_code=500, detail='No se pudo crear el video')
         for _, encoded in frames:
             frame = cv2.imdecode(np.frombuffer(encoded, np.uint8), cv2.IMREAD_COLOR)
             if frame is not None:
                 writer.write(frame)
         writer.release()
+        with open(path + '.timestamps.json', 'w') as handle:
+            json.dump([t-frames[0][0] for t, _ in frames], handle)
+        mp4 = path[:-4] + '.mp4'
+        try:
+            await asyncio.to_thread(subprocess.run, ['ffmpeg', '-nostdin', '-v', 'error', '-i', path,
+                '-c:v', 'libx264', '-preset', 'ultrafast', '-threads', '1', '-pix_fmt', 'yuv420p',
+                '-movflags', '+faststart', mp4], check=True, timeout=90, capture_output=True)
+            name = os.path.basename(mp4)
+        except (OSError, subprocess.SubprocessError):
+            pass  # Original AVI remains downloadable even if transcoding fails.
+        with open(os.path.join(media_dir, name) + '.info.json', 'w') as handle:
+            json.dump(dict(fps=fps, duration=frames[-1][0]-frames[0][0],
+                           width=first.shape[1], height=first.shape[0], source='kinect'), handle)
         return {"ok": True, "recording": False, "file": name,
-                "url": f"/api/media/{name}", "frames": len(frames)}
+                "url": f"/api/media/{name}", "frames": len(frames), 'fps': round(fps,2)}
 
     @app.get("/api/media/{name}")
     async def media_file(name: str) -> FileResponse:

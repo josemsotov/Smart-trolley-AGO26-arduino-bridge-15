@@ -298,3 +298,27 @@ systemctl --user status robot-follower.service robot-operator-web.service
 - Firmware instalado y verificado en Arduino. Respaldo previo en Pi: `/home/josemsotov/robot_backups/pre_ff120_v5_20260828.hex`.
 - Validacion posterior: `robot-follower.service` activo, puente Arduino recibiendo telemetria y motores detenidos con PWM/RPM 0/0.
 - Siguiente accion: validar fisicamente recorridos cortos de avance, reversa y giro desde la palanca virtual, empezando con amplitud reducida.
+
+## 2026-09-09 - Base de navegacion hibrida SLAM/GPS
+
+- Agregados `hybrid_navigation.launch.py`, `slam_real.yaml` y `ekf_gps.yaml` al paquete `robot_follower`.
+- Modos separados para evitar dos publicadores de `map -> odom`: `mapping` e `indoor` usan slam_toolbox; `outdoor` usa navsat_transform y EKF global.
+- La salida autonoma/Nav2 queda deliberadamente deshabilitada hasta validar localizacion y la ruta de seguridad `/cmd_vel/navigation`.
+- TF real completado con `base_link -> base_laser` en (-0.10, 0, 1.35 m) y `base_link -> gps_link` provisional en cero, pendiente medir la posicion de la antena.
+- Archivos desplegados y paquete recompilado en el Pi. Stack reiniciado activo, LiDAR comunicado y motores PWM/RPM 0/0.
+- Instalados en el Pi `ros-jazzy-slam-toolbox`, `ros-jazzy-navigation2`, `ros-jazzy-nav2-bringup` y `ros-jazzy-robot-localization`.
+- Validacion interior aprobada: lifecycle manager configuro y activo `slam_toolbox`, que registro el LiDAR real sin publicar movimiento.
+- Validacion exterior de arranque aprobada: `navsat_transform_node` y `ekf_global_filter` iniciaron sin fallo; falta validar posicion global con fix GPS estable al aire libre.
+- Guia operativa y comandos: `simulation_ws/HYBRID_NAVIGATION.md`.
+
+## 2026-09-10 - Respaldo SLAM, entrenamiento, Home Assistant y Stadia
+
+- Mapa de dos habitaciones guardado como `two_rooms_20260909_2105` (PGM/YAML), 260x278 celdas a 5 cm; copia local en follower_sim/maps. Grafo SLAM NO guardado: conflicto de simbolo FastCDR en cliente SerializePoseGraph. No considerar localizacion exterior validada: solo se comprobo arranque de nodos, no precision GPS ni rumbo absoluto.
+- Visor web SLAM con posicion TF y fallback a mapa guardado. Oculto en Entrenamiento; permanece en Operacion/Pruebas. API `/api/map`, vista compacta `/static/map.html`.
+- Home Assistant `http://homeassistant.local:8123/smart-trolley/0` (192.168.40.198) usa estrategia iframe a la web del Pi. URL actualizada con version de cache. Respaldos HA en LocalAppData/SmartTrolley/ha-backups; token permanece fuera del repositorio.
+- Stadia: curva lineal 1.6, aceleracion 0.20 m/s2 y 0.45 rad/s2; limites maximos 0.40 m/s y 0.70 rad/s. Paso por cero al invertir y STOP inmediato al soltar. Pruebas offline aprobadas, trayectoria fisica aun requiere ajuste.
+- PI 0.25 sin integral y hc on se activaron temporalmente el 09-09. Usuario reporto vibracion; intento posterior de k off NO se ejecuto por bloqueo de cuota. Hubo reinicios posteriores: consultar Arduino antes de asumir estado PI/hc; no hay activacion persistente nueva.
+- Coral recuperado tras reconexion USB: 18d1:9302, inferencias reales y coral_status=active. Fallo anterior de enumeracion USB, no del indicador web.
+- Kinect: captura solicitada a 30 Hz, grabacion medida 25.81 fps (104 frames); ultima recepcion observada 28.7 fps. Vista previa sigue limitada a 4 Hz, analisis corporal a 10 Hz durante sesion/2 Hz inactivo.
+- Entrenamiento: videos telefono hasta 300 MB, biblioteca, slow motion, paso aproximado por frames y marcas manuales exportables. Kinect clips hasta 30 s, AVI original, timestamps y MP4. Analisis telefono manual; no mide impacto, spin ni velocidad de bola/palo.
+- Validacion: tres paquetes ROS compilados, upload sintetico 120 fps y rechazo de archivo invalido aprobados, clip Kinect real generado, motores 0/0 al cierre de despliegue. Documentacion detallada en TRAINING_VIDEO_20260910.md y MANUAL_DRIVE_TUNING_20260909.md.

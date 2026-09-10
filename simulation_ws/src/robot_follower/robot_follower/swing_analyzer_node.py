@@ -70,7 +70,7 @@ class SwingAnalyzer(Node):
 
     def image_cb(self, msg):
         now = time.monotonic()
-        if self.pose is None or now - self.last_process < 0.10:
+        if self.pose is None or now - self.last_process < (0.10 if self.recording else 0.5):
             return
         self.last_process = now
         if msg.encoding.lower() == 'rgb8':
@@ -86,6 +86,15 @@ class SwingAnalyzer(Node):
                            'pose_visible': False}
             return
         lm = result.pose_landmarks.landmark
+        if min(lm[i].visibility for i in (11,12,23,24,25,26,27,28)) < 0.55:
+            self.latest = {'state': 'recording' if self.recording else 'ready',
+                           'pose_visible': False, 'sample_count': len(self.samples),
+                           'note': 'Coloca hombros, caderas, rodillas y pies dentro de la imagen.'}
+            self.last_wrists = None
+            return
+        # Angles require image aspect correction: normalized x/y use different units.
+        for landmark in lm:
+            landmark.x *= msg.width / msg.height
         P = self.mp.solutions.pose.PoseLandmark
         ls, rs = lm[P.LEFT_SHOULDER], lm[P.RIGHT_SHOULDER]
         lh, rh = lm[P.LEFT_HIP], lm[P.RIGHT_HIP]
@@ -116,6 +125,9 @@ class SwingAnalyzer(Node):
                        'sample_count': len(self.samples)}
         if self.recording:
             self.samples.append(sample)
+            if now - self.started >= 30:
+                self.recording = False
+                self.latest = self.summary()
 
     def summary(self):
         if not self.samples:

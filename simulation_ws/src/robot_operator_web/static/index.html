@@ -101,6 +101,14 @@
 </div>
 </main>
 
+<section id="slamMapSection" class="card" style="margin:16px 0">
+  <h2>Mapa del recorrido</h2>
+  <p id="mapStatus" role="status">Conectando al mapa...</p>
+  <canvas id="slamMap" width="900" height="520" style="width:100%;max-height:65vh;background:#17241d;border-radius:12px" aria-label="Mapa SLAM y posicion del robot"></canvas>
+  <p class="notice">Claro: espacio libre · Oscuro: paredes · Gris: sin explorar · Flecha verde: robot. Vista de seguimiento; tocar el mapa no manda movimiento.</p>
+  <button class="btn" id="mapRefresh">Actualizar mapa</button>
+</section>
+<script src="/static/slam-map.js" defer></script>
 <main id="tests" class="view">
 <div class="grid">
   <section class="card span12"><div class="status-banner"><div><span class="eyebrow">Banco de pruebas</span><strong style="display:block">Diagnóstico por subsistema</strong></div><span class="tag experimental">Controles avanzados</span></div><p class="notice">Las pruebas de movimiento deben ejecutarse con confirmación física del estado del robot. STOP permanece disponible en todo momento.</p></section>
@@ -117,6 +125,24 @@
 </main>
 
 <main id="training" class="view">
+<section class="card" style="margin:16px 0">
+<h2>Videos de swing · Kinect y telefono</h2>
+<p>Graba hasta 30 segundos con Kinect o carga un video del telefono (maximo 300 MB). Analisis corporal en vivo: usa los controles de postura de esta seccion.</p>
+<input id="swingFile" type="file" accept="video/mp4,video/quicktime,video/webm,.m4v">
+<button class="btn" id="uploadSwing">Cargar video</button>
+<button class="btn" id="recordSwingVideo">Grabar Kinect</button>
+<button class="btn" id="finishSwingVideo">Guardar Kinect</button>
+<p id="trainingMessage" role="status">Selecciona un video para revisar.</p>
+<select id="videoLibrary" aria-label="Videos guardados"><option value="">Videos guardados</option></select>
+<video id="swingPlayer" controls playsinline preload="metadata" style="width:100%;max-height:65vh;background:#101010"></video>
+<div class="btnrow"><label>Reproduccion <select id="swingRate"><option value="1">1x</option><option value="0.5">0.5x</option><option value="0.25">0.25x</option><option value="0.1">0.1x</option></select></label>
+<label>FPS del archivo <input id="swingFps" type="number" min="1" max="1000" value="30" style="width:70px"></label>
+<button class="btn" id="prevFrame">Anterior</button><button class="btn" id="nextFrame">Siguiente</button>
+<button class="btn" id="markTop">Marcar cima</button><button class="btn" id="markImpact">Marcar impacto</button><button class="btn" id="exportMarks">Exportar marcas</button></div>
+<p id="swingMarks">Marcas manuales sobre el tiempo del archivo.</p>
+<p class="notice">El paso por fotogramas es aproximado para videos de tasa variable. Un video exportado en camara lenta ya tiene el tiempo dilatado: no representa automaticamente la duracion real del swing. La revision de videos del telefono es manual; no calcula velocidad de bola ni del palo.</p>
+</section>
+<script src="/static/training-video.js" defer></script>
 <div class="grid">
   <section class="card hero span12"><span class="eyebrow">Golf intelligence lab</span><h2>Entrenamiento asistido</h2><p>Una ruta gradual: primero postura y geometría con sensores existentes; después impacto, bola y vuelo con captura especializada.</p></section>
   <section class="card span12"><div class="feature-grid">
@@ -135,7 +161,7 @@ const $=id=>document.getElementById(id); let lastState={}; let ws;
 const fmt=(v,n=2)=>v===null||v===undefined||Number.isNaN(Number(v))?'--':Number(v).toFixed(n);
 const ageOk=(ages,key,max)=>ages&&ages[key]!==null&&ages[key]!==undefined&&ages[key]<=max;
 const post=async(url,data={})=>{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const body=await r.json().catch(()=>({}));if(!r.ok)throw new Error(body.detail||r.statusText);return body};
-function tabs(){document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab,.view').forEach(x=>x.classList.remove('active'));b.classList.add('active');$(b.dataset.view).classList.add('active')})}
+function tabs(){document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab,.view').forEach(x=>x.classList.remove('active'));b.classList.add('active');$(b.dataset.view).classList.add('active');$('slamMapSection').hidden=b.dataset.view==='training'})}
 function course(load=true){let d={name:'Campo de golf',hole:'1',par:'4',yards:'',note:''};if(load){try{d={...d,...JSON.parse(localStorage.getItem('fairwayCourse')||'{}')}}catch(e){}}else{d={name:$('courseName').value||'Campo de golf',hole:$('hole').value||'1',par:$('par').value||'4',yards:$('yards').value,note:$('courseNote').value};localStorage.setItem('fairwayCourse',JSON.stringify(d))} $('courseName').value=d.name;$('hole').value=d.hole;$('par').value=d.par;$('yards').value=d.yards;$('courseNote').value=d.note;$('courseTitle').textContent=d.name;$('holeView').textContent=d.hole;$('parView').textContent=d.par;$('yardsView').textContent=d.yards||'--';$('missionSummary').textContent=d.note||`Hoyo ${d.hole}, par ${d.par}. Verifica sensores y selecciona el modo de operación.`}
 function service(name,ok,detail,warn=false){return `<div class="service"><span><i class="dot ${ok?'ok':warn?'warn':''}"></i>${name}</span><b>${detail}</b></div>`}
 function services(s){const a=s.ages||{},f=s.follower_state||{},g=s.gps_status||{},st=s.stadia_state||{};const list=[['Arduino',ageOk(a,'motor_status',2),ageOk(a,'motor_status',2)?'ONLINE':'SIN DATOS'],['LiDAR',ageOk(a,'scan',1),ageOk(a,'scan',1)?`${s.scan?.valid_count||0} pts`:'STALE'],['Kinect RGB',s.camera?.rgb_ready&&Number(s.camera.rgb_age)<1,s.camera?.rgb_ready?`${fmt(s.camera.rgb_age,1)} s`:'OFF'],['Kinect Depth',s.camera?.depth_ready&&Number(s.camera.depth_age)<1.5,s.camera?.depth_ready?`${fmt(s.camera.depth_age,1)} s`:'OFF'],['Follower',ageOk(a,'follower_state',2),f.enabled?'ACTIVO':'LISTO'],['Stadia',st.stadia==='connected',st.stadia==='connected'?(st.mode||'conectado'):'DESCONECTADO'],['GPS serial',ageOk(a,'gps_status',3),g.fix?`${g.sats||0} sat / FIX`:'SIN FIX'],['Odometría',ageOk(a,'odom',1),ageOk(a,'odom',1)?'FRESCA':'STALE'],['Coral TPU',f.coral_status==='active',f.coral_status||'sin estado']];const html=list.map(x=>service(x[0],x[1],x[2],x[0]==='GPS serial'&&x[1])).join('');$('operationServices').innerHTML=html;$('testServices').innerHTML=html}

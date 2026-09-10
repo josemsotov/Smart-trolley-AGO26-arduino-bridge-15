@@ -1,0 +1,5 @@
+# Add this card to the existing smart-trolley dashboard; do not replace the dashboard.
+type: iframe
+title: Smart Trolley · Mapa en vivo
+url: http://192.168.40.74:8080/static/map.html
+aspect_ratio: 75%

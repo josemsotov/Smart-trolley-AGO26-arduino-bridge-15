@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Smart Trolley · Mapa</title>
+<style>body{margin:0;padding:12px;background:#17241d;color:#e7f1e9;font:14px system-ui}canvas{width:100%;height:auto;background:#17241d}button{padding:8px 16px;border:1px solid #70ef70;border-radius:8px;background:#203b29;color:inherit}p{margin:8px 0}</style></head><body>
+<p id="mapStatus" role="status">Conectando al mapa...</p>
+<canvas id="slamMap" width="900" height="520" aria-label="Mapa SLAM y posicion del robot"></canvas>
+<p>Claro: libre · Oscuro: paredes · Gris: sin explorar · Flecha verde: robot</p>
+<button id="mapRefresh">Actualizar</button>
+<script src="/static/slam-map.js" defer></script>
+</body></html>
