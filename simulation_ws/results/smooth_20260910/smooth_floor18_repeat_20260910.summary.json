@@ -1,0 +1,66 @@
+{
+  "forward": {
+    "L": {
+      "rpm_mean": 65.03,
+      "rpm_std": 4.72,
+      "pwm_mean": 25.63,
+      "pwm_zero_fraction": 0.0,
+      "samples": 30
+    },
+    "R": {
+      "rpm_mean": 65,
+      "rpm_std": 4.58,
+      "pwm_mean": 26.37,
+      "pwm_zero_fraction": 0.0,
+      "samples": 30
+    }
+  },
+  "forward_low": {
+    "L": {
+      "rpm_mean": 25,
+      "rpm_std": 1.06,
+      "pwm_mean": 7.8,
+      "pwm_zero_fraction": 0.57,
+      "samples": 30
+    },
+    "R": {
+      "rpm_mean": 23.8,
+      "rpm_std": 1.33,
+      "pwm_mean": 7.8,
+      "pwm_zero_fraction": 0.57,
+      "samples": 30
+    }
+  },
+  "pivot": {
+    "L": {
+      "rpm_mean": 46.13,
+      "rpm_std": 2.5,
+      "pwm_mean": 20,
+      "pwm_zero_fraction": 0.0,
+      "samples": 30
+    },
+    "R": {
+      "rpm_mean": 46.1,
+      "rpm_std": 2.61,
+      "pwm_mean": 20,
+      "pwm_zero_fraction": 0.0,
+      "samples": 30
+    }
+  },
+  "reverse": {
+    "L": {
+      "rpm_mean": 66.47,
+      "rpm_std": 5.63,
+      "pwm_mean": 26.33,
+      "pwm_zero_fraction": 0.0,
+      "samples": 30
+    },
+    "R": {
+      "rpm_mean": 66.4,
+      "rpm_std": 6.04,
+      "pwm_mean": 25.67,
+      "pwm_zero_fraction": 0.0,
+      "samples": 30
+    }
+  }
+}

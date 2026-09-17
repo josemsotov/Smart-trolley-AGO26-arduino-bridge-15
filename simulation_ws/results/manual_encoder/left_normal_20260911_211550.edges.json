@@ -1,0 +1,34 @@
+[
+  {
+    "trial": 0,
+    "phase": "before",
+    "encoders": "L=0.000 R=0.000 OL=0 OR=0 HL=0 HR=0",
+    "stats": [
+      "j STAT Lus=6000 Rus=6000 Lraw=0 Lacc=0 Lrej=0 Rraw=0 Racc=0 Rrej=0"
+    ]
+  },
+  {
+    "trial": 0,
+    "phase": "after",
+    "encoders": "L=168.250 R=0.000 OL=208 OR=0 HL=217 HR=0",
+    "stats": [
+      "j STAT Lus=22585 Rus=6000 Lraw=277 Lacc=208 Lrej=69 Rraw=0 Racc=0 Rrej=0"
+    ]
+  },
+  {
+    "trial": 1,
+    "phase": "before",
+    "encoders": "L=168.250 R=0.000 OL=208 OR=0 HL=217 HR=0",
+    "stats": [
+      "j STAT Lus=22585 Rus=6000 Lraw=277 Lacc=208 Lrej=69 Rraw=0 Racc=0 Rrej=0"
+    ]
+  },
+  {
+    "trial": 1,
+    "phase": "after",
+    "encoders": "L=337.000 R=0.000 OL=415 OR=0 HL=433 HR=0",
+    "stats": [
+      "j STAT Lus=22259 Rus=6000 Lraw=554 Lacc=415 Lrej=139 Rraw=0 Racc=0 Rrej=0"
+    ]
+  }
+]

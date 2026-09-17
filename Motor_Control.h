@@ -217,6 +217,7 @@ volatile uint32_t rightOptoFilterUs = OPTO_FILTER_US;
 // Solo para el comando diagnostico q: congela ambos canales con el mismo
 // debounce y evita que el Hall del lado logico modifique el canal cruzado.
 volatile bool optoDiagnosticFixedFilter = false;
+volatile uint8_t optoLeftFilterScalePct = 100; // runtime bench A/B; boot unchanged
 volatile uint32_t leftOptoRawEdges = 0;
 volatile uint32_t rightOptoRawEdges = 0;
 volatile uint32_t leftOptoAccepted = 0;

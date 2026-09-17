@@ -96,6 +96,21 @@
   </section>
 
   <section class="card span12">
+    <h2>LiDAR inferior · obstáculos bajos</h2>
+    <div class="grid">
+      <div class="span6"><canvas id="lidarLower" class="lidar" width="360" height="360" aria-label="Escaneo del LiDAR inferior visto desde arriba"></canvas></div>
+      <div class="span6">
+        <div class="kv"><span>Estado</span><b id="lowerStatus">SIN DATOS</b></div>
+        <div class="kv"><span>Frecuencia</span><b id="lowerHz">--</b></div>
+        <div class="kv"><span>Puntos válidos</span><b id="lowerPoints">--</b></div>
+        <div class="kv"><span>Distancia frontal ±60°</span><b id="lowerFront">--</b></div>
+        <div class="kv"><span>Distancia mínima 360°</span><b id="lowerMin">--</b></div>
+        <p class="notice">Altura configurada: 15 cm · montaje invertido. Vista local: frente arriba, izquierda a la izquierda, radio 5 m. Posición horizontal pendiente de medir.</p>
+        <p class="notice">Monitorización del sensor. Estas lecturas aún no están incorporadas al frenado ni al mapa SLAM.</p>
+      </div>
+    </div>
+  </section>
+  <section class="card span12">
     <h2>Salud de la plataforma</h2><div id="operationServices" class="service-grid"></div>
   </section>
 </div>
@@ -185,4 +200,5 @@ $('swingStart').onclick=()=>post('/api/swing',{command:'start'}).catch(e=>alert(
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=async()=>{try{await post('/api/mode',{mode:b.dataset.mode})}catch(e){alert(e.message)}});$('stop').onclick=async()=>{try{await post('/api/stop')}catch(e){alert(e.message)}};$('saveCourse').onclick=()=>course(false);$('linearMax').oninput=e=>$('linearMaxVal').textContent=Number(e.target.value).toFixed(2);$('angularMax').oninput=e=>$('angularMaxVal').textContent=Number(e.target.value).toFixed(2);$('applyLimits').onclick=async()=>{try{await post('/api/stadia/speed_limits',{linear:Number($('linearMax').value),angular:Number($('angularMax').value)});alert('Límites enviados')}catch(e){alert(e.message)}};$('sendRaw').onclick=async()=>{const command=$('rawInput').value.trim();if(!command)return;try{await post('/api/raw_command',{command});$('rawInput').value=''}catch(e){alert(e.message)}};
 tabs();course(true);capabilities();connect();
 </script>
+<script src="/static/dual_lidar.js?v=20260916"></script>
 </body></html>

@@ -1,0 +1,24 @@
+{
+  "0": {
+    "filter_scale_pct": 80,
+    "demand": 15,
+    "seconds": 4.690732657996705,
+    "counts": {
+      "OL": 125,
+      "OR": 0,
+      "HL": 134,
+      "HR": 0
+    }
+  },
+  "1": {
+    "filter_scale_pct": 80,
+    "demand": 15,
+    "seconds": 4.695066984000732,
+    "counts": {
+      "OL": 126,
+      "OR": 0,
+      "HL": 134,
+      "HR": 0
+    }
+  }
+}

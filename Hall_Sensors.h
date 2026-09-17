@@ -99,6 +99,7 @@ void leftHallISR() {
       }
       uint16_t adaptive_permille = optoLeftPermilleForHallInterval(hallPulseIntervalLeft);
       uint32_t candidate = (hallPulseIntervalLeft * adaptive_permille) / 1000UL;
+      candidate = candidate * optoLeftFilterScalePct / 100UL;
       leftOptoFilterUs = constrain(candidate, OPTO_FILTER_LEFT_MIN_US, OPTO_FILTER_MAX_US);
     }
   }

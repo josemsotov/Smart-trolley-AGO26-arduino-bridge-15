@@ -21,7 +21,7 @@ from fastapi.responses import FileResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry, OccupancyGrid
-from rclpy.qos import QoSProfile, DurabilityPolicy
+from rclpy.qos import QoSProfile, DurabilityPolicy, qos_profile_sensor_data
 from tf2_ros import Buffer, TransformListener, TransformException
 import yaml
 from pathlib import Path
@@ -94,6 +94,7 @@ class SharedState:
         self.gesture_status: dict[str, Any] = {}
         self.swing_status: dict[str, Any] = {"state": "waiting"}
         self.scan: dict[str, Any] = {}
+        self.scan_lower: dict[str, Any] = {}
         self.raw_rx = deque(maxlen=80)
         self.rgb_jpeg: bytes | None = None
         self.depth_jpeg: bytes | None = None
@@ -126,6 +127,7 @@ class SharedState:
                 "gesture_status": dict(self.gesture_status),
                 "swing_status": dict(self.swing_status),
                 "scan": dict(self.scan),
+                "scan_lower": dict(self.scan_lower),
                 "raw_rx": list(self.raw_rx),
                 "last_cmd": dict(self.last_cmd),
                 "cmd_vel": dict(self.cmd_vel),
@@ -183,7 +185,9 @@ class OperatorNode(Node):
         self.create_subscription(String, "/gps/status", self.gps_status_cb, 10)
         self.create_subscription(String, "/gesture/status", self.gesture_status_cb, 10)
         self.create_subscription(String, "/swing/status", self.swing_status_cb, 10)
-        self.create_subscription(LaserScan, "/scan", self.scan_cb, 10)
+        self.scan_times = {key: deque(maxlen=30) for key in ('scan', 'scan_lower')}
+        self.create_subscription(LaserScan, "/scan", self.scan_cb, qos_profile_sensor_data)
+        self.create_subscription(LaserScan, "/scan_lower", self.scan_lower_cb, qos_profile_sensor_data)
         self.create_subscription(Image, "/camera/rgb/image_raw", self.rgb_cb, 2)
         self.create_subscription(Image, "/camera/depth/image_raw", self.depth_cb, 2)
         self._last_rgb_encode = 0.0
@@ -433,6 +437,12 @@ class OperatorNode(Node):
             self.state.stamps["swing_status"] = now_s()
 
     def scan_cb(self, msg: LaserScan) -> None:
+        self.update_scan(msg, 'scan')
+
+    def scan_lower_cb(self, msg: LaserScan) -> None:
+        self.update_scan(msg, 'scan_lower')
+
+    def update_scan(self, msg: LaserScan, key: str) -> None:
         valid = []
         front = []
         step = max(1, len(msg.ranges) // 180)
@@ -441,20 +451,29 @@ class OperatorNode(Node):
             if not math.isfinite(r) or r <= msg.range_min or r >= msg.range_max:
                 continue
             angle = msg.angle_min + i * msg.angle_increment
+            # Local top view, x forward/y left. Lower sensor is rolled by pi.
+            if key == 'scan_lower':
+                angle = -angle
+            angle = math.atan2(math.sin(angle), math.cos(angle))
             valid.append(r)
             if abs(angle) <= math.radians(60):
                 front.append(r)
             if i % step == 0:
                 points.append([round(angle, 3), round(float(r), 3)])
+        t = now_s()
+        times = self.scan_times[key]
+        times.append(t)
         with self.state.lock:
-            self.state.scan = {
+            setattr(self.state, key, {
+                "frame": msg.header.frame_id,
+                "hz": round((len(times)-1)/(times[-1]-times[0]), 2) if len(times)>1 and times[-1]>times[0] else 0,
                 "valid_count": len(valid),
                 "front_min": round(min(front), 3) if front else None,
                 "min": round(min(valid), 3) if valid else None,
                 "max": round(max(valid), 3) if valid else None,
                 "points": points[:240],
-            }
-            self.state.stamps["scan"] = now_s()
+            })
+            self.state.stamps[key] = t
 
     def rgb_cb(self, msg: Image) -> None:
         t = now_s()

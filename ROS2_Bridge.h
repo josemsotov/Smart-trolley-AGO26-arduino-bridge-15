@@ -87,6 +87,10 @@ float ros2_angular_vel = 0.0;  // rad/s
 // Low-speed pulse-density modulation. The 50 ms quantum gives each minimum
 // PWM pulse enough mechanical duration while preserving a fractional average.
 static const unsigned long ROS2_PWM_MODULATION_INTERVAL_MS = 100;
+// Bench-selectable continuous low PWM; legacy remains the boot default until
+// loaded ground tests establish the minimum sustainable duty cycle.
+static bool ros2_smooth_pwm_enabled = false;
+static int ros2_smooth_working_pwm = 18;
 static unsigned long ros2_pwm_last_apply_ms = 0;
 static float ros2_pwm_demand_left = 0.0f;
 static float ros2_pwm_demand_right = 0.0f;
@@ -236,14 +240,14 @@ int ros2_time_proportioned_pwm(float demand, int working_pwm,
 void ros2_apply_pwm_demands() {
   unsigned long now = millis();
   if (ros2_pwm_last_apply_ms != 0 &&
-      now - ros2_pwm_last_apply_ms < ROS2_PWM_MODULATION_INTERVAL_MS) {
+      now - ros2_pwm_last_apply_ms < (ros2_smooth_pwm_enabled ? 20UL : ROS2_PWM_MODULATION_INTERVAL_MS)) {
     return;
   }
   ros2_pwm_last_apply_ms = now;
   int next_left = ros2_time_proportioned_pwm(
-    ros2_pwm_demand_left, ROS2_STARTUP_BOOST_PWM, ros2_pwm_accumulator_left);
+    ros2_pwm_demand_left, ros2_smooth_pwm_enabled ? ros2_smooth_working_pwm : ROS2_STARTUP_BOOST_PWM, ros2_pwm_accumulator_left);
   int next_right = ros2_time_proportioned_pwm(
-    ros2_pwm_demand_right, ROS2_STARTUP_BOOST_PWM,
+    ros2_pwm_demand_right, ros2_smooth_pwm_enabled ? ros2_smooth_working_pwm : ROS2_STARTUP_BOOST_PWM,
     ros2_pwm_accumulator_right);
   if (next_left != ros2_pwm_applied_left ||
       ros2_pwm_dir_left != leftMotor.direction) {
@@ -962,6 +966,22 @@ void ros2_processCommand(String cmd) {
       } else if (params == "off") {
         velocity_pi_enabled = false;
         pid_per_wheel_reset();
+      } else if (params.startsWith("floor ")) {
+        if (ros2_pwm_demand_left != 0.0f || ros2_pwm_demand_right != 0.0f) {
+          Serial.println("k FAIL stop before profile change");
+          break;
+        }
+        ros2_smooth_working_pwm = constrain(params.substring(6).toInt(), 1, 25);
+        ros2_pwm_accumulator_left = ros2_pwm_accumulator_right = 0.0f;
+        Serial.print("k floor="); Serial.println(ros2_smooth_working_pwm);
+      } else if (params == "smooth" || params == "legacy") {
+        if (ros2_pwm_demand_left != 0.0f || ros2_pwm_demand_right != 0.0f) {
+          Serial.println("k FAIL stop before profile change");
+          break;
+        }
+        ros2_smooth_pwm_enabled = params == "smooth";
+        ros2_pwm_accumulator_left = ros2_pwm_accumulator_right = 0.0f;
+        Serial.print("k smooth="); Serial.println(ros2_smooth_pwm_enabled ? 1 : 0);
       } else if (params.length() > 0) {
         int sp2 = params.indexOf(' ');
         if (sp2 > 0) {
@@ -1107,6 +1127,21 @@ void ros2_processCommand(String cmd) {
       }
       String filter_arg = cmd.substring(sp + 1);
       filter_arg.trim();
+      if (filter_arg.startsWith("leftscale ")) {
+        if (leftMotor.pwm != 0 || rightMotor.pwm != 0 ||
+            ros2_pwm_demand_left != 0.0f || ros2_pwm_demand_right != 0.0f) {
+          Serial.println("j FAIL stop before scale change");
+          break;
+        }
+        int scale = filter_arg.substring(10).toInt();
+        if (scale < 50 || scale > 100) {
+          Serial.println("j FAIL scale range 50..100");
+          break;
+        }
+        optoLeftFilterScalePct = (uint8_t)scale;
+        Serial.print("j leftscale="); Serial.println(scale);
+        break;
+      }
       if (filter_arg == "stat") {
         noInterrupts();
         uint32_t lraw = leftOptoRawEdges;
@@ -1614,6 +1649,13 @@ void ros2_processCommand(String cmd) {
 
 bool ros2_tryProcessCommand(String cmd) {
   cmd.trim();
+
+  #ifdef ENABLE_TF_LUNA
+  if (cmd == "tf" || cmd.startsWith("tf ")) {
+    tf_luna_command(cmd);
+    return true;
+  }
+  #endif
   
   if (cmd.length() == 0) return false;
   

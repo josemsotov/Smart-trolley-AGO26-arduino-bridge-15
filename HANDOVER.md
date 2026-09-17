@@ -1,6 +1,61 @@
 # Handover — Smart Trolley V14
 
-Actualizado: 2026-08-20
+Actualizado: 2026-09-17
+
+## 2026-09-17 - Kinect recuperado y sincronizacion Escritorio
+
+- Tras reconexion USB Kinect estaba enumerado pero sin captura reciente.
+  Reinicio autorizado de robot-follower.service de usuario recupero RGB
+  a 25.9 FPS y profundidad fresca (0.653 s); ambos LiDAR frescos y motores
+  PWM/RPM cero. No se cambio firmware en esta recuperacion.
+- Copia del proyecto en Escritorio:
+  `C:\Users\cools\Desktop\Smart-trolley-AGO26-arduino-bridge-15`.
+- Respaldo/sincronizacion solicitado: codigo, firmware, documentacion,
+  resultados de pruebas y respaldos HEX se incluyen en GitHub y en la copia
+  del Escritorio. Entornos virtuales, credenciales y salidas generadas siguen
+  excluidos de Git segun `.gitignore`.
+- Las dos carpetas son clones independientes: cambios futuros requieren
+  commit/push/pull; no existe sincronizacion automatica entre carpetas.
+
+## 2026-09-16 - Segundo LD19 e interfaz
+
+- Superior USB by-path puerto 1.3, inferior 1.4: ambos CP2102 tienen serie
+  0001; no usar by-id compartido. Mantener y etiquetar puertos/cables.
+- Ambos activos a 10 Hz: `/scan` / `base_laser` y `/scan_lower` /
+  `base_laser_lower`. Inferior a z=0.15 m, roll=pi (invertido, flecha adelante).
+  x=-0.10/y=0 provisionales hasta medir posicion horizontal.
+- Panel inferior en Operacion, estado en Operacion/Pruebas de
+  `http://192.168.40.74:8080/`. Datos frescos confirmados por API; canvas y JS
+  servidos correctamente. Correccion de izquierda/derecha y frente 0/2pi.
+- Inferior NO incorporado aun al frenado ni SLAM. Retornos cercanos de 2.5 cm:
+  revisar objetos/montaje antes de usarlo para seguridad. No se movieron motores.
+- Detalles, respaldos y pruebas: `simulation_ws/DUAL_LIDAR_INTEGRATION.md`.
+
+## 2026-09-13 - Pausa obstaculos; soporte TF-Luna local
+
+Usuario solicita pausar la prueba motorizada de obstaculos para integrar TF-Luna.
+Driver I2C TF_Luna.h implementado, dos canales0x10/0x11 desactivados al boot,
+comandos tf status/on/off, trigger sin delay, identidad/calidad/frescura y timeout.
+Compilado y probado con Wire simulado; NO cargado al Arduino, NO desplegado al Pi.
+68780 flash /7125 RAM (1067 libres). Cableado mediante adaptador3.3V pendiente.
+Guia y limitaciones: TF_LUNA_INTEGRATION.md. No se integra aun a frenado/UI.
+
+## 2026-09-11 - Encoder izquierdo, comparacion de filtro
+
+Prueba manual: Hall453/opto454 para diez vueltas indicadas. Con movimiento
+a demanda15 aparece deficit opto ~5-7%; demanda20/25 concordo en una prueba.
+Selector de diagnostico `j leftscale 50..100` instalado, default100.
+Comparacion100 vs80 NO mejoro; restaurado100. No asumir ruido opto como causa
+unica ni cambiar PPR. Detalles: simulation_ws/results/manual_encoder/filter_ab_20260911.md.
+
+## Banco: suavizado 2026-09-10
+
+Firmware cargado y verificado con perfiles `k smooth` / `k legacy` y umbral
+`k floor 18`. Ensayos automaticos avance/reversa/giro completos, incluyendo
+repeticion. Detalles, limitaciones, respaldo original y resultados en
+`simulation_ws/SMOOTH_BENCH_20260910.md`. Perfil legacy sigue siendo default
+tras reiniciar Arduino; smooth queda habilitado solo en runtime para banco.
+PI y heading apagados. No extrapolar a suelo ni afirmar velocidad calibrada.
 
 ## Actualizacion 2026-08-25 - PPR efectivo de optoencoders
 
@@ -322,3 +377,15 @@ systemctl --user status robot-follower.service robot-operator-web.service
 - Kinect: captura solicitada a 30 Hz, grabacion medida 25.81 fps (104 frames); ultima recepcion observada 28.7 fps. Vista previa sigue limitada a 4 Hz, analisis corporal a 10 Hz durante sesion/2 Hz inactivo.
 - Entrenamiento: videos telefono hasta 300 MB, biblioteca, slow motion, paso aproximado por frames y marcas manuales exportables. Kinect clips hasta 30 s, AVI original, timestamps y MP4. Analisis telefono manual; no mide impacto, spin ni velocidad de bola/palo.
 - Validacion: tres paquetes ROS compilados, upload sintetico 120 fps y rechazo de archivo invalido aprobados, clip Kinect real generado, motores 0/0 al cierre de despliegue. Documentacion detallada en TRAINING_VIDEO_20260910.md y MANUAL_DRIVE_TUNING_20260909.md.
+
+## 2026-09-13 - TF-Luna commissioning firmware
+
+- Soporte firmware local agregado para TF-Luna por I2C en `TF_Luna.h`, habilitado por comandos `tf status`, `tf on 1`, `tf off 1`, `tf on 2`, `tf off 2`.
+- Direcciones previstas: canal 1 `0x10`, canal 2 `0x11`; ambos canales arrancan deshabilitados y no publican ni frenan el robot todavia.
+- Firmware compilado: 68780 bytes flash; RAM 7125/8192 bytes, 1067 libres. SHA256 del HEX: `3fa43156fcc0d0c2456cde10084b70045d81070851e02c8961f07dde01ba902e`.
+- Tests nativos del driver TF con Wire/Serial simulados pasaron: arranque deshabilitado, interlock de movimiento, firma, timeouts, rango, amplitud, error de dispositivo, stale y seleccion de canal 2.
+- Firmware TF-Luna cargado y verificado por `avrdude`: 68780 bytes escritos y verificados. Respaldo previo de esta carga en Pi: `/home/josemsotov/robot_backups/pre_tfluna_20260913_5jjaKY/original.hex`; copia local `arduino_flash_backups/pre_tfluna_20260913_before_successful_upload.hex`; SHA256 `31170255871eeffa724f193b2e1cae259d177d026b25c27db85bff4444fc015b`. Respaldo previo adicional local `arduino_flash_backups/pre_tfluna_20260913_original.hex`; SHA256 `dfd72ef56f1fff65636438b1c88b4991ccf52e7ffef550453e931b8f2fa99fbd`.
+- Usuario conecto solo el TF-Luna; IMU desconectado intencionalmente, por lo que `I ready=0` es esperado durante esta prueba.
+- Verificacion fisica: Arduino Mega reaparecio como `/dev/ttyACM0`; comandos `tf` reconocidos. Canal1 `0x10` y canal2 `0x11` devuelven `err=2`, es decir NACK/timeout/lectura corta I2C, sin medicion valida.
+- No se comandaron motores durante esta prueba. Siguiente paso: con power off, revisar VCC/GND, SDA/SCL a traves del level shifter, pin5 a GND, LV=3.3V, HV=lado Arduino, tierra comun y orientacion del conector; luego repetir `tf on 1`/`tf status` y despues reconectar/verificar MPU.
+- Guia de cableado, comandos y protocolo: `TF_LUNA_INTEGRATION.md`.

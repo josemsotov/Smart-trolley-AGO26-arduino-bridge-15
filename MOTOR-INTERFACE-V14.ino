@@ -133,6 +133,10 @@ void setup() {
     gps_initialize();
   #endif
 
+  #ifdef ENABLE_TF_LUNA
+    tf_luna_initialize();
+  #endif
+
   // Auto-activar balance anti-caída (requiere MPU ya inicializado)
   #if defined(ENABLE_HOVERBOARD_MODE) && defined(ENABLE_MPU9250)
     hoverboard_enable();
@@ -212,6 +216,10 @@ void loop() {
   // ===== MONITOREO DEL SISTEMA =====
   systemMonitoring();             // Verificaciones de seguridad
   motorSafetyCheck();             // Verificar seguridad motores
+
+  #ifdef ENABLE_TF_LUNA
+    tf_luna_update(); // bounded I2C work, after motor safety; no ranging delays
+  #endif
   
   // ===== DELAY MÍNIMO =====
   delay(1);  // Pequeño delay para estabilidad

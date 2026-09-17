@@ -162,6 +162,16 @@
 #define GPS_BAUD_RATE                 9600
 #define GPS_REPORT_INTERVAL_MS        1000
 
+// TF-Luna I2C support compiled in; both channels DISABLED at every boot.
+// Addresses are host configuration only: second sensor must be assigned 0x11
+// separately before sharing the bus. Never connect its 3.3V signals to 5V.
+#define ENABLE_TF_LUNA
+#define TF_LUNA_ADDR_1                0x10
+#define TF_LUNA_ADDR_2                0x11
+#define TF_LUNA_WAIT_MS               100UL
+#define TF_LUNA_RETRY_MS              1000UL
+#define TF_LUNA_STALE_MS              500UL
+
 #define ENABLE_ROS2_BRIDGE              // Activar bridge ROS2
 
 #ifdef ENABLE_ROS2_BRIDGE
