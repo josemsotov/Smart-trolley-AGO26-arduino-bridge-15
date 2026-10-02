@@ -44,16 +44,24 @@ try {
         $v=$config.views[$i]
         Write-Output "View $i title=$($v.title) type=$($v.type) cards=$(@($v.cards).Count) sections=$(@($v.sections).Count)"
     }
+    if ($config.strategy.type -eq 'iframe') {
+        Write-Output "Strategy type=iframe url=$($config.strategy.url)"
+    }
     if (!$Apply) { return }
     if ($config.strategy.type -eq 'iframe') {
-        if ($config.strategy.url.TrimEnd('/') -notin @('http://192.168.40.74:8080', 'http://192.168.40.74:8080/?v=slam-map-20260909')) {
+        $canonicalUrl = 'http://192.168.40.74:8080/?v=unified-interface-20261002'
+        if ($config.strategy.url.TrimEnd('/') -notin @(
+            'http://192.168.40.74:8080',
+            'http://192.168.40.74:8080/?v=slam-map-20260909',
+            $canonicalUrl
+        )) {
             throw 'Unexpected embedded interface URL; inspect before changing'
         }
-        $config.strategy.url = 'http://192.168.40.74:8080/?v=slam-map-20260909'
+        $config.strategy.url = $canonicalUrl
         Command @{id=2; type='lovelace/config/save'; url_path='smart-trolley'; config=$config} | Out-Null
         $verified=Command @{id=3; type='lovelace/config'; url_path='smart-trolley'}
         if ($verified.strategy.url -ne $config.strategy.url) { throw 'Dashboard verification failed' }
-        Write-Output 'Embedded interface URL updated and verified; includes live SLAM map'
+        Write-Output "Home Assistant now embeds the canonical Fairway OS interface: $canonicalUrl"
         return
     }
     $view = $config.views[0]

@@ -1,6 +1,20 @@
 # Handover — Smart Trolley V14
 
-Actualizado: 2026-09-17
+Actualizado: 2026-10-02
+
+## 2026-10-02 - Interfaz unificada con Home Assistant
+
+- Fairway Trolley OS sigue siendo la unica interfaz canonica en
+  `http://192.168.40.74:8080/`.
+- El dashboard `smart-trolley` de Home Assistant usa estrategia iframe y apunta
+  a esa interfaz completa con version de cache
+  `?v=unified-interface-20261002`; no mantiene una segunda implementacion.
+- Se desplego la pestana `VISUAL AID` con la imagen Stadia suministrada y la
+  leyenda de controles en las rutas source/install del Pi.
+- Respaldo previo del dashboard HA en
+  `%LOCALAPPDATA%\SmartTrolley\ha-backups\smart-trolley-20261002-183049.json`.
+- Respaldo previo de la web del Pi en
+  `/home/josemsotov/robot_backups/visual_aid_20261002_181451`.
 
 ## 2026-09-17 - Kinect recuperado y sincronizacion Escritorio
 

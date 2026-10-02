@@ -1,6 +1,8 @@
 # Smart Golf Trolley portfolio
 
-Static portfolio case study for Jose M Soto V. It is intentionally dependency-free and can be published on any static web host.
+Static portfolio case study for SOTO-ROBOTICS, led by Jose M Soto V. It is intentionally dependency-free and can be published on any static web host.
+
+The systems-engineering section applies a V-model/MBSE-inspired workflow to the implemented trolley baseline. Its requirements, safety functions and hazard priorities are preliminary engineering artefacts for an R&D prototype; they are not certification, an ISO 26262 assessment or permission for unsupervised operation.
 
 ## Preview locally
 
@@ -14,15 +16,23 @@ Then open `http://localhost:8000`.
 
 ## Recommended LinkedIn publishing route
 
-GitHub Pages is preferable to Google Drive for this portfolio. Google Drive stores and shares the files, but it does not serve a folder as a normal public website.
+GitHub Pages is preferable to Google Drive for this portfolio. Google Drive stores and shares the files, but it does not serve a folder as a normal public website and should not be used as the LinkedIn destination.
 
 1. Keep the `portfolio` directory in a public GitHub repository.
 2. In the repository, open **Settings > Pages**.
-3. Select **Deploy from a branch**, choose the branch and `/portfolio` source if available.
-4. If GitHub only offers the repository root or `/docs`, copy these four files into a `docs` directory and select `/docs`.
-5. Add the resulting `https://...github.io/...` address to the **Featured** section of LinkedIn.
+3. Select **Deploy from a branch**, choose the publishing branch and select the repository root.
+4. Use the resulting `https://<username>.github.io/<repository>/portfolio/` address. Alternatively, copy these four files into a `docs` directory, select `/docs` as the Pages source and use the main Pages address.
+5. Add the public address to the **Featured** section of LinkedIn.
+
+Suggested LinkedIn title: **Smart Golf Trolley — Robotics R&D by SOTO-ROBOTICS**
+
+Suggested LinkedIn description: **A multidisciplinary engineering case study covering embedded motor control, ROS 2, perception, electronics, mechanical integration, safety and prototype validation.**
 
 Alternatives such as Netlify, Cloudflare Pages or Google Firebase Hosting can publish the same files without modification.
+
+## Revision traceability
+
+The public page identifies its technical baseline with a Git tag. For the first published release, `portfolio-v1.0.0` points to the exact repository commit containing the portfolio claims, interface documentation and supporting implementation revision. Future material changes should use a new tag rather than moving an existing tag.
 
 ## Before publishing
 

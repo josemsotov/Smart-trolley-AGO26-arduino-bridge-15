@@ -3,13 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Smart Golf Trolley robotics R&D case study by Jose M Soto V: embedded control, ROS 2, perception, electronics and mechanical integration.">
-  <meta name="author" content="Jose M Soto V">
+  <meta name="description" content="Smart Golf Trolley robotics R&D case study by SOTO-ROBOTICS: embedded control, ROS 2, perception, electronics and mechanical integration.">
+  <meta name="author" content="SOTO-ROBOTICS">
   <meta name="theme-color" content="#101d19">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Smart Golf Trolley | Jose M Soto V">
+  <meta property="og:site_name" content="SOTO-ROBOTICS">
+  <meta property="og:title" content="Smart Golf Trolley | SOTO-ROBOTICS">
   <meta property="og:description" content="A multidisciplinary robotics R&D case study spanning embedded software, ROS 2, sensing, safety and mechanical integration.">
-  <title>Smart Golf Trolley | Jose M Soto V</title>
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Smart Golf Trolley | SOTO-ROBOTICS">
+  <meta name="twitter:description" content="Robotics R&D across embedded software, ROS 2, sensing, electronics, safety and mechanical integration.">
+  <title>Smart Golf Trolley | SOTO-ROBOTICS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,9 +24,9 @@
   <a class="skip-link" href="#main">Skip to project</a>
 
   <header class="site-header" data-header>
-    <a class="brand" href="#top" aria-label="Jose M Soto V, home">
-      <span class="brand-mark" aria-hidden="true">JS</span>
-      <span>JOSE M SOTO V</span>
+    <a class="brand" href="#top" aria-label="SOTO-ROBOTICS, home">
+      <span class="brand-mark" aria-hidden="true">SR</span>
+      <span>SOTO-ROBOTICS</span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
       <span class="sr-only">Toggle navigation</span>
@@ -33,6 +37,7 @@
       <a href="#engineering">Engineering</a>
       <a href="#mechanical">Mechanical</a>
       <a href="#architecture">Architecture</a>
+      <a href="#systems-engineering">Systems</a>
       <a href="#validation">Validation</a>
       <a class="nav-cta" href="mailto:josemsotov@gmail.com?subject=Engineering%20project%20enquiry">Discuss a project</a>
     </nav>
@@ -41,9 +46,9 @@
   <main id="main">
     <section id="top" class="hero section-grid">
       <div class="hero-copy reveal">
-        <p class="eyebrow"><span>01</span> Robotics R&amp;D case study</p>
+        <p class="eyebrow"><span>01</span> SOTO-ROBOTICS R&amp;D case study</p>
         <h1>Smart Golf<br><em>Trolley</em></h1>
-        <p class="hero-intro">A multidisciplinary robotic platform developed to explore safe autonomous assistance on the golf course&mdash;from motor control and sensing to ROS 2 perception and a field-ready operator interface.</p>
+        <p class="hero-intro">A multidisciplinary robotic platform developed by SOTO-ROBOTICS to explore safe autonomous assistance on the golf course&mdash;from motor control and sensing to ROS 2 perception and a field-ready operator interface.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#overview">Explore the engineering <span aria-hidden="true">&darr;</span></a>
           <a class="button button-text" href="mailto:josemsotov@gmail.com?subject=Smart%20Golf%20Trolley%20R%26D">Contact Jose <span aria-hidden="true">&nearr;</span></a>
@@ -341,9 +346,245 @@
       </div>
     </section>
 
+    <section id="systems-engineering" class="systems-engineering section-shell">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span>06</span> Systems engineering</p>
+        <h2>From stakeholder need<br>to <em>verified behaviour</em></h2>
+      </div>
+
+      <div class="se-intro">
+        <div class="se-intro-lead reveal">
+          <p>The trolley is treated as a system of people, software, electronics, mechanics, information and operating procedures&mdash;not as a collection of components.</p>
+        </div>
+        <div class="se-intro-copy reveal">
+          <p>A V-model and MBSE-inspired workflow connects operational needs to functions, logical architecture, physical implementation, interfaces and verification evidence. The artefacts below are reconstructed from the implemented prototype and its test record.</p>
+          <p><strong>Scope statement:</strong> this is a preliminary engineering baseline for an R&amp;D prototype. It is not an ISO&nbsp;26262 assessment, product certification, safety case or permission for unsupervised operation.</p>
+        </div>
+      </div>
+
+      <div class="se-method-grid">
+        <article class="se-method reveal"><span>01</span><h3>Need &amp; CONOPS</h3><p>Assist a golfer by carrying equipment, following or accepting manual commands while remaining observable and controllable during field trials.</p></article>
+        <article class="se-method reveal"><span>02</span><h3>Requirements</h3><p>Translate the need into measurable motion, perception, control-authority, stopping, telemetry and maintainability requirements.</p></article>
+        <article class="se-method reveal"><span>03</span><h3>Functional analysis</h3><p>Decompose the mission into operate, perceive, decide, move, protect, estimate, inform, verify and support functions.</p></article>
+        <article class="se-method reveal"><span>04</span><h3>Architecture &amp; interfaces</h3><p>Allocate functions across the operator, web HMI, ROS&nbsp;2 edge computer, embedded controller, sensors and mechanical plant.</p></article>
+        <article class="se-method reveal"><span>05</span><h3>Integration &amp; V&amp;V</h3><p>Integrate bottom-up, exercise interfaces, inject stale or invalid inputs and retain test results as objective evidence.</p></article>
+      </div>
+
+      <div class="se-subheading reveal">
+        <p class="eyebrow"><span>A</span> System context</p>
+        <h3>Functional and physical allocation</h3>
+        <p>Commands flow left to right; state, diagnostics and evidence return to the operator. The boundary includes the robot and its local edge-compute stack.</p>
+      </div>
+
+      <div class="se-context-diagram reveal" role="img" aria-label="System context block diagram from stakeholders through interfaces, ROS 2 compute, embedded control and physical trolley">
+        <article class="se-layer">
+          <span>Stakeholders</span>
+          <h4>People &amp; external systems</h4>
+          <ul><li>Golfer / operator</li><li>Test engineer</li><li>Maintainer</li><li>Home Assistant</li></ul>
+        </article>
+        <div class="se-diagram-arrow" aria-hidden="true"><b>intent</b></div>
+        <article class="se-layer">
+          <span>Interaction</span>
+          <h4>Control &amp; information</h4>
+          <ul><li>Physical Stadia controller</li><li>Fairway Trolley OS</li><li>STOP and mode requests</li><li>Telemetry / maps / media</li></ul>
+        </article>
+        <div class="se-diagram-arrow" aria-hidden="true"><b>HTTP · evdev</b></div>
+        <article class="se-layer featured">
+          <span>Edge compute</span>
+          <h4>Raspberry Pi 5 / ROS 2</h4>
+          <ul><li>Authority &amp; velocity mux</li><li>Follower / gesture / navigation</li><li>Odometry, EKF &amp; perception</li><li>Web API and observability</li></ul>
+        </article>
+        <div class="se-diagram-arrow" aria-hidden="true"><b>USB serial</b></div>
+        <article class="se-layer">
+          <span>Embedded control</span>
+          <h4>Arduino Mega 2560</h4>
+          <ul><li>Command validation &amp; watchdog</li><li>Differential drive conversion</li><li>Sensor acquisition</li><li>PWM / direction / brake / stop</li></ul>
+        </article>
+        <div class="se-diagram-arrow" aria-hidden="true"><b>I/O · power</b></div>
+        <article class="se-layer">
+          <span>Physical plant</span>
+          <h4>Trolley &amp; environment</h4>
+          <ul><li>Two driven wheels</li><li>Passive casters and chassis</li><li>Golf equipment payload</li><li>People, terrain and obstacles</li></ul>
+        </article>
+      </div>
+
+      <div class="se-feedback-band reveal">
+        <strong>Feedback path</strong>
+        <span>Hall + optical encoders</span><i></i><span>IMU</span><i></i><span>motor current</span><i></i><span>GPS</span><i></i><span>RGB-D</span><i></i><span>dual LiDAR</span>
+      </div>
+
+      <div class="se-subheading reveal">
+        <p class="eyebrow"><span>B</span> Control architecture</p>
+        <h3>One authorised motion path</h3>
+        <p>Multiple behaviours may propose motion, but a single arbiter selects and limits one fresh source before commands cross the embedded boundary.</p>
+      </div>
+
+      <div class="control-chain reveal">
+        <div class="control-sources">
+          <span>Command sources</span>
+          <article><b>Web dead-man</b><small>Fresh while held</small></article>
+          <article><b>Physical Stadia</b><small>Manual takeover</small></article>
+          <article><b>Follower</b><small>Authorised person track</small></article>
+          <article><b>Gesture</b><small>Explicit mode</small></article>
+          <article><b>Nav2</b><small>Readiness + GPS gated</small></article>
+        </div>
+        <div class="control-step"><span>1</span><b>Field supervisor</b><small>Fail-closed mode selection</small></div>
+        <div class="control-step"><span>2</span><b>cmd_vel mux</b><small>Freshness, priority and ±0.45&nbsp;m/s / ±0.90&nbsp;rad/s clamps</small></div>
+        <div class="control-step"><span>3</span><b>Arduino bridge</b><small>0.5&nbsp;s command watchdog and serial validation</small></div>
+        <div class="control-step"><span>4</span><b>Firmware</b><small>Velocity constraints, 1.0&nbsp;s ROS timeout, heading and motor state</small></div>
+        <div class="control-step output"><span>5</span><b>Actuation</b><small>Timer5 PWM, direction, brake and driver STOP lines</small></div>
+      </div>
+
+      <div class="se-grid-two">
+        <div class="se-panel reveal">
+          <div class="se-panel-heading"><span>C</span><h3>Functional allocation</h3></div>
+          <div class="allocation-list">
+            <article><b>Operate</b><p>Modes, manual drive, web dead-man, speed limits and emergency request.</p><small>HMI + Stadia + field supervisor</small></article>
+            <article><b>Perceive</b><p>Person, face session, obstacles, depth, pose and swing observations.</p><small>Kinect + upper/lower LiDAR + Coral</small></article>
+            <article><b>Decide</b><p>Control authority, target association, obstacle gating and navigation readiness.</p><small>ROS 2 supervision and behaviours</small></article>
+            <article><b>Move</b><p>Differential velocity conversion, heading correction and motor actuation.</p><small>Bridge + Arduino firmware + drivers</small></article>
+            <article><b>Estimate</b><p>Wheel odometry, encoder confidence, IMU state, GPS and mapping.</p><small>Encoder fusion + EKF + SLAM</small></article>
+            <article><b>Protect</b><p>Source timeout, command clamps, stop states, takeover and perception freshness.</p><small>Distributed software controls</small></article>
+            <article><b>Inform &amp; verify</b><p>Live telemetry, health, maps, diagnostics, media and recorded test results.</p><small>Fairway OS + Python test tools</small></article>
+          </div>
+        </div>
+
+        <div class="se-panel reveal">
+          <div class="se-panel-heading"><span>D</span><h3>Lifecycle evidence</h3></div>
+          <ol class="v-cycle">
+            <li><b>Need</b><span>Safe robotic assistance concept</span></li>
+            <li><b>Requirements</b><span>Derived operating and safety baseline</span></li>
+            <li><b>Logical design</b><span>Functions, modes and authority model</span></li>
+            <li><b>Physical design</b><span>Pi, Mega, sensors, drivers and chassis</span></li>
+            <li><b>Component verification</b><span>Motor, Hall, optical, IMU, current and serial tools</span></li>
+            <li><b>Integration verification</b><span>ROS tests, interface checks and bench sweeps</span></li>
+            <li><b>System validation</b><span>Controlled ground trials remain incomplete</span></li>
+          </ol>
+          <div class="evidence-note"><b>Traceability rule</b><p>Need &rarr; requirement &rarr; function &rarr; component/interface &rarr; verification method &rarr; result. The current repository contains substantial test evidence, but not yet a complete approved RTM.</p></div>
+        </div>
+      </div>
+
+      <div class="se-subheading reveal">
+        <p class="eyebrow"><span>E</span> Interface control</p>
+        <h3>Defined exchanges across boundaries</h3>
+      </div>
+
+      <div class="table-scroll reveal" tabindex="0" aria-label="Interface register, horizontally scrollable">
+        <table class="se-table interface-table">
+          <thead><tr><th>ID</th><th>Boundary</th><th>Exchange</th><th>Protocol / physical interface</th><th>Control or constraint</th></tr></thead>
+          <tbody>
+            <tr><td>IF-01</td><td>Operator &harr; Fairway OS</td><td>Modes, STOP, limits, telemetry, map and media</td><td>HTTP, WebSocket, responsive browser</td><td>Web joystick is dead-man; loss of fresh packets returns zero</td></tr>
+            <tr><td>IF-02</td><td>Home Assistant &harr; Fairway OS</td><td>Canonical operator interface</td><td>HTTP iframe</td><td>One UI implementation; HA authentication does not protect the direct Pi URL</td></tr>
+            <tr><td>IF-03</td><td>Stadia &harr; Pi</td><td>Drive axes, takeover and safety buttons</td><td>Bluetooth / Linux evdev</td><td>Takeover on connect; configured deadzones; current deployed profile does not require neutral-to-arm</td></tr>
+            <tr><td>IF-04</td><td>ROS 2 nodes</td><td>Commands, state, images, scans and transforms</td><td>DDS over Zenoh; ROS topics / TF</td><td>Single output mux; source freshness and mode authority</td></tr>
+            <tr><td>IF-05</td><td>Pi &harr; Arduino</td><td>Velocity, raw diagnostics and telemetry</td><td>USB ASCII serial at 115,200 baud</td><td>Line validation, bounded raw command length and independent timeouts</td></tr>
+            <tr><td>IF-06</td><td>Arduino &harr; motor drivers</td><td>PWM, direction, brake and STOP</td><td>Timer5 + digital I/O</td><td>Pin-specific implementation; pin&nbsp;44 requires direct OCR5C handling</td></tr>
+            <tr><td>IF-07</td><td>Wheels &harr; Arduino</td><td>Rotation pulses</td><td>Hall + optical interrupts, 45 effective PPR</td><td>Hall-primary confidence logic; optical-only motion is rejected</td></tr>
+            <tr><td>IF-08</td><td>IMU &harr; Arduino</td><td>Acceleration, rate, pitch and yaw</td><td>I2C, 200&nbsp;Hz target</td><td>Filtering, calibration and heading feedback; tilt logic exists</td></tr>
+            <tr><td>IF-09</td><td>Power path &harr; Arduino</td><td>Left/right motor current</td><td>ACS712 analogue inputs</td><td>Telemetry implemented; automatic overcurrent trip not evidenced</td></tr>
+            <tr><td>IF-10</td><td>GPS &harr; Arduino/Pi</td><td>Fix, satellites and position</td><td>Serial3 at 9,600 baud / ROS NavSatFix</td><td>Navigation gated by freshness, fix and quality; antenna transform remains provisional</td></tr>
+            <tr><td>IF-11</td><td>Kinect &harr; Pi</td><td>RGB, depth, body, face and tilt</td><td>USB / ROS image topics</td><td>Freshness and identity gates; not a safety-rated perception channel</td></tr>
+            <tr><td>IF-12</td><td>Dual LD19 &harr; Pi</td><td>Upper and lower 2D range scans</td><td>USB serial at 230,400 baud / LaserScan</td><td>Upper scan supports behaviour; lower scan is monitor-only pending geometry validation</td></tr>
+            <tr><td>IF-13</td><td>TF-Luna provision</td><td>Short-range distance</td><td>I2C 0x10 / 0x11 via 3.3&nbsp;V adaptation</td><td>Compiled support, disabled at boot and not credited for stopping</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="se-subheading reveal">
+        <p class="eyebrow"><span>F</span> Provisional requirements baseline</p>
+        <h3>Measurable statements and verification intent</h3>
+        <p>These requirements are derived from implemented behaviour and recorded configuration. They should be reviewed with stakeholders and placed under formal change control.</p>
+      </div>
+
+      <div class="table-scroll reveal" tabindex="0" aria-label="Requirements traceability matrix, horizontally scrollable">
+        <table class="se-table requirements-table">
+          <thead><tr><th>ID</th><th>Provisional system requirement</th><th>Allocation</th><th>Verification</th><th>Current evidence</th></tr></thead>
+          <tbody>
+            <tr><td>SYS-01</td><td>The system shall default to a non-moving state when no authorised fresh command source is available.</td><td>Supervisor, mux, bridge, firmware</td><td>Fault injection / timeout test</td><td class="status-partial">Implemented; multi-layer timeout evidence, full chain timing TBC</td></tr>
+            <tr><td>SYS-02</td><td>The system shall constrain commanded velocity to the approved prototype operating envelope.</td><td>Mux, Stadia node, firmware</td><td>Boundary-value test</td><td class="status-evidence">ROS unit tests verify ±0.45&nbsp;m/s and ±0.90&nbsp;rad/s mux clamps</td></tr>
+            <tr><td>SYS-03</td><td>The operator shall be able to cancel autonomous following through deliberate physical-controller input.</td><td>Stadia node, supervisor</td><td>Integration test</td><td class="status-evidence">Takeover and authorisation revocation implemented</td></tr>
+            <tr><td>SYS-04</td><td>Follower motion shall require a connected controller, explicit authorisation, fresh follower state and an enabled person track.</td><td>Supervisor, Stadia, follower</td><td>State-transition test</td><td class="status-evidence">Fail-closed selection has automated tests</td></tr>
+            <tr><td>SYS-05</td><td>Forward follower motion shall be inhibited when required obstacle observations are stale, unknown or blocked.</td><td>Follower obstacle gate</td><td>Unit + controlled obstacle test</td><td class="status-partial">Core unit tests pass; physical coverage and stopping distance TBC</td></tr>
+            <tr><td>SYS-06</td><td>The system shall report command, motor, encoder, IMU, GPS, perception and service freshness to the operator.</td><td>Bridge, web server, HMI</td><td>Interface inspection</td><td class="status-evidence">Live WebSocket dashboard implemented</td></tr>
+            <tr><td>SYS-07</td><td>The embedded controller shall set motor demand to zero within 1.0&nbsp;s of a lost ROS velocity command.</td><td>Arduino firmware</td><td>Timed disconnect test</td><td class="status-evidence">Firmware timeout implemented; measured end-to-end stop TBC</td></tr>
+            <tr><td>SYS-08</td><td>The system shall preserve diagnostic evidence sufficient to reproduce calibration and integration decisions.</td><td>Test tools and repository</td><td>Configuration audit</td><td class="status-partial">Extensive records exist; formal configuration baseline remains incomplete</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="se-subheading safety-heading-se reveal">
+        <p class="eyebrow"><span>G</span> Preliminary safety engineering</p>
+        <h3>Credit controls only when evidence supports them</h3>
+        <p>The assessment uses qualitative severity and likelihood for prioritisation. ISO&nbsp;26262 HARA concepts inform the structure, but ASIL is deliberately not assigned: this trolley is not being assessed as a road-vehicle item, operational exposure is not quantified, and controllability data is unavailable.</p>
+      </div>
+
+      <div class="safety-function-grid">
+        <article class="safety-function credited reveal"><span>SF-01 · credited prototype control</span><h4>Fail-closed command chain</h4><p>Mode gating, single-source arbitration, source freshness, Pi watchdog and firmware timeout drive demand to zero after communication loss.</p><small>Evidence: code + ROS unit tests. End-to-end stopping time and distance still require measurement.</small></article>
+        <article class="safety-function credited reveal"><span>SF-02 · credited prototype control</span><h4>Manual takeover</h4><p>Physical Stadia movement revokes follower authorisation, sends zero and transfers authority to manual control.</p><small>Evidence: implemented logic. Human-factors validation remains open.</small></article>
+        <article class="safety-function credited reveal"><span>SF-03 · credited prototype control</span><h4>Velocity limiting and ramping</h4><p>Command clamps, deadzones, acceleration/deceleration ramps and stop-before-reversal reduce abrupt or excessive demand.</p><small>Evidence: configuration + unit tests. Safe limits depend on mass, slope and surface.</small></article>
+        <article class="safety-function partial reveal"><span>SF-04 · partial credit</span><h4>Obstacle and target gating</h4><p>Follower logic requires fresh LiDAR/depth observations and uses target continuity and visual identity checks.</p><small>Gap: blind zones, environmental performance and physical stopping distance are not validated.</small></article>
+        <article class="safety-function monitor reveal"><span>SF-05 · monitoring only</span><h4>Velocity guard and current sensing</h4><p>The guard detects conflicting publishers, motion while stopped and limit violations; ACS712 channels expose motor current.</p><small>Gap: the configured guard is monitor-only and no automatic overcurrent shutdown is evidenced.</small></article>
+        <article class="safety-function uncredited reveal"><span>SF-06 · not credited</span><h4>Tilt / balance response</h4><p>Firmware contains tilt thresholds, correction and emergency-stop logic, but the production ROS controller repeatedly commands balance off.</p><small>Gap: behaviour is not a validated safety function in the deployed operating configuration.</small></article>
+        <article class="safety-function uncredited reveal"><span>SF-07 · not evidenced</span><h4>Independent emergency stop</h4><p>The red web STOP and software stop chain are useful operational controls.</p><small>Gap: no independent hardwired mushroom, safety relay or motor-power contactor is evidenced in the reviewed baseline.</small></article>
+      </div>
+
+      <div class="risk-scale reveal">
+        <span>Preliminary risk priority</span>
+        <b class="risk-critical">Critical</b><b class="risk-high">High</b><b class="risk-medium">Medium</b><b class="risk-low">Low</b>
+        <p>Priority combines credible harm severity with qualitative likelihood before additional mitigation. It is not an ASIL or certified risk rating.</p>
+      </div>
+
+      <div class="table-scroll reveal" tabindex="0" aria-label="Preliminary hazard log, horizontally scrollable">
+        <table class="se-table hazard-table">
+          <thead><tr><th>ID</th><th>Hazardous event</th><th>Potential effect</th><th>Existing controls</th><th>Key gap / recommended action</th><th>Priority</th></tr></thead>
+          <tbody>
+            <tr><td>HZ-01</td><td>Unintended motion or failure to stop</td><td>Impact, trapping or trolley runaway</td><td>Authority model, mux zero, multiple watchdogs, software STOP</td><td>Add independent hardwired E-stop and power isolation; measure worst-case stop time/distance on representative load and slope</td><td><b class="risk-critical">Critical</b></td></tr>
+            <tr><td>HZ-02</td><td>Forward collision during follower operation</td><td>Person struck or equipment/property damage</td><td>Upper LiDAR, depth freshness, obstacle gate, speed limit</td><td>Validate field of view, detection probability and braking envelope across clothing, sunlight, rain and terrain</td><td><b class="risk-high">High</b></td></tr>
+            <tr><td>HZ-03</td><td>Reverse or low-obstacle collision</td><td>Foot/ankle impact, caster obstruction or tip</td><td>Unknown-rear logic can inhibit retreat in obstacle core</td><td>Integrate and validate lower/rear sensing or contact bumpers; lower LiDAR is currently monitor-only</td><td><b class="risk-high">High</b></td></tr>
+            <tr><td>HZ-04</td><td>Wrong-person acquisition or target jump</td><td>Unexpected trajectory into people or hazards</td><td>Face session, visual/LiDAR gating, continuity checks, controller authorisation</td><td>Quantify false accept/switch rates; require safe reacquisition and operator confirmation after track loss</td><td><b class="risk-high">High</b></td></tr>
+            <tr><td>HZ-05</td><td>Tip, rollaway or unstable behaviour on slope</td><td>Crush/impact, damaged equipment</td><td>Low speed, IMU telemetry, firmware tilt logic</td><td>Define slope/payload limits, centre-of-gravity envelope, parking restraint and validated static/dynamic stability tests</td><td><b class="risk-high">High</b></td></tr>
+            <tr><td>HZ-06</td><td>Electrical overcurrent, short circuit or battery thermal event</td><td>Fire, burns or loss of control</td><td>Current telemetry; motor-driver stop lines</td><td>Confirm battery chemistry, BMS, fuse, contactor, cable protection, enclosure and automatic trip architecture</td><td><b class="risk-critical">Critical</b></td></tr>
+            <tr><td>HZ-07</td><td>Unauthorised or malformed network command</td><td>Unexpected mode or motion request</td><td>Input ranges, source mux and local-network deployment</td><td>Add authenticated API, TLS or trusted reverse proxy; restrict raw diagnostics and segment the robot network</td><td><b class="risk-high">High</b></td></tr>
+            <tr><td>HZ-08</td><td>Sensor data stale, biased or geometrically misregistered</td><td>Incorrect localisation, obstacle decision or heading</td><td>Freshness checks, confidence logic and TF model</td><td>Complete sensor calibration, lower-LiDAR pose and GPS antenna transform; add plausibility/fault-injection tests</td><td><b class="risk-high">High</b></td></tr>
+            <tr><td>HZ-09</td><td>Unexpected movement during maintenance or diagnostic test</td><td>Hand injury, impact or entanglement</td><td>Warnings, explicit test modes, zero defaults and documented bench practice</td><td>Use keyed maintenance enable, wheel-off-ground fixture, exclusion zone and two-person test procedure</td><td><b class="risk-high">High</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="se-grid-two closing-grid">
+        <div class="se-panel priority-actions reveal">
+          <div class="se-panel-heading"><span>H</span><h3>Risk-reduction roadmap</h3></div>
+          <ol>
+            <li><b>Hardware safe state</b><span>Define and implement independent E-stop, power isolation, braking behaviour and restart interlock.</span></li>
+            <li><b>Motion envelope</b><span>Measure loaded stopping distance, slope stability, traction and caster behaviour; derive validated limits.</span></li>
+            <li><b>Protective sensing</b><span>Close rear/low-obstacle coverage and validate perception under representative outdoor conditions.</span></li>
+            <li><b>Electrical protection</b><span>Baseline battery/BMS/fusing/contactors, current trip thresholds, thermal monitoring and wiring protection.</span></li>
+            <li><b>Secure control plane</b><span>Authenticate remote commands, isolate diagnostic routes and document the trust boundary.</span></li>
+            <li><b>Safety evidence</b><span>Create an approved requirements traceability matrix, interface control documents, hazard log and witnessed V&amp;V procedures.</span></li>
+          </ol>
+        </div>
+        <div class="se-panel tbc-register reveal">
+          <div class="se-panel-heading"><span>I</span><h3>Assumptions &amp; TBC register</h3></div>
+          <p>No unsupported value is treated as fact. The following must be measured or confirmed before detailed design limits can be justified:</p>
+          <ul>
+            <li>Total mass, payload range and centre of gravity</li>
+            <li>Motor, gearbox, driver and braking ratings</li>
+            <li>Battery chemistry, capacity and protection architecture</li>
+            <li>Maximum slope, cross-slope, surface and weather envelope</li>
+            <li>Stopping distance and fault-tolerant time interval</li>
+            <li>Full sensor coverage, blind zones and environmental limits</li>
+            <li>Mechanical strength, ingress protection and EMC performance</li>
+            <li>Mission duration, duty cycle, service life and reliability target</li>
+            <li>Operator population, training and controllability evidence</li>
+            <li>Applicable product, machinery, radio and battery regulations</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <section class="software section-shell">
       <div class="section-heading reveal">
-        <p class="eyebrow"><span>06</span> Software design</p>
+        <p class="eyebrow"><span>07</span> Software design</p>
         <h2>From a deterministic loop<br>to a <em>robotics ecosystem</em></h2>
       </div>
       <div class="software-layout">
@@ -380,12 +621,35 @@
           </article>
         </div>
       </div>
+      <figure class="controller-guide reveal">
+        <div class="controller-guide-copy">
+          <p class="eyebrow"><span>Manual control</span> Verified production mapping</p>
+          <h3>One controller.<br>Explicit authority.</h3>
+          <p>The physical Stadia controller provides immediate manual takeover and safety actions. Deliberate left-stick movement cancels follower operation; connection takeover sends an initial zero command before manual demand is accepted.</p>
+          <p class="controller-note">The D-pad, shoulder, Assistant and Capture controls are intentionally unassigned in the production ROS 2 node.</p>
+        </div>
+        <div class="controller-visual">
+          <a class="controller-image-link" href="stadia-controller.png" target="_blank" rel="noopener" aria-label="Open the Stadia controller photograph at full size">
+            <img src="stadia-controller.png" alt="White Google Stadia controller used for manual Smart Golf Trolley operation.">
+            <span>Open full-size controller image <b aria-hidden="true">&nearr;</b></span>
+          </a>
+          <ul class="controller-functions" aria-label="Stadia controller functions">
+            <li><b>Left stick</b><span>Drive and cancel FOLLOWER</span></li>
+            <li><b>A</b><span>Manual Stadia control</span></li>
+            <li><b>B</b><span>STOP and cancel FOLLOWER</span></li>
+            <li><b>X</b><span>Toggle Kinect tilt mode</span></li>
+            <li><b>Right stick</b><span>Kinect tilt when X is active</span></li>
+            <li><b>Y</b><span>Balance OFF and STOP</span></li>
+            <li><b>Menu</b><span>System OFF, STOP and status</span></li>
+          </ul>
+        </div>
+      </figure>
     </section>
 
     <section class="safety section-shell">
       <div class="safety-panel reveal">
         <div class="safety-heading">
-          <p class="eyebrow"><span>07</span> Safety by design</p>
+          <p class="eyebrow"><span>08</span> Safety by design</p>
           <h2>Stop is a<br><em>system function.</em></h2>
         </div>
         <div class="safety-copy">
@@ -393,7 +657,7 @@
           <ul class="check-list">
             <li><span>&check;</span> Arduino command watchdog with a 0.5&nbsp;s timeout</li>
             <li><span>&check;</span> Constrained speed, angular rate, PWM and acceleration</li>
-            <li><span>&check;</span> Manual control priority and centred-stick arming</li>
+            <li><span>&check;</span> Manual control priority, deadzones and zero-demand takeover</li>
             <li><span>&check;</span> Explicit authorisation before follower mode can move</li>
             <li><span>&check;</span> Tilt monitoring, current telemetry and motor stop states</li>
             <li><span>&check;</span> Conservative bench validation before ground trials</li>
@@ -404,7 +668,7 @@
 
     <section id="validation" class="validation section-shell">
       <div class="section-heading reveal">
-        <p class="eyebrow"><span>08</span> Development &amp; validation</p>
+        <p class="eyebrow"><span>09</span> Development &amp; validation</p>
         <h2>Evidence over <em>assumption</em></h2>
       </div>
       <div class="validation-grid">
@@ -428,7 +692,7 @@
 
     <section class="timeline section-shell">
       <div class="section-heading reveal">
-        <p class="eyebrow"><span>09</span> Engineering journey</p>
+        <p class="eyebrow"><span>10</span> Engineering journey</p>
         <h2>Built through <em>iteration</em></h2>
       </div>
       <ol class="timeline-list">
@@ -442,11 +706,11 @@
 
     <section class="role section-shell">
       <div class="role-card reveal">
-        <p class="eyebrow"><span>10</span> Role &amp; contribution</p>
+        <p class="eyebrow"><span>11</span> Role &amp; contribution</p>
         <div class="role-grid">
-          <h2>End-to-end engineering by<br><em>Jose M Soto V</em></h2>
+          <h2>End-to-end engineering by<br><em>SOTO-ROBOTICS</em></h2>
           <div>
-            <p>This project demonstrates practical R&amp;D across embedded systems, robotics software, electronic integration, mechanical packaging, troubleshooting and verification.</p>
+            <p>Led by Jose M Soto V through SOTO-ROBOTICS, this project demonstrates practical consultancy R&amp;D across embedded systems, robotics software, electronic integration, mechanical packaging, troubleshooting and verification.</p>
             <p>Responsibilities span system architecture, component integration, firmware and Python development, ROS 2 implementation, diagnostic tooling, test execution and technical documentation.</p>
           </div>
         </div>
@@ -455,9 +719,9 @@
 
     <section class="contact section-shell">
       <div class="contact-inner reveal">
-        <p class="eyebrow"><span>11</span> Engineering consultancy</p>
+        <p class="eyebrow"><span>12</span> Engineering consultancy</p>
         <h2>Have a product that needs to<br><em>move, sense or think?</em></h2>
-        <p>I am open to conversations about robotics, embedded systems, automation, prototyping and multidisciplinary engineering development.</p>
+        <p>SOTO-ROBOTICS provides engineering consultancy for robotics, embedded systems, automation, prototyping and multidisciplinary product development.</p>
         <a class="button button-primary button-large" href="mailto:josemsotov@gmail.com?subject=Engineering%20consultancy%20enquiry">Start a conversation <span aria-hidden="true">&nearr;</span></a>
       </div>
     </section>
@@ -465,14 +729,18 @@
 
   <footer class="site-footer">
     <div>
-      <a class="brand" href="#top"><span class="brand-mark">JS</span><span>JOSE M SOTO V</span></a>
-      <p>Engineering R&amp;D &middot; Robotics &middot; Embedded systems</p>
+      <a class="brand" href="#top"><span class="brand-mark">SR</span><span>SOTO-ROBOTICS</span></a>
+      <p>Engineering consultancy &middot; R&amp;D &middot; Robotics &middot; Embedded systems</p>
+      <p class="portfolio-revision">Technical baseline:
+        <a href="https://github.com/josemsotov/Smart-trolley-AGO26-arduino-bridge-15/tree/portfolio-v1.0.0"
+          target="_blank" rel="noreferrer">portfolio-v1.0.0</a>
+      </p>
     </div>
     <div class="footer-contact">
       <span>Contact</span>
       <a href="mailto:josemsotov@gmail.com">josemsotov@gmail.com</a>
     </div>
-    <p class="copyright">&copy; <span data-year>2026</span> Jose M Soto V</p>
+    <p class="copyright">&copy; <span data-year>2026</span> SOTO-ROBOTICS</p>
   </footer>
 </body>
 </html>
