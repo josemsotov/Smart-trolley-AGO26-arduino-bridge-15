@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Smart Golf Trolley robotics R&D case study by Jose M Soto V: embedded control, ROS 2, perception, electronics and mechanical integration.">
+  <meta name="author" content="Jose M Soto V">
+  <meta name="theme-color" content="#101d19">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Smart Golf Trolley | Jose M Soto V">
+  <meta property="og:description" content="A multidisciplinary robotics R&D case study spanning embedded software, ROS 2, sensing, safety and mechanical integration.">
+  <title>Smart Golf Trolley | Jose M Soto V</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to project</a>
+
+  <header class="site-header" data-header>
+    <a class="brand" href="#top" aria-label="Jose M Soto V, home">
+      <span class="brand-mark" aria-hidden="true">JS</span>
+      <span>JOSE M SOTO V</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+      <span class="sr-only">Toggle navigation</span>
+      <span></span><span></span>
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label="Main navigation" data-nav>
+      <a href="#overview">Overview</a>
+      <a href="#engineering">Engineering</a>
+      <a href="#mechanical">Mechanical</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#validation">Validation</a>
+      <a class="nav-cta" href="mailto:josemsotov@gmail.com?subject=Engineering%20project%20enquiry">Discuss a project</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section id="top" class="hero section-grid">
+      <div class="hero-copy reveal">
+        <p class="eyebrow"><span>01</span> Robotics R&amp;D case study</p>
+        <h1>Smart Golf<br><em>Trolley</em></h1>
+        <p class="hero-intro">A multidisciplinary robotic platform developed to explore safe autonomous assistance on the golf course&mdash;from motor control and sensing to ROS 2 perception and a field-ready operator interface.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#overview">Explore the engineering <span aria-hidden="true">&darr;</span></a>
+          <a class="button button-text" href="mailto:josemsotov@gmail.com?subject=Smart%20Golf%20Trolley%20R%26D">Contact Jose <span aria-hidden="true">&nearr;</span></a>
+        </div>
+        <ul class="hero-facts" aria-label="Project highlights">
+          <li><strong>ROS 2</strong><span>Jazzy robotics stack</span></li>
+          <li><strong>2-layer</strong><span>Embedded + edge control</span></li>
+          <li><strong>Safety-led</strong><span>Fail-safe architecture</span></li>
+        </ul>
+      </div>
+
+      <div class="hero-visual reveal" aria-label="Technical illustration of the smart golf trolley">
+        <div class="visual-grid" aria-hidden="true"></div>
+        <div class="visual-label label-lidar"><span>01</span> Dual LiDAR</div>
+        <div class="visual-label label-vision"><span>02</span> RGB-D vision</div>
+        <div class="visual-label label-drive"><span>03</span> Differential drive</div>
+        <svg class="trolley-illustration" viewBox="0 0 660 620" role="img" aria-labelledby="trolley-title trolley-desc">
+          <title id="trolley-title">Smart golf trolley technical illustration</title>
+          <desc id="trolley-desc">A stylised robotic trolley with two drive wheels, sensor mast, electronics enclosure and golf bag support.</desc>
+          <defs>
+            <linearGradient id="body-gradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#d9ff65"/>
+              <stop offset="1" stop-color="#94c938"/>
+            </linearGradient>
+            <filter id="soft-shadow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="15" stdDeviation="14" flood-color="#07110d" flood-opacity=".45"/>
+            </filter>
+          </defs>
+          <g fill="none" stroke="#d9ff65" stroke-width="1.5" opacity=".4">
+            <path d="M330 83V24M330 83L184 38M330 83l147-45"/>
+            <circle cx="330" cy="83" r="55" stroke-dasharray="5 10"/>
+            <circle cx="330" cy="83" r="84" stroke-dasharray="2 12"/>
+          </g>
+          <g filter="url(#soft-shadow)">
+            <path d="M252 340L276 153h109l45 187z" fill="#1a2d26" stroke="#5a766b" stroke-width="3"/>
+            <path d="M285 164l27-70h51l13 70" fill="#243d33" stroke="#678177" stroke-width="3"/>
+            <path d="M300 105l12-37h53l-2 37z" fill="#0b1511" stroke="#d9ff65" stroke-width="3"/>
+            <circle cx="332" cy="84" r="8" fill="#d9ff65"/>
+            <rect x="291" y="207" width="103" height="79" rx="10" fill="#0d1914" stroke="#80a095" stroke-width="3"/>
+            <path d="M306 225h44M306 240h70M306 255h55" stroke="#d9ff65" stroke-width="4" opacity=".72"/>
+            <path d="M247 329h188l53 107-51 69H237l-58-69z" fill="url(#body-gradient)" stroke="#e9ffa8" stroke-width="3"/>
+            <path d="M234 373h202l24 62-42 37H256l-48-37z" fill="#14251e" opacity=".92"/>
+            <circle cx="207" cy="454" r="83" fill="#0a110e" stroke="#6b847a" stroke-width="7"/>
+            <circle cx="207" cy="454" r="49" fill="#192a23" stroke="#d9ff65" stroke-width="3"/>
+            <circle cx="455" cy="454" r="83" fill="#0a110e" stroke="#6b847a" stroke-width="7"/>
+            <circle cx="455" cy="454" r="49" fill="#192a23" stroke="#d9ff65" stroke-width="3"/>
+            <circle cx="207" cy="454" r="10" fill="#d9ff65"/>
+            <circle cx="455" cy="454" r="10" fill="#d9ff65"/>
+            <path d="M281 502l-44 59M387 502l48 59" stroke="#819d92" stroke-width="8" stroke-linecap="round"/>
+            <circle cx="226" cy="571" r="18" fill="#111e19" stroke="#819d92" stroke-width="5"/>
+            <circle cx="446" cy="571" r="18" fill="#111e19" stroke="#819d92" stroke-width="5"/>
+          </g>
+          <g fill="#d9ff65">
+            <circle cx="330" cy="24" r="4"/>
+            <circle cx="184" cy="38" r="4"/>
+            <circle cx="477" cy="38" r="4"/>
+          </g>
+          <path d="M169 454h-58M549 454h-58" stroke="#d9ff65" stroke-width="2" stroke-dasharray="5 7" opacity=".65"/>
+        </svg>
+        <div class="visual-status"><span></span> Prototype development / active validation</div>
+      </div>
+    </section>
+
+    <section class="project-strip" aria-label="Project disciplines">
+      <div class="marquee-track">
+        <span>Embedded systems</span><i></i><span>Robotics</span><i></i><span>Electronics</span><i></i><span>Mechanical integration</span><i></i><span>Perception</span><i></i><span>Test &amp; validation</span><i></i>
+        <span aria-hidden="true">Embedded systems</span><i aria-hidden="true"></i><span aria-hidden="true">Robotics</span><i aria-hidden="true"></i><span aria-hidden="true">Electronics</span><i aria-hidden="true"></i><span aria-hidden="true">Mechanical integration</span><i aria-hidden="true"></i>
+      </div>
+    </section>
+
+    <section id="overview" class="overview section-shell">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span>02</span> Project overview</p>
+        <h2>Turning a trolley into a <em>robotic platform</em></h2>
+      </div>
+      <div class="overview-grid">
+        <div class="overview-lead reveal">
+          <p>The objective was not simply to motorise a golf trolley. It was to create an extensible engineering platform capable of manual operation, person-following research, environmental sensing and future autonomous navigation&mdash;without losing sight of real-world safety.</p>
+        </div>
+        <div class="overview-detail reveal">
+          <p>The work brings together a differential-drive chassis, low-level AVR firmware, a Raspberry Pi 5 running ROS 2, multi-sensor perception, live telemetry and a purpose-built web console.</p>
+          <p>Development follows an incremental R&amp;D process: model, integrate, bench-test, measure, diagnose and only then advance towards controlled ground trials.</p>
+        </div>
+      </div>
+      <div class="scope-cards">
+        <article class="scope-card reveal">
+          <span class="scope-number">01</span>
+          <div>
+            <h3>The challenge</h3>
+            <p>Coordinate motors, noisy wheel feedback and diverse sensors across two computing layers while maintaining predictable stop behaviour.</p>
+          </div>
+        </article>
+        <article class="scope-card reveal">
+          <span class="scope-number">02</span>
+          <div>
+            <h3>The approach</h3>
+            <p>Separate deterministic hardware control from high-level robotics, connect them through a validated serial protocol and test each layer independently.</p>
+          </div>
+        </article>
+        <article class="scope-card reveal">
+          <span class="scope-number">03</span>
+          <div>
+            <h3>The outcome</h3>
+            <p>An integrated prototype with manual drive, telemetry, fused odometry, perception experiments, simulation and layered safety controls.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="engineering" class="engineering section-shell">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span>03</span> Engineering scope</p>
+        <h2>One project.<br><em>Four disciplines.</em></h2>
+      </div>
+
+      <div class="discipline-list">
+        <article class="discipline reveal">
+          <div class="discipline-index">01</div>
+          <div class="discipline-title">
+            <span class="discipline-icon" aria-hidden="true">&lt;/&gt;</span>
+            <h3>Software &amp; autonomy</h3>
+          </div>
+          <div class="discipline-copy">
+            <p>Developed a modular Arduino C++ control layer and a ROS 2 Jazzy stack for command routing, odometry, localisation experiments, person-following and operator control.</p>
+            <ul class="tag-list" aria-label="Software technologies">
+              <li>C++ / Arduino</li><li>Python</li><li>ROS 2 Jazzy</li><li>Nav2</li><li>Gazebo</li><li>FastAPI</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="discipline reveal">
+          <div class="discipline-index">02</div>
+          <div class="discipline-title">
+            <span class="discipline-icon" aria-hidden="true">&#9883;</span>
+            <h3>Electronics &amp; sensing</h3>
+          </div>
+          <div class="discipline-copy">
+            <p>Integrated dual motor actuation with Hall and optical encoder feedback, IMU, current monitoring, GPS, RGB-D vision, two LiDAR units and provision for short-range ToF sensing.</p>
+            <ul class="tag-list" aria-label="Electronic components">
+              <li>Mega 2560</li><li>Raspberry Pi 5</li><li>MPU IMU</li><li>ACS712</li><li>Kinect RGB-D</li><li>LD19 LiDAR</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="discipline reveal">
+          <div class="discipline-index">03</div>
+          <div class="discipline-title">
+            <span class="discipline-icon" aria-hidden="true">&#9678;</span>
+            <h3>Mechanical integration</h3>
+          </div>
+          <div class="discipline-copy">
+            <p>Configured a differential-drive layout around 270&nbsp;mm wheels and passive casters, then defined the robot geometry, sensor frames and collision model for physical integration and simulation.</p>
+            <ul class="tag-list" aria-label="Mechanical work">
+              <li>Drive layout</li><li>Sensor mounting</li><li>Wheel geometry</li><li>URDF / Xacro</li><li>Packaging</li><li>Service access</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="discipline reveal">
+          <div class="discipline-index">04</div>
+          <div class="discipline-title">
+            <span class="discipline-icon" aria-hidden="true">&#10003;</span>
+            <h3>Systems validation</h3>
+          </div>
+          <div class="discipline-copy">
+            <p>Created dedicated diagnostics, repeatable encoder sweeps, motor bench routines, simulation scenarios and live dashboards to expose faults before autonomous operation.</p>
+            <ul class="tag-list" aria-label="Validation methods">
+              <li>Bench testing</li><li>Calibration</li><li>Telemetry</li><li>Fault injection</li><li>Simulation</li><li>Traceable results</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="mechanical" class="mechanical section-shell">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span>04</span> Mechanical integration</p>
+        <h2>Robotics engineered around an<br><em>off-the-shelf trolley</em></h2>
+      </div>
+
+      <div class="mechanical-intro">
+        <div class="mechanical-lead reveal">
+          <p>The mechanical strategy retains the practical structure of a commercially available trolley and adds purpose-designed interfaces where standard hardware cannot meet the robotic requirements.</p>
+        </div>
+        <div class="mechanical-detail reveal">
+          <p>Custom 3D-printed parts provide a rapid, adaptable route for mounting sensors, routing cables, housing electronics and aligning components. This hybrid approach reduces fabrication time while allowing the robotic package to evolve through repeated physical trials.</p>
+        </div>
+      </div>
+
+      <div class="photo-gallery" aria-label="Reserved project photography">
+        <figure class="photo-slot photo-slot-wide reveal">
+          <div class="photo-placeholder">
+            <span class="photo-index">PHOTO 01</span>
+            <svg viewBox="0 0 120 90" aria-hidden="true">
+              <path d="M15 69h90M24 69l13-29h39l17 29M44 40l8-20h17l7 20M31 62h56"/>
+              <circle cx="34" cy="68" r="10"/><circle cx="88" cy="68" r="10"/>
+              <path d="M80 30l13-13"/>
+            </svg>
+            <strong>Full trolley overview</strong>
+            <small>Final project photography to be added</small>
+          </div>
+          <figcaption><span>01</span><div><strong>Platform integration</strong><p>Overall view showing how the robotic system is incorporated into the original trolley structure.</p></div></figcaption>
+        </figure>
+
+        <figure class="photo-slot reveal">
+          <div class="photo-placeholder">
+            <span class="photo-index">PHOTO 02</span>
+            <svg viewBox="0 0 120 90" aria-hidden="true">
+              <path d="M29 65V28h62v37zM36 35h48v23H36zM22 72h76"/>
+              <circle cx="42" cy="47" r="4"/><circle cx="59" cy="47" r="4"/><circle cx="76" cy="47" r="4"/>
+              <path d="M40 28v-9M80 28v-9"/>
+            </svg>
+            <strong>3D-printed interfaces</strong>
+            <small>Mount and enclosure close-ups</small>
+          </div>
+          <figcaption><span>02</span><div><strong>Custom adaptation</strong><p>Printed brackets and enclosures bridge the geometry between sensors, electronics and the donor trolley.</p></div></figcaption>
+        </figure>
+
+        <figure class="photo-slot reveal">
+          <div class="photo-placeholder">
+            <span class="photo-index">PHOTO 03</span>
+            <svg viewBox="0 0 120 90" aria-hidden="true">
+              <path d="M60 17v56M60 29H31v25M60 38h30v24M22 54h18v16H22zM80 62h20v10H80z"/>
+              <circle cx="60" cy="17" r="5"/><circle cx="60" cy="73" r="5"/>
+            </svg>
+            <strong>Electronics packaging</strong>
+            <small>Wiring and service access</small>
+          </div>
+          <figcaption><span>03</span><div><strong>Serviceable assembly</strong><p>Controller, power and sensor connections arranged for inspection, iteration and fault finding.</p></div></figcaption>
+        </figure>
+      </div>
+
+      <div class="integration-principles">
+        <article class="reveal">
+          <span>01</span>
+          <h3>Reuse the proven base</h3>
+          <p>The off-the-shelf trolley contributes an established frame, wheel arrangement and load-carrying function, concentrating development effort on robotic capability.</p>
+        </article>
+        <article class="reveal">
+          <span>02</span>
+          <h3>Adapt without permanent tooling</h3>
+          <p>3D printing enables fast geometry changes as sensor positions, cable routes and component selections are refined during prototype testing.</p>
+        </article>
+        <article class="reveal">
+          <span>03</span>
+          <h3>Design for maintenance</h3>
+          <p>Modular mounts and accessible electronics support inspection, replacement and controlled experimentation across the evolving platform.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="architecture" class="architecture section-shell">
+      <div class="section-heading light reveal">
+        <p class="eyebrow"><span>05</span> System architecture</p>
+        <h2>Designed in <em>layers</em></h2>
+        <p class="section-summary">Time-critical motor and safety functions stay close to the hardware. Compute-intensive perception, supervision and operator tooling run on the edge computer.</p>
+      </div>
+
+      <div class="architecture-diagram reveal">
+        <article class="arch-node">
+          <span class="arch-kicker">Human interface</span>
+          <h3>Operator</h3>
+          <p>Stadia controller<br>Responsive web console<br>Emergency stop</p>
+        </article>
+        <div class="arch-link" aria-hidden="true"><span>Commands</span></div>
+        <article class="arch-node featured">
+          <span class="arch-kicker">High-level compute</span>
+          <h3>Raspberry Pi 5</h3>
+          <p>ROS 2 orchestration<br>Perception &amp; following<br>Odometry &amp; telemetry</p>
+        </article>
+        <div class="arch-link" aria-hidden="true"><span>115.2 kbaud</span></div>
+        <article class="arch-node">
+          <span class="arch-kicker">Real-time interface</span>
+          <h3>Arduino Mega</h3>
+          <p>Motor PWM &amp; direction<br>Encoder acquisition<br>Watchdog &amp; limits</p>
+        </article>
+      </div>
+
+      <div class="sensor-grid">
+        <article class="sensor-card reveal">
+          <span>Perception</span>
+          <h3>RGB-D + dual LiDAR</h3>
+          <p>Visual tracking and 2D ranging provide complementary environmental observations for follower and obstacle-gating research.</p>
+        </article>
+        <article class="sensor-card reveal">
+          <span>Motion feedback</span>
+          <h3>Hall + optical fusion</h3>
+          <p>Two encoder technologies are compared in a shared 45&nbsp;PPR domain, with weighted fusion and fail-safe fallback when they disagree.</p>
+        </article>
+        <article class="sensor-card reveal">
+          <span>Vehicle state</span>
+          <h3>IMU + current + GPS</h3>
+          <p>Orientation, motor load and position data enrich diagnostics and support heading, localisation and protection functions.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="software section-shell">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span>06</span> Software design</p>
+        <h2>From a deterministic loop<br>to a <em>robotics ecosystem</em></h2>
+      </div>
+      <div class="software-layout">
+        <div class="code-window reveal" aria-label="Simplified control flow example">
+          <div class="window-bar">
+            <span></span><span></span><span></span>
+            <p>CONTROL_FLOW.cpp</p>
+          </div>
+          <pre><code><b>01</b>  read_serial_commands();
+<b>02</b>  update_imu_and_current();
+<b>03</b>
+<b>04</b>  <i>if</i> (command_is_fresh) {
+<b>05</b>    constrain_velocity();
+<b>06</b>    apply_heading_correction();
+<b>07</b>    drive_differential_motors();
+<b>08</b>  } <i>else</i> {
+<b>09</b>    safe_stop();
+<b>10</b>  }
+<b>11</b>
+<b>12</b>  publish_telemetry();</code></pre>
+        </div>
+        <div class="software-points">
+          <article class="feature-point reveal">
+            <span>01</span>
+            <div><h3>Modular firmware</h3><p>Compile-time feature flags keep the AVR build configurable while a cooperative superloop avoids blocking the safety path.</p></div>
+          </article>
+          <article class="feature-point reveal">
+            <span>02</span>
+            <div><h3>ROS 2 command supervision</h3><p>A velocity multiplexer separates manual, gesture, follower and navigation sources so control authority is explicit.</p></div>
+          </article>
+          <article class="feature-point reveal">
+            <span>03</span>
+            <div><h3>Field observability</h3><p>A FastAPI and WebSocket interface exposes modes, sensors, motor state, maps and diagnostics from any device on the robot network.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="safety section-shell">
+      <div class="safety-panel reveal">
+        <div class="safety-heading">
+          <p class="eyebrow"><span>07</span> Safety by design</p>
+          <h2>Stop is a<br><em>system function.</em></h2>
+        </div>
+        <div class="safety-copy">
+          <p>Safety is implemented across the control chain rather than delegated to a single switch or software node.</p>
+          <ul class="check-list">
+            <li><span>&check;</span> Arduino command watchdog with a 0.5&nbsp;s timeout</li>
+            <li><span>&check;</span> Constrained speed, angular rate, PWM and acceleration</li>
+            <li><span>&check;</span> Manual control priority and centred-stick arming</li>
+            <li><span>&check;</span> Explicit authorisation before follower mode can move</li>
+            <li><span>&check;</span> Tilt monitoring, current telemetry and motor stop states</li>
+            <li><span>&check;</span> Conservative bench validation before ground trials</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="validation" class="validation section-shell">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span>08</span> Development &amp; validation</p>
+        <h2>Evidence over <em>assumption</em></h2>
+      </div>
+      <div class="validation-grid">
+        <div class="metrics reveal">
+          <article><strong>45</strong><span>PPR effective encoder domain</span></article>
+          <article><strong>200<small>Hz</small></strong><span>IMU acquisition target</span></article>
+          <article><strong>20<small>Hz</small></strong><span>Encoder request cycle</span></article>
+          <article><strong>0.5<small>s</small></strong><span>Command watchdog</span></article>
+        </div>
+        <div class="validation-copy reveal">
+          <h3>A traceable engineering loop</h3>
+          <p>Special-purpose sketches and Python tools isolate motors, sensors and communications. Recorded sweeps compare Hall and optical counts, identify unreliable operating regions and inform the firmware configuration.</p>
+          <p>Gazebo models reproduce the drive geometry and sensor frames before higher-level behaviours are exercised on hardware. Results and limitations are documented as part of the development record.</p>
+          <div class="status-note">
+            <span>Current status</span>
+            <p>Integrated R&amp;D prototype. Core subsystems and safety paths have been bench-tested; calibration and controlled ground validation remain active engineering work. No claim of production readiness is made.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="timeline section-shell">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span>09</span> Engineering journey</p>
+        <h2>Built through <em>iteration</em></h2>
+      </div>
+      <ol class="timeline-list">
+        <li class="reveal"><span>Foundation</span><h3>Motor interface &amp; control</h3><p>Differential motor control, pin mapping, direction logic and safe-stop behaviour established on the Arduino platform.</p></li>
+        <li class="reveal"><span>Instrumentation</span><h3>Feedback &amp; diagnostics</h3><p>Hall, optical, IMU and current sensing integrated with dedicated test routines and serial telemetry.</p></li>
+        <li class="reveal"><span>Connectivity</span><h3>ROS 2 bridge</h3><p>Bidirectional serial protocol connected deterministic firmware to Raspberry Pi robotics software.</p></li>
+        <li class="reveal"><span>Intelligence</span><h3>Perception &amp; supervision</h3><p>RGB-D, LiDAR, gesture and face-session experiments added within an explicit control-authority model.</p></li>
+        <li class="reveal"><span>Field engineering</span><h3>Operator UI &amp; validation</h3><p>Live web tools, simulations and structured test records now support progressive system integration.</p></li>
+      </ol>
+    </section>
+
+    <section class="role section-shell">
+      <div class="role-card reveal">
+        <p class="eyebrow"><span>10</span> Role &amp; contribution</p>
+        <div class="role-grid">
+          <h2>End-to-end engineering by<br><em>Jose M Soto V</em></h2>
+          <div>
+            <p>This project demonstrates practical R&amp;D across embedded systems, robotics software, electronic integration, mechanical packaging, troubleshooting and verification.</p>
+            <p>Responsibilities span system architecture, component integration, firmware and Python development, ROS 2 implementation, diagnostic tooling, test execution and technical documentation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact section-shell">
+      <div class="contact-inner reveal">
+        <p class="eyebrow"><span>11</span> Engineering consultancy</p>
+        <h2>Have a product that needs to<br><em>move, sense or think?</em></h2>
+        <p>I am open to conversations about robotics, embedded systems, automation, prototyping and multidisciplinary engineering development.</p>
+        <a class="button button-primary button-large" href="mailto:josemsotov@gmail.com?subject=Engineering%20consultancy%20enquiry">Start a conversation <span aria-hidden="true">&nearr;</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <a class="brand" href="#top"><span class="brand-mark">JS</span><span>JOSE M SOTO V</span></a>
+      <p>Engineering R&amp;D &middot; Robotics &middot; Embedded systems</p>
+    </div>
+    <div class="footer-contact">
+      <span>Contact</span>
+      <a href="mailto:josemsotov@gmail.com">josemsotov@gmail.com</a>
+    </div>
+    <p class="copyright">&copy; <span data-year>2026</span> Jose M Soto V</p>
+  </footer>
+</body>
+</html>
