@@ -118,6 +118,10 @@ void setup() {
   
   // Inicializar sistema principal
   initializeSystem();
+
+  #ifdef ENABLE_AUX_SERVO
+    aux_servo_initialize();
+  #endif
   
   // Inicializar ROS2 Bridge
   #ifdef ENABLE_ROS2_BRIDGE

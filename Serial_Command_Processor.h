@@ -114,6 +114,12 @@ void processSerialCommand() {
   else if (cmd == "HELP") {
     printCommandHelp();
   }
+
+  #ifdef ENABLE_AUX_SERVO
+  else if (cmd == "SERVO" || cmd.startsWith("SERVO ")) {
+    aux_servo_process_command(cmd);
+  }
+  #endif
   
   // ===== COMANDO DE CALIBRACIÓN PID GENERAL =====
   else if (cmd == "CALIBRATE" || cmd == "CALIBRACION" || cmd == "PID_CALIBRATE") {
@@ -481,6 +487,15 @@ void printCommandHelp() {
   DEBUG_PRINTLN("  HELP/? - Esta ayuda");
   DEBUG_PRINTLN("  STOP - Detener movimiento (STOP=LOW)");
   DEBUG_PRINTLN("");
+
+  #ifdef ENABLE_AUX_SERVO
+  DEBUG_PRINTLN(F("SERVO AUXILIAR (pin 42):"));
+  DEBUG_PRINTLN(F("  SERVO <0-180> - Mover a un angulo absoluto"));
+  DEBUG_PRINTLN(F("  SERVO TOGGLE - Alternar entre 0 y 90 grados"));
+  DEBUG_PRINTLN(F("  SERVO STATUS - Mostrar angulo y temporizador"));
+  DEBUG_PRINTLN(F("  SERVO PIN <34|36|38|40|42> - Diagnostico de cableado"));
+  DEBUG_PRINTLN(F(""));
+  #endif
   
   DEBUG_PRINTLN("� MOVIMIENTO (Solo en estado HABILITADO):");
   DEBUG_PRINTLN("  ADELANTE - Avanzar a 30 PWM (genérico)");

@@ -27,25 +27,32 @@ function drawScanTopView(id, scan, fresh, color) {
 }
 
 function renderDualLidar(s) {
+  const enabled = false;
   const lower = s.scan_lower || {}, ages = s.ages || {};
-  const fresh = Number.isFinite(ages.scan_lower) && ages.scan_lower < 1;
+  const fresh = enabled && Number.isFinite(ages.scan_lower) && ages.scan_lower < 1;
   const upperFresh = Number.isFinite(ages.scan) && ages.scan < 1;
   const set = (id, value) => document.getElementById(id).textContent = value;
   const metres = v => fresh && Number.isFinite(v) ? `${v.toFixed(2)} m` : '--';
-  set('lowerStatus', fresh ? 'ONLINE' : 'SIN DATOS RECIENTES');
+  set('lowerStatus', enabled ? (fresh ? 'ONLINE' : 'SIN DATOS RECIENTES') : 'DESACTIVADO · PUERTO ELP');
   set('lowerHz', fresh ? `${Number(lower.hz || 0).toFixed(1)} Hz` : '--');
   set('lowerPoints', fresh ? lower.valid_count : '--');
   set('lowerFront', metres(lower.front_min)); set('lowerMin', metres(lower.min));
   drawScanTopView('lidarLower', lower, fresh, '#66cfff');
+  if (!enabled) {
+    const canvas = document.getElementById('lidarLower');
+    const context = canvas.getContext('2d');
+    context.fillStyle = '#ffd77e';
+    context.fillText('DESACTIVADO · PUERTO REASIGNADO A ELP', canvas.width/2, canvas.height/2 + 35);
+  }
   drawScanTopView('lidar', s.scan || {}, upperFresh, '#5ae17b');
   ['operationServices', 'testServices'].forEach(id => {
     const root = document.getElementById(id);
     const row = document.createElement('div'); row.className = 'service';
     const label = document.createElement('span');
-    const dot = document.createElement('i'); dot.className = 'dot' + (fresh ? ' ok' : '');
+    const dot = document.createElement('i'); dot.className = 'dot' + (fresh || !enabled ? ' warn' : '');
     label.append(dot, document.createTextNode('LiDAR inferior'));
     const value = document.createElement('b');
-    value.textContent = fresh ? `${lower.valid_count} pts · ${Number(lower.hz).toFixed(1)} Hz` : 'SIN DATOS';
+    value.textContent = enabled ? (fresh ? `${lower.valid_count} pts · ${Number(lower.hz).toFixed(1)} Hz` : 'SIN DATOS') : 'DESACTIVADO · ELP';
     row.append(label, value); root.append(row);
   });
 }

@@ -26,5 +26,27 @@
   xhr.onerror=xhr.ontimeout=()=>{button.disabled=false;message('La carga fallo. Comprueba la conexion y reintenta.')};xhr.send(file);};
  async function record(action){try{message(action==='start'?'Iniciando Kinect...':'Guardando video...');const r=await fetch('/api/camera/video',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action})});const x=await r.json();if(!r.ok)throw Error(x.detail);if(action==='stop'){await refresh(x.url);if(x.fps)el('swingFps').value=x.fps;message(`Kinect guardado: ${x.frames} imagenes · ${x.fps} fps efectivos`)}else message('Grabando Kinect. Maximo 30 s; pulsa Guardar Kinect al terminar.')}catch(e){message(e.message)}}
  el('recordSwingVideo').onclick=()=>record('start');el('finishSwingVideo').onclick=()=>record('stop');
+ let lastElpFile='';
+ function formatBytes(bytes){return (Number(bytes||0)/1024/1024).toFixed(1)}
+ async function elpStatus(){
+  try{
+   const r=await fetch('/api/elp/status',{cache:'no-store'}),x=await r.json();if(!r.ok)throw Error(x.detail);
+   el('elpElapsed').textContent=Number(x.elapsed||0).toFixed(1);el('elpSize').textContent=formatBytes(x.bytes);
+   el('elpProfile').textContent=x.profile||'1920x1080 · 90 FPS';
+   el('recordElpVideo').disabled=!x.available||x.recording||x.processing;
+   el('finishElpVideo').disabled=!x.recording;
+   const labels={idle:'Lista',recording:'Grabando',processing:'Generando proxy',ready:'Video listo',error:'Error'};
+   el('elpStatus').textContent=!x.available?'ELP no conectada':(labels[x.phase]||x.phase);
+   el('elpTag').className='tag '+(x.recording?'experimental':x.available&&x.phase!=='error'?'ready':'hardware');
+   el('elpPreviewTag').textContent=x.recording?'PAUSADA · GRABANDO':x.preview_active?'EN VIVO':x.processing?'REINICIANDO':'CONECTANDO';
+   el('elpPreviewTag').className='tag '+(x.preview_active?'ready':x.recording?'experimental':'hardware');
+   if(x.error)message(x.error);
+   if(x.preview_error&&!x.recording)message(x.preview_error);
+   if(x.result?.url&&x.result.file!==lastElpFile){lastElpFile=x.result.file;await refresh(x.result.url);message(`ELP guardada: ${x.result.frames} fotogramas · ${Number(x.result.fps).toFixed(2)} FPS · maestro ${formatBytes(x.result.master_bytes)} MB`)}
+  }catch(e){el('elpStatus').textContent='Estado ELP no disponible';message(e.message)}
+ }
+ async function recordElp(action){try{message(action==='start'?'Iniciando ELP 90 FPS...':'Deteniendo ELP; se generara el proxy...');const r=await fetch('/api/elp/recording',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action})});const x=await r.json();if(!r.ok)throw Error(x.detail);await elpStatus();if(action==='start')message('ELP grabando a 1080p/90 FPS. Se detendra automaticamente a los 15 segundos.')}catch(e){message(e.message)}}
+ el('recordElpVideo').onclick=()=>recordElp('start');el('finishElpVideo').onclick=()=>recordElp('stop');
+ elpStatus();setInterval(elpStatus,1000);
  refresh().catch(e=>message(e.message));
 })();

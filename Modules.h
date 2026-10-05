@@ -24,6 +24,10 @@
 #include "Motor_Control.h"       // Control básico de motores (primero - define MotorState)
 #include "Robot_States.h"        // Sistema de estados del robot (segundo - usa MotorState)
 
+#ifdef ENABLE_AUX_SERVO
+  #include "Servo_Control.h"     // Servo auxiliar en Timer1; Timer5 queda reservado a motores
+#endif
+
 //===========================================================================
 //==================== INCLUSIÓN CONDICIONAL DE MÓDULOS ===================
 //===========================================================================

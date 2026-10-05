@@ -110,6 +110,10 @@
 //========================== PINES DE CONTROL ==============================
 //===========================================================================
 
+#ifdef ENABLE_AUX_SERVO
+  #define AUX_SERVO_PIN       42
+#endif
+
 /**
  * JOYSTICK ANALÓGICO - CONTROL MANUAL
  * Joystick de 2 ejes + botón para control directo del robot
@@ -182,6 +186,14 @@
 
 #if defined(PWM_RIGHT_MOTOR) && (PWM_RIGHT_MOTOR < 2)  
   #error "PWM_RIGHT_MOTOR no puede usar pines 0-1 (reservados para Serial)"
+#endif
+
+#if defined(ENABLE_AUX_SERVO) && \
+    (AUX_SERVO_PIN == PWM_LEFT_MOTOR || AUX_SERVO_PIN == PWM_RIGHT_MOTOR || \
+     AUX_SERVO_PIN == DIR_LEFT_MOTOR || AUX_SERVO_PIN == DIR_RIGHT_MOTOR || \
+     AUX_SERVO_PIN == BRAKE_LEFT_MOTOR || AUX_SERVO_PIN == BRAKE_RIGHT_MOTOR || \
+     AUX_SERVO_PIN == STOP_LEFT_MOTOR || AUX_SERVO_PIN == STOP_RIGHT_MOTOR)
+  #error "AUX_SERVO_PIN entra en conflicto con un pin de motor"
 #endif
 
 #endif // PINS_H

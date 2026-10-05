@@ -29,10 +29,12 @@ from rclpy.node import Node
 from sensor_msgs.msg import Image, LaserScan
 from std_msgs.msg import Bool, String
 import uvicorn
+from .elp_camera import install_routes as install_elp_routes
 from .training_media import install_routes
 
 
 PRINTABLE = re.compile(r"^[ -~]{1,96}$")
+STACK_SERVICES = ("robot-follower.service", "robot-operator-web.service")
 
 
 def now_s() -> float:
@@ -553,6 +555,7 @@ def create_app(node: OperatorNode, state: SharedState) -> FastAPI:
     media_dir = os.path.expanduser("~/robot_media")
     os.makedirs(media_dir, exist_ok=True)
     install_routes(app, media_dir)
+    install_elp_routes(app, media_dir)
     app.mount("/static", StaticFiles(directory=static_dir, follow_symlink=True), name="static")
 
     async def close_local_kiosk() -> None:
@@ -575,6 +578,53 @@ def create_app(node: OperatorNode, state: SharedState) -> FastAPI:
             stderr=subprocess.DEVNULL,
             start_new_session=True,
         )
+
+    def schedule_stack_restore() -> str:
+        for service in STACK_SERVICES:
+            probe = subprocess.run(
+                [
+                    "/usr/bin/systemctl",
+                    "--user",
+                    "show",
+                    "--property=LoadState",
+                    "--value",
+                    service,
+                ],
+                check=False,
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                timeout=5.0,
+            )
+            if probe.returncode != 0 or probe.stdout.strip() != "loaded":
+                detail = (probe.stderr or f"{service} is not loaded").strip()
+                raise HTTPException(status_code=503, detail=detail)
+
+        unit = f"robot-stack-restore-{uuid.uuid4().hex[:8]}"
+        scheduled = subprocess.run(
+            [
+                "/usr/bin/systemd-run",
+                "--user",
+                "--collect",
+                f"--unit={unit}",
+                "--on-active=1s",
+                "/usr/bin/systemctl",
+                "--user",
+                "restart",
+                *STACK_SERVICES,
+            ],
+            check=False,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=5.0,
+        )
+        if scheduled.returncode != 0:
+            detail = (scheduled.stderr or "stack restore scheduling failed").strip()
+            raise HTTPException(status_code=503, detail=detail)
+        return unit
 
     @app.get("/")
     def index() -> FileResponse:
@@ -688,6 +738,22 @@ def create_app(node: OperatorNode, state: SharedState) -> FastAPI:
 
         asyncio.create_task(reboot_host())
         return {"ok": True, "status": "rebooting"}
+
+    @app.post("/api/system/restore")
+    async def api_system_restore(payload: dict[str, Any]) -> dict[str, Any]:
+        if str(payload.get("confirm", "")).strip().upper() != "RESTORE":
+            raise HTTPException(
+                status_code=400,
+                detail="Explicit RESTORE confirmation is required",
+            )
+
+        node.set_robot_mode("IDLE")
+        node.publish_field_mode("EMERGENCY_STOP")
+        node.publish_stop()
+        await asyncio.sleep(0.6)
+
+        unit = schedule_stack_restore()
+        return {"ok": True, "status": "scheduled", "unit": unit}
 
     @app.post("/api/mode")
     async def api_mode(payload: dict[str, Any]) -> dict[str, Any]:

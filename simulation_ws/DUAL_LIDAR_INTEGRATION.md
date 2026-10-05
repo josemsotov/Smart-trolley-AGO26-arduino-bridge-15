@@ -1,5 +1,10 @@
 # Identificacion de dos LiDAR — 2026-09-16
 
+> Estado supersedido el 2026-10-05: el LiDAR inferior fue desconectado y su
+> puerto físico se reasignó a la cámara ELP global-shutter. El launch activo lo
+> deja deshabilitado por defecto y la interfaz lo identifica como desactivado.
+> El contenido siguiente conserva la evidencia histórica de la integración dual.
+
 Estado actual: ambos LiDAR transmiten a 10 Hz y aparecen en la interfaz web.
 No esta validado el inferior para navegacion/evasion.
 

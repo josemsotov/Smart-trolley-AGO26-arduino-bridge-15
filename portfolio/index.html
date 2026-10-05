@@ -186,9 +186,9 @@
             <h3>Electronics &amp; sensing</h3>
           </div>
           <div class="discipline-copy">
-            <p>Integrated dual motor actuation with Hall and optical encoder feedback, IMU, current monitoring, GPS, RGB-D vision, two LiDAR units and provision for short-range ToF sensing.</p>
+            <p>Integrated dual motor actuation with Hall and optical encoder feedback, IMU, current monitoring, GPS, RGB-D vision, upper LiDAR and a 90 FPS global-shutter camera. A second low-mounted LiDAR was prototyped and is currently displaced by the swing camera.</p>
             <ul class="tag-list" aria-label="Electronic components">
-              <li>Mega 2560</li><li>Raspberry Pi 5</li><li>MPU IMU</li><li>ACS712</li><li>Kinect RGB-D</li><li>LD19 LiDAR</li>
+              <li>Mega 2560</li><li>Raspberry Pi 5</li><li>MPU IMU</li><li>ACS712</li><li>Kinect RGB-D</li><li>LD19 LiDAR</li><li>ELP 90 FPS camera</li>
             </ul>
           </div>
         </article>
@@ -440,7 +440,7 @@
           <div class="se-panel-heading"><span>C</span><h3>Functional allocation</h3></div>
           <div class="allocation-list">
             <article><b>Operate</b><p>Modes, manual drive, web dead-man, speed limits and emergency request.</p><small>HMI + Stadia + field supervisor</small></article>
-            <article><b>Perceive</b><p>Person, face session, obstacles, depth, pose and swing observations.</p><small>Kinect + upper/lower LiDAR + Coral</small></article>
+            <article><b>Perceive</b><p>Person, face session, obstacles, depth, pose and high-speed swing observations.</p><small>Kinect + upper LiDAR + ELP global shutter + Coral</small></article>
             <article><b>Decide</b><p>Control authority, target association, obstacle gating and navigation readiness.</p><small>ROS 2 supervision and behaviours</small></article>
             <article><b>Move</b><p>Differential velocity conversion, heading correction and motor actuation.</p><small>Bridge + Arduino firmware + drivers</small></article>
             <article><b>Estimate</b><p>Wheel odometry, encoder confidence, IMU state, GPS and mapping.</p><small>Encoder fusion + EKF + SLAM</small></article>
@@ -484,8 +484,9 @@
             <tr><td>IF-09</td><td>Power path &harr; Arduino</td><td>Left/right motor current</td><td>ACS712 analogue inputs</td><td>Telemetry implemented; automatic overcurrent trip not evidenced</td></tr>
             <tr><td>IF-10</td><td>GPS &harr; Arduino/Pi</td><td>Fix, satellites and position</td><td>Serial3 at 9,600 baud / ROS NavSatFix</td><td>Navigation gated by freshness, fix and quality; antenna transform remains provisional</td></tr>
             <tr><td>IF-11</td><td>Kinect &harr; Pi</td><td>RGB, depth, body, face and tilt</td><td>USB / ROS image topics</td><td>Freshness and identity gates; not a safety-rated perception channel</td></tr>
-            <tr><td>IF-12</td><td>Dual LD19 &harr; Pi</td><td>Upper and lower 2D range scans</td><td>USB serial at 230,400 baud / LaserScan</td><td>Upper scan supports behaviour; lower scan is monitor-only pending geometry validation</td></tr>
+            <tr><td>IF-12</td><td>LD19 &harr; Pi</td><td>Upper 2D range scan; provision for a lower scan</td><td>USB serial at 230,400 baud / LaserScan</td><td>Upper scan supports behaviour; the lower unit is currently disconnected and disabled</td></tr>
             <tr><td>IF-13</td><td>TF-Luna provision</td><td>Short-range distance</td><td>I2C 0x10 / 0x11 via 3.3&nbsp;V adaptation</td><td>Compiled support, disabled at boot and not credited for stopping</td></tr>
+            <tr><td>IF-14</td><td>ELP camera &harr; Pi</td><td>Live framing and high-speed swing video</td><td>Direct USB / V4L2 MJPEG; 640×480 preview and 1920×1080 capture at 90 FPS</td><td>Preview releases the device for a bounded 15 s master capture, then resumes while the H.264 review proxy is generated; analysis evidence only, not a safety channel</td></tr>
           </tbody>
         </table>
       </div>
@@ -540,7 +541,7 @@
           <tbody>
             <tr><td>HZ-01</td><td>Unintended motion or failure to stop</td><td>Impact, trapping or trolley runaway</td><td>Authority model, mux zero, multiple watchdogs, software STOP</td><td>Add independent hardwired E-stop and power isolation; measure worst-case stop time/distance on representative load and slope</td><td><b class="risk-critical">Critical</b></td></tr>
             <tr><td>HZ-02</td><td>Forward collision during follower operation</td><td>Person struck or equipment/property damage</td><td>Upper LiDAR, depth freshness, obstacle gate, speed limit</td><td>Validate field of view, detection probability and braking envelope across clothing, sunlight, rain and terrain</td><td><b class="risk-high">High</b></td></tr>
-            <tr><td>HZ-03</td><td>Reverse or low-obstacle collision</td><td>Foot/ankle impact, caster obstruction or tip</td><td>Unknown-rear logic can inhibit retreat in obstacle core</td><td>Integrate and validate lower/rear sensing or contact bumpers; lower LiDAR is currently monitor-only</td><td><b class="risk-high">High</b></td></tr>
+            <tr><td>HZ-03</td><td>Reverse or low-obstacle collision</td><td>Foot/ankle impact, caster obstruction or tip</td><td>Unknown-rear logic can inhibit retreat in obstacle core</td><td>Integrate and validate lower/rear sensing or contact bumpers; the prototype lower LiDAR is currently displaced</td><td><b class="risk-high">High</b></td></tr>
             <tr><td>HZ-04</td><td>Wrong-person acquisition or target jump</td><td>Unexpected trajectory into people or hazards</td><td>Face session, visual/LiDAR gating, continuity checks, controller authorisation</td><td>Quantify false accept/switch rates; require safe reacquisition and operator confirmation after track loss</td><td><b class="risk-high">High</b></td></tr>
             <tr><td>HZ-05</td><td>Tip, rollaway or unstable behaviour on slope</td><td>Crush/impact, damaged equipment</td><td>Low speed, IMU telemetry, firmware tilt logic</td><td>Define slope/payload limits, centre-of-gravity envelope, parking restraint and validated static/dynamic stability tests</td><td><b class="risk-high">High</b></td></tr>
             <tr><td>HZ-06</td><td>Electrical overcurrent, short circuit or battery thermal event</td><td>Fire, burns or loss of control</td><td>Current telemetry; motor-driver stop lines</td><td>Confirm battery chemistry, BMS, fuse, contactor, cable protection, enclosure and automatic trip architecture</td><td><b class="risk-critical">Critical</b></td></tr>

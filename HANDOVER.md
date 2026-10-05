@@ -1,6 +1,85 @@
 # Handover — Smart Trolley V14
 
-Actualizado: 2026-10-02
+Actualizado: 2026-10-05
+
+## 2026-10-05 - Servo auxiliar desde Stadia
+
+- Servo independiente conectado con señal al pin 42 del Arduino Mega.
+- El botón Y conserva su secuencia segura (modo Stadia, balance desactivado y
+  STOP) y después envía `SERVO TOGGLE`, alternando entre 0° y 90°.
+- El firmware acepta además `SERVO <0-180>` y `SERVO STATUS`.
+- `Servo_Control.h` usa Timer1 directamente. No usar `Servo.h`: en Mega puede
+  tomar Timer5, reservado por los motores de tracción en los pines 44/46.
+- El servo debe alimentarse con una fuente de 5–6 V adecuada para su corriente,
+  con masa común entre esa fuente y el Arduino; no alimentar un servo de carga
+  desde el pin 5 V del Mega.
+
+## 2026-10-05 - Cámara ELP global-shutter para análisis de swing
+
+- Cámara identificada como USB `32e4:0234` y configurada por la ruta persistente
+  `/dev/v4l/by-id/usb-Global_Shutter_Camera_Global_Shutter_Camera_01.00.00-video-index0`.
+- La ELP está conectada directamente al puerto USB de la Pi `4-2`. El Arduino
+  Mega se trasladó al hub y conserva su ruta persistente `/dev/serial/by-id/...`.
+- El puerto anteriormente ocupado por el LiDAR inferior se reasignó a la ELP.
+  `enable_lidar_lower` queda desactivado por defecto; `/scan_lower` no se espera
+  en la configuración física actual. El LiDAR superior continúa fresco y activo.
+- Fairway Trolley OS incorpora estado y controles independientes para la ELP.
+  Cada captura se limita a 15 s, exige al menos 700 MB libres y usa un único
+  proceso de grabación. Se conserva un maestro MKV MJPEG a 1920x1080/90 FPS y
+  se genera un proxy MP4 H.264 a 960x540/90 FPS para reproducción web.
+- La pestaña ENTRENAMIENTO muestra un feed ELP MJPEG de 640x480/30 FPS para
+  encuadre. El backend mantiene una sola apertura de preview, la detiene y
+  libera antes de grabar a 1080p/90 FPS, y la reanuda durante la generación del
+  proxy. Validación real del traspaso: preview activo, pausado durante captura,
+  194 fotogramas a 90.0 FPS en 2.156 s y preview activo nuevamente.
+- Prueba corta real: 290 fotogramas, 3.222 s, 90.0 FPS, maestro de 51.5 MB y
+  proxy de 2.98 MB. Prueba automática al límite: 1,351 fotogramas, 15.011 s,
+  90.0 FPS y maestro de 222.4 MB. El proxy apareció en la biblioteca con
+  `source=elp`; el maestro quedó enlazado en los metadatos. El conteo exhaustivo
+  del maestro usa un timeout específico de 45 s, mientras las sondas normales
+  conservan 15 s. Kinect, LiDAR superior y Arduino permanecieron frescos; PWM
+  y RPM se mantuvieron en 0/0.
+- Home Assistant sigue usando la interfaz canónica mediante
+  `http://192.168.40.74:8080/?v=elp-live-20261005`.
+- Respaldos previos:
+  `/home/josemsotov/robot_backups/elp_camera_20261005_175131` y
+  `/home/josemsotov/robot_backups/elp_live_preview_20261005_181737`.
+  Respaldos Home Assistant:
+  `%LOCALAPPDATA%\SmartTrolley\ha-backups\smart-trolley-20261005-175948.json`
+  y `smart-trolley-20261005-181849.json`.
+- Próxima fase: ajustar exposición y ganancia manuales con iluminación real,
+  validar 10–15 s sostenidos y desarrollar extracción de rasgos del palo/cuerpo.
+  La ELP a 90 FPS no acredita velocidad de bola, distancia ni función de seguridad.
+
+## 2026-10-05 - Interfaz canónica y restauración del stack
+
+- Navegador, Home Assistant y pantalla táctil usan la misma portada responsiva
+  de Fairway Trolley OS en `http://192.168.40.74:8080/`.
+- El acceso histórico `/static/touch.html` redirige a la portada canónica para
+  evitar que las funciones diverjan entre plataformas.
+- La barra superior incluye `RESTAURAR STACK`. La acción exige confirmación,
+  ordena STOP/IDLE, espera la parada y programa mediante systemd el reinicio de
+  `robot-follower.service` y `robot-operator-web.service`.
+- Home Assistant usa la versión de caché
+  `?v=unified-interface-20261005`.
+- Copia previa en la Pi:
+  `/home/josemsotov/robot_backups/canonical_interface_20261005_105416`.
+- Copia previa de Home Assistant:
+  `%LOCALAPPDATA%\SmartTrolley\ha-backups\smart-trolley-20261005-105506.json`.
+- Validación funcional: restauración real programada, ambos servicios regresaron
+  a `active`, la portada respondió HTTP 200 y el modo final fue `IDLE`.
+
+### Recuperación Kinect tras pérdida de alimentación
+
+- El Kinect dejó de publicar porque la batería principal agotada no alimentaba
+  el adaptador del sensor. USB conservó únicamente el motor `045e:02b0`; cámara
+  `045e:02ae` y audio `045e:02ad` estaban ausentes, y `kinect_node` notificaba
+  `Invalid index [0]`.
+- Tras restaurar alimentación aparecieron las tres interfaces USB. Un reinicio
+  de `robot-follower.service` recuperó RGB a 20.5 FPS y profundidad fresca
+  (0.633 s). La demanda, PWM y RPM permanecieron en cero durante el diagnóstico.
+- Ante el mismo síntoma, comprobar batería/alimentación y las tres interfaces
+  USB antes de reiniciar servicios o modificar software.
 
 ## 2026-10-02 - Interfaz unificada con Home Assistant
 

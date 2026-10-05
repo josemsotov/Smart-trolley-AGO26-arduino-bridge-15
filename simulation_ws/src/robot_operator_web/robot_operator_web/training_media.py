@@ -11,16 +11,29 @@ from fastapi import HTTPException, Request
 LIMIT = 300 * 1024 * 1024
 
 
-def probe(path):
-    result = subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'v:0',
-        '-show_entries', 'stream=width,height,avg_frame_rate:format=duration',
-        '-of', 'json', str(path)], capture_output=True, timeout=15, check=True)
+def probe(path, count_frames=False):
+    command = ['ffprobe', '-v', 'error']
+    if count_frames:
+        command.append('-count_frames')
+    command += ['-select_streams', 'v:0',
+        '-show_entries', 'stream=width,height,avg_frame_rate,nb_read_frames:format=duration',
+        '-of', 'json', str(path)]
+    result = subprocess.run(
+        command,
+        capture_output=True,
+        timeout=45 if count_frames else 15,
+        check=True,
+    )
     data = json.loads(result.stdout)
     stream = data['streams'][0]
     n, d = stream['avg_frame_rate'].split('/')
-    return dict(width=stream['width'], height=stream['height'],
+    info = dict(width=stream['width'], height=stream['height'],
                 fps=float(n)/float(d) if float(d) else 0,
                 duration=float(data['format'].get('duration', 0)))
+    if count_frames:
+        value = stream.get('nb_read_frames')
+        info['frames'] = int(value) if value and value != 'N/A' else 0
+    return info
 
 
 def install_routes(app, media_dir):
@@ -66,7 +79,7 @@ def install_routes(app, media_dir):
         for path in sorted(folder.glob('*'), key=lambda p:p.stat().st_mtime, reverse=True):
             if path.suffix.lower() not in ('.mp4','.mov','.m4v','.webm','.avi'):
                 continue
-            if not path.name.startswith(('phone_', 'kinect_', 'video_')):
+            if not path.name.startswith(('phone_', 'kinect_', 'video_', 'elp_')):
                 continue
             info_path=path.with_suffix(path.suffix+'.info.json')
             info=json.loads(info_path.read_text()) if info_path.exists() else {}

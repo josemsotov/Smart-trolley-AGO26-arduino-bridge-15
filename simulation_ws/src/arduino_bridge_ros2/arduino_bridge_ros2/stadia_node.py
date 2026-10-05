@@ -242,8 +242,9 @@ class StadiaNode(Node):
             self._set_stadia_mode()
             self._disable_balance(force=True)
             self._send_stop(disable_balance=False)
+            self.pub_raw.publish(String(data='SERVO TOGGLE'))
             self.get_logger().warn(
-                'Boton Y: balance bloqueado por seguridad; STOP aplicado'
+                'Boton Y: STOP aplicado y servo auxiliar alternado 0/90 grados'
             )
         elif code == BTN_X:
             self._toggle_kinect_tilt_mode()

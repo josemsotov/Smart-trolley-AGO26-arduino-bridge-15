@@ -148,6 +148,23 @@
 #endif
 
 /**
+ * SERVO AUXILIAR
+ * Controla un servo independiente desde el mando Stadia y comandos serie.
+ * Usa Timer1 directamente para no interferir con el PWM de motores en Timer5.
+ * COMANDOS: SERVO <0-180> | SERVO TOGGLE | SERVO STATUS
+ */
+#define ENABLE_AUX_SERVO
+
+#ifdef ENABLE_AUX_SERVO
+  #define AUX_SERVO_MIN_ANGLE       0
+  #define AUX_SERVO_MAX_ANGLE     180
+  #define AUX_SERVO_START_ANGLE     0
+  #define AUX_SERVO_TOGGLE_ANGLE   90
+  #define AUX_SERVO_MIN_PULSE_US 1000
+  #define AUX_SERVO_MAX_PULSE_US 2000
+#endif
+
+/**
  * ROS2 BRIDGE - COMUNICACIÓN CON RASPBERRY PI 5
  * Bridge de comunicación serial compatible con ROS2
  * CARACTERÍSTICAS:

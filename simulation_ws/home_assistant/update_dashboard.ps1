@@ -49,10 +49,13 @@ try {
     }
     if (!$Apply) { return }
     if ($config.strategy.type -eq 'iframe') {
-        $canonicalUrl = 'http://192.168.40.74:8080/?v=unified-interface-20261002'
+        $canonicalUrl = 'http://192.168.40.74:8080/?v=elp-live-20261005'
         if ($config.strategy.url.TrimEnd('/') -notin @(
             'http://192.168.40.74:8080',
             'http://192.168.40.74:8080/?v=slam-map-20260909',
+            'http://192.168.40.74:8080/?v=unified-interface-20261002',
+            'http://192.168.40.74:8080/?v=unified-interface-20261005',
+            'http://192.168.40.74:8080/?v=elp-camera-20261005',
             $canonicalUrl
         )) {
             throw 'Unexpected embedded interface URL; inspect before changing'
