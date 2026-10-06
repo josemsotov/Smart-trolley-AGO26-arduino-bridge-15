@@ -579,6 +579,17 @@ def create_app(node: OperatorNode, state: SharedState) -> FastAPI:
             start_new_session=True,
         )
 
+    async def poweroff_host() -> None:
+        # Return the HTTP acknowledgement before systemd stops networking.
+        await asyncio.sleep(1.0)
+        subprocess.Popen(
+            ["/usr/bin/systemctl", "poweroff", "--no-wall"],
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            start_new_session=True,
+        )
+
     def schedule_stack_restore() -> str:
         for service in STACK_SERVICES:
             probe = subprocess.run(
@@ -738,6 +749,37 @@ def create_app(node: OperatorNode, state: SharedState) -> FastAPI:
 
         asyncio.create_task(reboot_host())
         return {"ok": True, "status": "rebooting"}
+
+    @app.post("/api/system/poweroff")
+    async def api_system_poweroff(
+        payload: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        if str((payload or {}).get("confirm", "")).strip().upper() != "POWEROFF":
+            raise HTTPException(
+                status_code=400,
+                detail="Explicit POWEROFF confirmation is required",
+            )
+
+        node.set_robot_mode("IDLE")
+        node.publish_field_mode("EMERGENCY_STOP")
+        node.publish_stop()
+        await asyncio.sleep(0.6)
+
+        probe = subprocess.run(
+            ["/usr/bin/systemctl", "poweroff", "--dry-run", "--no-wall"],
+            check=False,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=5.0,
+        )
+        if probe.returncode != 0:
+            detail = (probe.stderr or "poweroff authorization failed").strip()
+            raise HTTPException(status_code=503, detail=detail)
+
+        asyncio.create_task(poweroff_host())
+        return {"ok": True, "status": "powering_off"}
 
     @app.post("/api/system/restore")
     async def api_system_restore(payload: dict[str, Any]) -> dict[str, Any]:

@@ -2,6 +2,15 @@
 
 Actualizado: 2026-10-05
 
+## 2026-10-06 - Apagado seguro desde Fairway Trolley OS
+
+- La barra superior incorpora `APAGAR PI` con confirmación explícita.
+- El backend exige `confirm=POWEROFF`, ordena IDLE, EMERGENCY_STOP y velocidad
+  cero, espera la parada, valida autorización con `systemctl poweroff --dry-run`
+  y programa el apagado un segundo después de responder al navegador.
+- El botón queda deshabilitado durante la secuencia y muestra el estado
+  `PI APAGÁNDOSE`; un fallo de autorización se presenta al operador.
+
 ## 2026-10-05 - Servo auxiliar desde Stadia
 
 - Servo independiente conectado con señal al pin 38 del Arduino Mega,
