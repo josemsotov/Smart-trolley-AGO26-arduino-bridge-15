@@ -111,7 +111,7 @@
 //===========================================================================
 
 #ifdef ENABLE_AUX_SERVO
-  #define AUX_SERVO_PIN       42
+  #define AUX_SERVO_PIN       38
 #endif
 
 /**

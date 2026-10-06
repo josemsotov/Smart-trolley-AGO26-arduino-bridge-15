@@ -20,9 +20,20 @@ volatile uint16_t auxServoPulseTicks =
     AUX_SERVO_MIN_PULSE_US * AUX_SERVO_TICKS_PER_US;
 volatile bool auxServoPulseHigh = false;
 volatile uint8_t auxServoPin = AUX_SERVO_PIN;
+volatile bool auxServoAttached = false;
 int auxServoAngle = AUX_SERVO_START_ANGLE;
+uint16_t auxServoPulseUs = AUX_SERVO_MIN_PULSE_US;
+uint16_t auxServoTargetPulseUs = AUX_SERVO_MIN_PULSE_US;
+bool auxServoCustomPulse = false;
+unsigned long auxServoReleaseAtMs = 0;
+unsigned long auxServoLastStepMs = 0;
 
 ISR(TIMER1_COMPA_vect) {
+  if (!auxServoAttached) {
+    auxServoPulseHigh = false;
+    OCR1A = static_cast<uint16_t>(AUX_SERVO_FRAME_TICKS - 1UL);
+    return;
+  }
   if (auxServoPulseHigh) {
     digitalWrite(auxServoPin, LOW);
     OCR1A = static_cast<uint16_t>(
@@ -35,6 +46,38 @@ ISR(TIMER1_COMPA_vect) {
   }
 }
 
+void aux_servo_attach() {
+  pinMode(auxServoPin, OUTPUT);
+  digitalWrite(auxServoPin, LOW);
+  ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+    auxServoAttached = true;
+  }
+}
+
+void aux_servo_schedule_release() {
+  auxServoReleaseAtMs = millis() + AUX_SERVO_RELEASE_DELAY_MS;
+}
+
+void aux_servo_release() {
+  ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+    auxServoAttached = false;
+    auxServoPulseHigh = false;
+  }
+  digitalWrite(auxServoPin, LOW);
+  pinMode(auxServoPin, INPUT);
+  auxServoReleaseAtMs = 0;
+}
+
+void aux_servo_begin_motion(uint16_t targetPulseUs) {
+  aux_servo_attach();
+  auxServoTargetPulseUs = targetPulseUs;
+  auxServoReleaseAtMs = 0;
+  auxServoLastStepMs = millis();
+  if (auxServoPulseUs == auxServoTargetPulseUs) {
+    aux_servo_schedule_release();
+  }
+}
+
 void aux_servo_set_angle(int angle) {
   const int constrainedAngle =
       constrain(angle, AUX_SERVO_MIN_ANGLE, AUX_SERVO_MAX_ANGLE);
@@ -44,18 +87,17 @@ void aux_servo_set_angle(int angle) {
       AUX_SERVO_MAX_ANGLE,
       AUX_SERVO_MIN_PULSE_US,
       AUX_SERVO_MAX_PULSE_US));
-  const uint16_t pulseTicks =
-      pulseUs * static_cast<uint16_t>(AUX_SERVO_TICKS_PER_US);
-
-  ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-    auxServoPulseTicks = pulseTicks;
-  }
+  aux_servo_begin_motion(pulseUs);
   auxServoAngle = constrainedAngle;
+  auxServoCustomPulse = false;
+}
+
+void aux_servo_set_pulse_us(uint16_t pulseUs) {
+  aux_servo_begin_motion(pulseUs);
+  auxServoCustomPulse = true;
 }
 
 void aux_servo_initialize() {
-  pinMode(auxServoPin, OUTPUT);
-  digitalWrite(auxServoPin, LOW);
   aux_servo_set_angle(AUX_SERVO_START_ANGLE);
 
   const uint8_t savedSreg = SREG;
@@ -77,10 +119,21 @@ void aux_servo_initialize() {
 
 void aux_servo_print_status() {
   Serial.print(F("SERVO angle="));
-  Serial.print(auxServoAngle);
+  if (auxServoCustomPulse) {
+    Serial.print(F("custom"));
+  } else {
+    Serial.print(auxServoAngle);
+  }
+  Serial.print(F(" pulse_us="));
+  Serial.print(auxServoPulseUs);
+  Serial.print(F(" target_us="));
+  Serial.print(auxServoTargetPulseUs);
   Serial.print(F(" pin="));
   Serial.print(auxServoPin);
-  Serial.println(F(" timer=1"));
+  Serial.print(F(" timer=1 model="));
+  Serial.print(F(AUX_SERVO_MODEL_NAME));
+  Serial.print(F(" attached="));
+  Serial.println(auxServoAttached ? 1 : 0);
 }
 
 bool aux_servo_is_diagnostic_pin(int pin) {
@@ -96,6 +149,7 @@ void aux_servo_set_pin(int requestedPin) {
   const uint8_t nextPin = static_cast<uint8_t>(requestedPin);
   const uint8_t previousPin = auxServoPin;
   if (nextPin != previousPin) {
+    aux_servo_release();
     pinMode(nextPin, OUTPUT);
     digitalWrite(nextPin, LOW);
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
@@ -103,6 +157,10 @@ void aux_servo_set_pin(int requestedPin) {
     }
     digitalWrite(previousPin, LOW);
     pinMode(previousPin, INPUT);
+    aux_servo_attach();
+    if (auxServoPulseUs == auxServoTargetPulseUs) {
+      aux_servo_schedule_release();
+    }
   }
   aux_servo_print_status();
 }
@@ -137,9 +195,27 @@ void aux_servo_process_command(const String &command) {
     aux_servo_set_pin(pinText.toInt());
     return;
   }
+  if (command.startsWith("SERVO PULSE ")) {
+    String pulseText = command.substring(12);
+    pulseText.trim();
+    for (unsigned int i = 0; i < pulseText.length(); ++i) {
+      if (pulseText.charAt(i) < '0' || pulseText.charAt(i) > '9') {
+        Serial.println(F("ERROR SERVO: pulso invalido"));
+        return;
+      }
+    }
+    const long requestedPulse = pulseText.toInt();
+    if (requestedPulse < 500 || requestedPulse > 2500) {
+      Serial.println(F("ERROR SERVO: pulso fuera de rango 500-2500 us"));
+      return;
+    }
+    aux_servo_set_pulse_us(static_cast<uint16_t>(requestedPulse));
+    aux_servo_print_status();
+    return;
+  }
   if (!command.startsWith("SERVO ")) {
     Serial.println(F(
-        "ERROR SERVO: usa SERVO <0-180>, TOGGLE, STATUS o PIN <n>"));
+        "ERROR SERVO: usa <0-180>, TOGGLE, STATUS, PIN o PULSE"));
     return;
   }
 
@@ -164,6 +240,38 @@ void aux_servo_process_command(const String &command) {
   }
   aux_servo_set_angle(static_cast<int>(requested));
   aux_servo_print_status();
+}
+
+void aux_servo_update() {
+  const unsigned long now = millis();
+  if (auxServoAttached &&
+      auxServoPulseUs != auxServoTargetPulseUs &&
+      now - auxServoLastStepMs >= AUX_SERVO_SLEW_INTERVAL_MS) {
+    auxServoLastStepMs = now;
+    if (auxServoPulseUs < auxServoTargetPulseUs) {
+      const uint16_t remaining = auxServoTargetPulseUs - auxServoPulseUs;
+      auxServoPulseUs += min(
+          remaining, static_cast<uint16_t>(AUX_SERVO_SLEW_STEP_US));
+    } else {
+      const uint16_t remaining = auxServoPulseUs - auxServoTargetPulseUs;
+      auxServoPulseUs -= min(
+          remaining, static_cast<uint16_t>(AUX_SERVO_SLEW_STEP_US));
+    }
+    const uint16_t pulseTicks =
+        auxServoPulseUs * static_cast<uint16_t>(AUX_SERVO_TICKS_PER_US);
+    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+      auxServoPulseTicks = pulseTicks;
+    }
+    if (auxServoPulseUs == auxServoTargetPulseUs) {
+      aux_servo_schedule_release();
+    }
+  }
+
+  if (auxServoAttached &&
+      auxServoReleaseAtMs != 0 &&
+      static_cast<long>(now - auxServoReleaseAtMs) >= 0) {
+    aux_servo_release();
+  }
 }
 
 #endif

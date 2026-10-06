@@ -4,15 +4,37 @@ Actualizado: 2026-10-05
 
 ## 2026-10-05 - Servo auxiliar desde Stadia
 
-- Servo independiente conectado con señal al pin 42 del Arduino Mega.
+- Servo independiente conectado con señal al pin 38 del Arduino Mega,
+  confirmado mediante prueba física secuencial de los pines 34/36/38.
 - El botón Y conserva su secuencia segura (modo Stadia, balance desactivado y
-  STOP) y después envía `SERVO TOGGLE`, alternando entre 0° y 90°.
+  STOP) y después envía `SERVO TOGGLE`. El SG90/MG90S fue sustituido por un
+  MG996R. La medición mediante la ruta real del botón Y dio unos 95–100°
+  físicos con 0/154; el ajuste fino final quedó en 0/142 para buscar 90°.
 - El firmware acepta además `SERVO <0-180>` y `SERVO STATUS`.
 - `Servo_Control.h` usa Timer1 directamente. No usar `Servo.h`: en Mega puede
   tomar Timer5, reservado por los motores de tracción en los pines 44/46.
 - El servo debe alimentarse con una fuente de 5–6 V adecuada para su corriente,
   con masa común entre esa fuente y el Arduino; no alimentar un servo de carga
   desde el pin 5 V del Mega.
+- Configuración fuente posterior: `AUX_SERVO_MODEL_SG90` queda seleccionada por
+  defecto con toggle 0/180. `AUX_SERVO_MODEL_MG996R` queda disponible como
+  alternativa con la calibración confirmada 0/142; solo puede activarse un
+  modelo. Tras reinstalar físicamente el SG90, el firmware activo volvió a la
+  configuración SG90 predeterminada 0/180.
+- Reensamblaje SG90: 2000 us coincide con el tope mecánico definido como 90°,
+  mientras 1000 us dejaba el extremo opuesto a unos 45°. La prueba a 500 us
+  alcanzó el tope opuesto y produjo zumbido; se desconectó inmediatamente y se
+  restauró el arranque seguro a 1000 us. `SERVO PULSE <500-2500>` permite
+  buscar el extremo gradualmente. La opción MG996R conserva 1000–2000 us.
+- El SG90 presentó un zumbido leve incluso con trims 1020/1040 us una vez
+  instalado el horn. Como el mecanismo no necesita fuerza de retención, el
+  firmware libera automáticamente la señal 1 s después de cada movimiento;
+  la siguiente orden vuelve a adjuntar pin 38 antes de mover.
+- El movimiento instantáneo se sustituyó por una rampa no bloqueante. La prueba
+  1000–2125 us alcanzó unos 87° pero conservó pequeños tirones; el ajuste fino
+  quedó en 1000–2165 us. La rampa 2 us/20 ms resultó demasiado lenta; el ajuste
+  perfil 2 us/5 ms tardó unos 5 s reales; el ajuste final es 3 us cada 5 ms,
+  estimado en unos 3.3 s reales para el recorrido completo.
 
 ## 2026-10-05 - Cámara ELP global-shutter para análisis de swing
 

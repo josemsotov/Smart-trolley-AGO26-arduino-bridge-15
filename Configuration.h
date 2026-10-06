@@ -156,12 +156,44 @@
 #define ENABLE_AUX_SERVO
 
 #ifdef ENABLE_AUX_SERVO
+  // Seleccionar exactamente un modelo. SG90 es la configuracion por defecto.
+  #define AUX_SERVO_MODEL_SG90
+  //#define AUX_SERVO_MODEL_MG996R
+
+  #if defined(AUX_SERVO_MODEL_SG90) && defined(AUX_SERVO_MODEL_MG996R)
+    #error "Selecciona solo un modelo de servo auxiliar"
+  #elif !defined(AUX_SERVO_MODEL_SG90) && !defined(AUX_SERVO_MODEL_MG996R)
+    #error "Selecciona un modelo de servo auxiliar"
+  #endif
+
   #define AUX_SERVO_MIN_ANGLE       0
   #define AUX_SERVO_MAX_ANGLE     180
   #define AUX_SERVO_START_ANGLE     0
-  #define AUX_SERVO_TOGGLE_ANGLE   90
-  #define AUX_SERVO_MIN_PULSE_US 1000
-  #define AUX_SERVO_MAX_PULSE_US 2000
+
+  #ifdef AUX_SERVO_MODEL_SG90
+    // Inicio seguro mientras se calibra el extremo opuesto al tope mecanico.
+    // 500 us alcanzo el tope y produjo zumbido; no usar como default.
+    // 2125 us produjo ~87 grados; 2165 us busca el extremo fisico de 90.
+    #define AUX_SERVO_MODEL_NAME       "SG90"
+    #define AUX_SERVO_TOGGLE_ANGLE     180
+    #define AUX_SERVO_MIN_PULSE_US    1000
+    #define AUX_SERVO_MAX_PULSE_US    2165
+  #endif
+
+  #ifdef AUX_SERVO_MODEL_MG996R
+    // Calibracion MG996R verificada: 0/142 produce ~90 grados fisicos.
+    #define AUX_SERVO_MODEL_NAME       "MG996R"
+    #define AUX_SERVO_TOGGLE_ANGLE     142
+    #define AUX_SERVO_MIN_PULSE_US    1000
+    #define AUX_SERVO_MAX_PULSE_US    2000
+  #endif
+
+  // Liberar la señal después del movimiento evita zumbido y calentamiento
+  // cuando el mecanismo no necesita fuerza de mantenimiento.
+  #define AUX_SERVO_RELEASE_DELAY_MS 1000UL
+  // Rampa no bloqueante calibrada: 3 us cada 5 ms, ~3.3 s medidos.
+  #define AUX_SERVO_SLEW_STEP_US       3U
+  #define AUX_SERVO_SLEW_INTERVAL_MS   5UL
 #endif
 
 /**

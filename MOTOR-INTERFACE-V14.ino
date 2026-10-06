@@ -160,6 +160,10 @@ void setup() {
 // ============================================================================================================================================================================================================================
 
 void loop() {
+  #ifdef ENABLE_AUX_SERVO
+    aux_servo_update();
+  #endif
+
   // ===== PROCESAMIENTO DE COMANDOS SERIE =====
   #ifdef ENABLE_SERIAL_COMMANDS
     readSerialCommands();

@@ -244,7 +244,7 @@ class StadiaNode(Node):
             self._send_stop(disable_balance=False)
             self.pub_raw.publish(String(data='SERVO TOGGLE'))
             self.get_logger().warn(
-                'Boton Y: STOP aplicado y servo auxiliar alternado 0/90 grados'
+                'Boton Y: STOP y servo D38 alterna ~90 grados fisicos'
             )
         elif code == BTN_X:
             self._toggle_kinect_tilt_mode()

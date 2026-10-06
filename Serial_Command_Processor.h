@@ -489,10 +489,11 @@ void printCommandHelp() {
   DEBUG_PRINTLN("");
 
   #ifdef ENABLE_AUX_SERVO
-  DEBUG_PRINTLN(F("SERVO AUXILIAR (pin 42):"));
+  DEBUG_PRINTLN(F("SERVO AUXILIAR (pin 38):"));
   DEBUG_PRINTLN(F("  SERVO <0-180> - Mover a un angulo absoluto"));
-  DEBUG_PRINTLN(F("  SERVO TOGGLE - Alternar entre 0 y 90 grados"));
+  DEBUG_PRINTLN(F("  SERVO TOGGLE - Alternar ~90 grados segun modelo configurado"));
   DEBUG_PRINTLN(F("  SERVO STATUS - Mostrar angulo y temporizador"));
+  DEBUG_PRINTLN(F("  SERVO PULSE <500-2500> - Calibracion directa en us"));
   DEBUG_PRINTLN(F("  SERVO PIN <34|36|38|40|42> - Diagnostico de cableado"));
   DEBUG_PRINTLN(F(""));
   #endif

@@ -17,7 +17,7 @@ El segundo bloque del proyecto son utilidades Python independientes para control
 - Arduino C++/AVR, Arduino core y `Wire` para I2C.
 - Arduino Mega 2560, PWM directo mediante Timer5 y drivers de motor.
 - Sensores Hall, IMU MPU9250/MPU6500 y sensores de corriente ACS712.
-- Servo auxiliar en el pin 42, controlado con Timer1 para mantener Timer5
+- Servo auxiliar en el pin 38, controlado con Timer1 para mantener Timer5
   dedicado al PWM de tracción.
 - Python 3 para herramientas host; dependencias observadas: `pyserial`, `tkinter`, `matplotlib` y, para controladores HID concretos, `pywinusb`.
 - Arduino CLI para compilar/subir mediante `upload.ps1` o `upload.bat`.
@@ -35,7 +35,8 @@ El segundo bloque del proyecto son utilidades Python independientes para control
 1. Al arrancar, `MOTOR-INTERFACE-V14.ino::setup()` abre `Serial`, llama a `initializeSystem()`, inicializa el bridge serie ROS2 y los sensores de corriente, y activa el modo hoverboard cuando IMU y balance están habilitados.
 2. `initializeSystem()` configura pines/motores, sensores habilitados y estado seguro inicial. La IMU se detecta, configura y puede autocalibrarse.
 3. En cada iteración, `readSerialCommands()` acumula una línea ASCII y `processSerialCommand()` la enruta. Los comandos ROS2 (`v`, `e`, `r`, `s`, etc.) se delegan primero a `ROS2_Bridge.h`; los comandos locales modifican estados, pruebas, calibraciones o actuadores.
-   El comando local `SERVO TOGGLE` alterna el servo auxiliar entre 0° y 90°;
+   El comando local `SERVO TOGGLE` usa una calibración específica del MG996R
+   instalado para producir aproximadamente 90° físicos;
    el nodo Stadia lo publica al pulsar Y después de aplicar STOP.
 4. Un comando de velocidad se limita, se convierte en consignas diferenciales y termina en funciones de `Motor_Control.h`, que escriben dirección, freno/STOP y PWM de Timer5. Los comandos discretos pasan normalmente por `Robot_States.h`.
 5. En paralelo, `mpu_update()`, `current_sensors_update()` y `updateHallSpeeds()` actualizan inclinación, corriente, pulsos y velocidad. `hoverboard_update()` usa pitch/giroscopio y vuelve a inyectar una consigna corregida en el flujo ROS2. El PID está disponible como módulo, aunque `ENABLE_PID_CONTROL` está desactivado en la configuración actual.
@@ -70,9 +71,17 @@ Los archivos Python de raíz son ejecutables independientes, no un paquete únic
 - **Configuración funcional:** `Configuration.h`. Estado actual relevante: Hall, MPU, hoverboard, ACS712, bridge ROS2 y comandos seriales habilitados; joystick y PID general deshabilitados.
 - **Configuración física:** `Pins.h`. Es la fuente de verdad para pines y restricciones del Timer5; cambios aquí requieren validación sobre Arduino Mega 2560.
 - **Composición:** `Modules.h`. Mantener el orden documentado: motores → estados → sensores/IMU → PID → ROS2 → balance → joystick → core → comandos seriales.
-- **Servo auxiliar:** `Servo_Control.h` genera pulsos en el pin 42 mediante
+- **Servo auxiliar:** `Servo_Control.h` genera pulsos en el pin 38 mediante
   Timer1. No sustituirlo por `Servo.h`, porque en Mega esa librería puede
   apropiarse de Timer5 y romper el PWM de los motores en pines 44/46.
+  `Configuration.h` selecciona exactamente un modelo: SG90 es el predeterminado
+  (toggle 0/180, arranque seguro 1000/2000 us) y MG996R conserva la calibración
+  opcional 0/142 con pulsos 1000/2000 us. `SERVO PULSE <us>` permite calibrar
+  gradualmente; 500 us no debe usarse como default porque alcanzó el tope.
+  La señal se libera automáticamente 1 s después de cada movimiento para
+  eliminar zumbido y calentamiento cuando no se requiere fuerza de retención.
+  El movimiento usa una rampa no bloqueante de 3 us/5 ms; SG90 emplea
+  1000–2165 us para corregir el recorrido medido hasta aproximadamente 90°.
 - **Constantes locales críticas:** algunos límites siguen junto a su dominio: PWM/timeout en `Motor_Control.h`, geometría/PPR en `Robot_States.h`, límites de protocolo en `ROS2_Bridge.h`, filtro IMU en `MPU9250.h` y balance en `Balance_Controller.h`/`Configuration.h`.
 - **Carga:** `upload.ps1` y `upload.bat` invocan Arduino CLI para Mega 2560 y actualmente contienen rutas/puerto locales (por ejemplo `COM4`).
 - **Herramientas Python:** normalmente `main()` o bloque `if __name__ == "__main__"`; varias aceptan el puerto como argumento y otras conservan `COM4` como valor local.
